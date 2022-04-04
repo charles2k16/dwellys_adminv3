@@ -1,0 +1,222 @@
+// All element ui classes starts with a 'el' word. Take note
+$--color-primary: #E89400;
+$--color-success: #13ce66;
+$--color-warning: #f7ba2a;
+$--color-danger: #f73030;
+$--color-info: #e6b258;
+
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import '~element-ui/packages/theme-chalk/src/index';
+// @import 'element-ui/lib/theme-chalk/reset.css';
+
+
+.el-container {
+  border: none !important
+}
+.el-header {
+  height: 68px !important;
+  padding: 0 0px;
+  box-sizing: border-box;
+  line-height: 50px;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: #fff;
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
+  z-index: 500;
+}
+
+// menu items
+.el-menu {
+  border-right: none;
+  background-color: transparent;
+
+  .el-menu-item {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+
+    &:hover {
+      background-color: #f2c16c;
+      // border-top-right-radius: 18px;
+      // border-bottom-right-radius: 18px;
+      // margin-right: 25px;
+    }
+
+    i {
+      font-weight: bold;
+      color: rgb(83, 79, 79);
+      margin-right: 15px;
+    }
+  }
+}
+.el-menu-item.is-active {
+  background-color: #d09125;
+  font-weight: bold;
+  // color: white;
+  // border-top-right-radius: 18px;
+  // border-bottom-right-radius: 18px;
+  // margin-right: 25px;
+}
+.el-submenu__title {
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+  // color: rgb(229, 221, 241);
+
+  &:hover {
+        background-color: #f2c16c;
+  }
+
+  i {
+    font-weight: bold;
+    color: rgb(83, 79, 79);
+  }
+}
+.el-submenu [class^=el-icon-] {
+  margin-right: 15px;
+  font-size: 17px;
+}
+
+// button
+.el-button {
+  font-family: var(--font-primary) !important;
+}
+.el-button--mini {
+  padding: 5px 14px;
+}
+
+// form inputs
+.el-form-item {
+  &__label {
+    font-size: 15px;
+  }
+}
+.el-input {
+  font-size: 16px;
+
+  &__inner {
+    height: 49px;
+    line-height: 50px;
+    font-family:var(--font-primary);
+    border: 1px solid #9ca2b1;
+  }
+}
+.classes_input.el-input-number {
+  line-height: 40px;
+  // .el-input__inner {
+  //  height: 42px;
+  // }
+}
+.el-form--label-top .el-form-item__label {
+  padding: 0 0 0 0 !important;
+}
+.el-textarea__inner {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  border: 1px solid #9ca2b1;
+}
+
+// dialogue
+.el-dialog {
+  border-radius: 0.5rem;
+  background: #f8f8ff;
+
+  &__header {
+    // background: #dcdcf5;
+    background: #40155c;
+    // border-radius: 0.5rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    color: whitesmoke;
+
+    .el-dialog__close {
+      font-size: 19px;
+      font-weight: bold;
+      background: #eae9ff;
+      border-radius: 15px;
+      padding: 3px;
+    }
+  }
+
+  &__footer {
+    padding: 0;
+  }
+}
+
+// table
+.el-table {
+  td.el-table__cell div {
+    color: #39365c;
+  }
+
+  thead {
+    color: #595d64;
+  }
+
+  &__expanded-cell {
+  
+    padding-left: 15px !important;
+  }
+}
+
+// date picker & callendar
+.el-calendar-table {
+  &__row {
+    .current.is-selected {
+      color: white;
+      background: var(--color-primary);
+      border-radius: 4px;
+    }
+  }
+  .el-calendar-day {
+    box-sizing: border-box;
+    padding: 8px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+
+    &:hover {
+      cursor: pointer;
+      background-color: none !important;
+      background: none;
+    }
+  }
+}
+.el-calendar__body {
+  padding: 12px 2px 6px;
+}
+.schedule_calendar .el-calendar__header {
+  padding: 17px 0px;
+
+  .el-calendar__title {
+    display: none;
+  }
+}
+
+// card
+.el-card {
+  border-radius: 13px;
+
+  &__body {
+    padding: 15px;
+  }
+}
+.event_div__card {
+  border: 1px solid #EBEEF5;
+  background-color: #EBEEF5;
+
+  .el-card__body {
+    padding: 0px !important;
+  }
+} 
+
+// tabs
+.el-tabs__item {
+  padding: 6px 20px;
+  height: 50px;
+}
