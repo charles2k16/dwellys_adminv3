@@ -65,7 +65,8 @@ hr.hr_rule {
 }
 footer {
   padding: 7px;
-  background: rgb(246, 240, 248);
+  background: #049342;
+  color: #fff;
 }
 footer p {
   font-size: 11px;
@@ -173,4 +174,10 @@ footer p {
 }
 .full_width {
   width: 100%;
+}
+.search_input_width.el-input {
+  width: 80% !important;
+}
+.clickable {
+  cursor: pointer;
 }

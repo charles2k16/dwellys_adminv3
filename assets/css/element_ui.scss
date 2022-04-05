@@ -33,7 +33,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 // menu items
 .el-menu {
-  border-right: none;
+  // border-right: none;
   background-color: transparent;
 
   .el-menu-item {
@@ -70,7 +70,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   // color: rgb(229, 221, 241);
 
   &:hover {
-        background-color: #f2c16c;
+    background-color: #f2c16c;
   }
 
   i {
@@ -107,11 +107,8 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     border: 1px solid #9ca2b1;
   }
 }
-.classes_input.el-input-number {
+.default_input.el-input-number {
   line-height: 40px;
-  // .el-input__inner {
-  //  height: 42px;
-  // }
 }
 .el-form--label-top .el-form-item__label {
   padding: 0 0 0 0 !important;
@@ -129,7 +126,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
   &__header {
     // background: #dcdcf5;
-    background: #40155c;
+    background: #00923F;
     // border-radius: 0.5rem;
     border-radius: 0.5rem 0.5rem 0 0;
     color: whitesmoke;
