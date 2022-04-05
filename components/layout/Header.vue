@@ -2,7 +2,7 @@
   <div class="dashboard-header d-flex justify_between">
     <h2 class="page__title">{{ pageTitle }}</h2>
     <div class="d-flex">
-      <!-- <i class="el-icon-s-custom mr-10"></i> -->
+      <Notification />
       <el-dropdown trigger="click">
         <span class="dashboard-header__user">
           <el-avatar
@@ -46,6 +46,7 @@ export default Vue.extend({
   data() {
     return {
       pageTitle: '' as string,
+      notify_count: 0,
     }
   },
   watch: {
@@ -74,7 +75,7 @@ export default Vue.extend({
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 280px;
+    width: 250px;
 
     i {
       font-weight: bold;

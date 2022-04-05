@@ -2,6 +2,15 @@
   <div>
     <ApplicationHandler ref="handleAction"></ApplicationHandler>
 
+    <div>
+      <div class="page__title">
+        <el-button size="mini" round type="primary">Submitted</el-button>
+      </div>
+      <div class="page__content">
+        <router-view></router-view>
+      </div>
+    </div>
+
     <el-row :gutter="10" class="mb-2 mt-20">
       <el-col :sm="21" :md="21">
         <div class="d-flex">
@@ -127,6 +136,7 @@ export default Vue.extend({
   name: 'ProductsPage',
   data() {
     return {
+      tableLoading: false,
       products: [
         {
           name: 'Themra Turkish Honey Macun 240 Gr',

@@ -1,6 +1,6 @@
 // All element ui classes starts with a 'el' word. Take note
 $--color-primary: #E89400;
-$--color-success: #13ce66;
+$--color-success: #049341;
 $--color-warning: #f7ba2a;
 $--color-danger: #f73030;
 $--color-info: #e6b258;
@@ -58,7 +58,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-menu-item.is-active {
   background-color: #d09125;
   font-weight: bold;
-  // color: white;
+  color: white;
   // border-top-right-radius: 18px;
   // border-bottom-right-radius: 18px;
   // margin-right: 25px;
@@ -81,6 +81,9 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-submenu [class^=el-icon-] {
   margin-right: 15px;
   font-size: 17px;
+}
+.el-submenu .el-menu-item {
+  font-size: 16px !important;
 }
 
 // button
@@ -216,4 +219,16 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-tabs__item {
   padding: 6px 20px;
   height: 50px;
+}
+
+// dropdown
+.el-dropdown-menu.header_notify {
+  padding: 0px !important;
+}
+
+// badge
+.el-badge__content.is-fixed {
+  top: 5px !important;
+  // right: 20px !important;
+  // transform: translateY(-50%) translateX(100%);
 }

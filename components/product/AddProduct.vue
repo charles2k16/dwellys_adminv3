@@ -4,7 +4,7 @@
       <el-tabs v-model="activeTab" class="mt-4 px-2" stretch type="border-card">
         <el-tab-pane name="details">
           <span slot="label"
-            ><i class="el-icon-document-copy mr-5"></i> Product Details</span
+            ><i class="el-icon-goods mr-5"></i> Product Details</span
           >
 
           <el-form-item prop="name">
@@ -116,14 +116,24 @@
               </div>
             </div>
           </div>
+
+          <div class="mt-40">
+            <el-button
+              class="full_width"
+              type="success"
+              icon="el-icon-d-arrow-right"
+              @click="handleContinue('inventory')"
+              >Continue</el-button
+            >
+          </div>
         </el-tab-pane>
 
         <!-- Inventory Info -->
         <el-tab-pane name="inventory">
-          <span slot="label"><i class="el-icon-timer"></i> Inventory</span>
+          <span slot="label"><i class="el-icon-folder-add"></i> Inventory</span>
 
           <el-row :gutter="20">
-            <el-col :md="19" :xs="24" :sm="24">
+            <el-col :md="17" :xs="24" :sm="24">
               <el-form-item prop="sku">
                 <label>SKU</label>
                 <el-tooltip
@@ -138,7 +148,7 @@
               </el-form-item>
             </el-col>
 
-            <el-col :md="5" :xs="24" :sm="24">
+            <el-col :md="6" :xs="24" :sm="24">
               <el-form-item prop="stock_level" label="Stock Quantity">
                 <el-input-number
                   v-model="productDetails.stock_level"
@@ -211,11 +221,24 @@
               </el-form-item>
             </el-col>
           </el-row>
+
+          <br />
+          <div class="mt-40">
+            <el-button
+              class="full_width"
+              type="success"
+              icon="el-icon-d-arrow-right"
+              @click="handleContinue('assets')"
+              >Continue</el-button
+            >
+          </div>
         </el-tab-pane>
 
         <!-- Assets Info -->
-        <el-tab-pane name="schedule">
-          <span slot="label"><i class="el-icon-timer"></i> Product Assets</span>
+        <el-tab-pane name="assets">
+          <span slot="label"
+            ><i class="el-icon-camera"></i> Product Assets</span
+          >
 
           <!-- class images -->
           <el-row :gutter="10" class="mt-20">
@@ -224,6 +247,13 @@
               <ImageUpload />
             </el-col>
           </el-row>
+
+          <br />
+          <div class="mt-40">
+            <el-button class="full_width" type="success" @click="addProduct"
+              >SUBMIT FOR REVIEW</el-button
+            >
+          </div>
         </el-tab-pane>
       </el-tabs>
     </el-form>
@@ -287,6 +317,12 @@ export default Vue.extend({
     },
     addAdditionalInfo() {
       this.additional_infos.push({ name: '', value: '' })
+    },
+    handleContinue(nextTab: string) {
+      this.activeTab = nextTab
+    },
+    addProduct() {
+      this.$store.dispatch('addProduct', this.productDetails)
     },
   },
 })

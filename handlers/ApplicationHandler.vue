@@ -3,7 +3,7 @@
     <!-- add new enquiry dialog -->
     <el-dialog
       :visible.sync="showProductModal"
-      width="65%"
+      width="55%"
       custom-class="mobile-modal"
     >
       <template slot="title">
