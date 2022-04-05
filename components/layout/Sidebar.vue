@@ -5,7 +5,7 @@
         <img src="/logo.png" alt="logo" width="180px" />
       </div>
       <br />
-      <el-menu :default-openeds="['1']" router active-text-color="white">
+      <el-menu :default-openeds="['1']" router active-text-color="black">
         <el-menu-item index="1" :route="{ path: '/' }">
           <i class="el-icon-s-data"></i>
           Dasboard</el-menu-item

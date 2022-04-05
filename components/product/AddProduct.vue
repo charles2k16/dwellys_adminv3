@@ -24,7 +24,7 @@
             />
           </el-form-item>
 
-          <el-form-item prop="category" class="mt-20">
+          <el-form-item prop="category" class="mt-20" label="Product Category">
             <el-select
               v-model="productDetails.category"
               multiple
@@ -120,7 +120,7 @@
           <div class="mt-40">
             <el-button
               class="full_width"
-              type="success"
+              type="primary"
               icon="el-icon-d-arrow-right"
               @click="handleContinue('inventory')"
               >Continue</el-button
@@ -226,7 +226,7 @@
           <div class="mt-40">
             <el-button
               class="full_width"
-              type="success"
+              type="primary"
               icon="el-icon-d-arrow-right"
               @click="handleContinue('assets')"
               >Continue</el-button
@@ -250,7 +250,7 @@
 
           <br />
           <div class="mt-40">
-            <el-button class="full_width" type="success" @click="addProduct"
+            <el-button class="full_width" type="primary" @click="addProduct"
               >SUBMIT FOR REVIEW</el-button
             >
           </div>

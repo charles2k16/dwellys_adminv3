@@ -42,7 +42,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     font-size: 17px;
 
     &:hover {
-      background-color: #f2c16c;
+      background-color: #e4e3e1;
       // border-top-right-radius: 18px;
       // border-bottom-right-radius: 18px;
       // margin-right: 25px;
@@ -56,9 +56,9 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   }
 }
 .el-menu-item.is-active {
-  background-color: #d09125;
+  background-color: #e4e3e1;
   font-weight: bold;
-  color: white;
+  // color: white;
   // border-top-right-radius: 18px;
   // border-bottom-right-radius: 18px;
   // margin-right: 25px;
@@ -70,7 +70,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   // color: rgb(229, 221, 241);
 
   &:hover {
-    background-color: #f2c16c;
+    background-color: #e4e3e1;
   }
 
   i {
@@ -128,11 +128,9 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   background: #f8f8ff;
 
   &__header {
-    // background: #dcdcf5;
-    background: #00923F;
-    // border-radius: 0.5rem;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
+    background: #f5f5fc;
     border-radius: 0.5rem 0.5rem 0 0;
-    color: whitesmoke;
 
     .el-dialog__close {
       font-size: 19px;
@@ -159,7 +157,6 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   }
 
   &__expanded-cell {
-  
     padding-left: 15px !important;
   }
 }
