@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ApplicationHandler ref="handleAction"></ApplicationHandler>
+    <!-- <ApplicationHandler ref="handleAction"></ApplicationHandler> -->
 
     <div class="page__title">
       <NuxtLink to="/products/" class="mr-10">

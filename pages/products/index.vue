@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card>
+    <el-card class="mt-20">
       <el-tabs v-model="activeTab" type="card">
         <el-tab-pane name="pendingReview">
           <span slot="label"
@@ -130,7 +130,7 @@
 
         <el-tab-pane name="rejected">
           <span slot="label"
-            ><i class="el-icon-circle-check"></i> {{ rejectedTab }}</span
+            ><i class="el-icon-delete"></i> {{ rejectedTab }}</span
           >
           <h2>here now</h2>
         </el-tab-pane>
@@ -148,7 +148,7 @@ export default Vue.extend({
       activeTab: 'pendingReview',
       pendingTab: 'Pending Products',
       pendingTotal: 0,
-      rejectedTab: 'Rejected',
+      rejectedTab: 'Rejected Products',
       rejectedTotal: 0,
       tableLoading: false,
       products: [

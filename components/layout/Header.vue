@@ -62,7 +62,12 @@ export default Vue.extend({
       this.notify_count = 0
     },
     setRoutesNames(routeName: string) {
-      this.pageTitle = routeName === 'index' ? 'Dashboard' : routeName
+      this.pageTitle =
+        routeName === 'index'
+          ? 'Dashboard'
+          : routeName === 'products-approved'
+          ? 'Products'
+          : routeName
     },
   },
 })

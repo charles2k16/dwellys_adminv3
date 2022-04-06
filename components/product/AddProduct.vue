@@ -32,7 +32,7 @@
               class="full_width mr-30"
             >
               <el-option
-                v-for="(category, index) in classCategories"
+                v-for="(category, index) in productCategories"
                 :key="index"
                 :label="category.name"
                 :value="category._id"
@@ -285,7 +285,7 @@ export default Vue.extend({
         images: [''],
       },
       additional_infos: [{ name: '', value: '' }],
-      categories: [] as Array<object>,
+      productCategories: [] as Array<object>,
       activeTab: 'details',
       tagOptions: ['food'],
       unitsMeasurement: [

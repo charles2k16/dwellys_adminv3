@@ -80,6 +80,8 @@ export default Vue.extend({
       ;(this as any).$refs.loginForm.validate((valid: boolean) => {
         if (valid) {
           console.log(this.loginForm)
+
+          this.signIn()
         } else {
           this.buttonLoading = false
           ;(this as any as IMixinState).getNotification(
@@ -89,6 +91,23 @@ export default Vue.extend({
           return false
         }
       })
+    },
+    async signIn(): Promise<any> {
+      try {
+        await this.$auth.loginWith('local', {
+          data: this.loginForm,
+        })
+        this.buttonLoading = false
+        this.$router.push({
+          name: 'index',
+        })
+      } catch (error: any) {
+        this.buttonLoading = false
+        // const err = Object.assign({}, error)
+        // const message = err.response.data.message
+
+        // ;(this as any as IMixinState).getNotification(message, 'error')
+      }
     },
   },
 })
