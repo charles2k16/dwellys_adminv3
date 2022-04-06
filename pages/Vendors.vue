@@ -56,6 +56,8 @@
                 </b>
                 <br />
                 <small style="font-size: 12px"> {{ props.row.number }} </small>
+                <br />
+                <small style="font-size: 12px"> {{ props.row.email }} </small>
               </span>
             </div>
           </template>
@@ -72,6 +74,11 @@
             <small
               >Verified: <el-tag type="danger" size="mini">No</el-tag>
             </small>
+          </template>
+        </el-table-column>
+        <el-table-column label="Joined">
+          <template slot-scope="props">
+            <span class="d-block">{{ props.row.created_at }}</span>
           </template>
         </el-table-column>
         <el-table-column>
@@ -106,10 +113,11 @@
     <div class="mt-40 center pb-10">
       <el-pagination
         background
+        :current-page.sync="currentPage"
         :page-sizes="[15, 30, 50]"
         :page-size="15"
         layout="prev, pager, next, sizes, total"
-        :total="0"
+        :total="total"
       >
       </el-pagination>
     </div>
@@ -128,12 +136,15 @@ export default Vue.extend({
       vendorsData: [] as Array<object>,
       tableLoading: true as boolean,
       search: '' as string,
+      total: 0 as number,
+      currentPage: 1 as number,
     }
   },
   async fetch() {
     try {
       const vendors = await this.$usersApi.index()
       this.loadDataTable(vendors.payload)
+      this.total = vendors.total
     } catch (err) {
       console.log('vendors')
     }
@@ -163,7 +174,7 @@ export default Vue.extend({
       })
     },
     deleteVendor(id: string) {
-      this.$confirm('Are you sure to delete this product?', 'Warning', {
+      this.$confirm('Are you sure to delete this veendor?', 'Warning', {
         confirmButtonText: 'Yes',
         cancelButtonText: 'No',
         type: 'warning',
