@@ -21,10 +21,10 @@
             <i class="el-icon-cold-drink mt-10"></i>
             <el-select v-model="value" filterable placeholder="Filter">
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in listings"
+                :key="item.id"
+                :label="item.lister.first_name"
+                :value="item.lister.first_name"
               >
               </el-option>
             </el-select>

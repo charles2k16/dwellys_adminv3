@@ -14,8 +14,8 @@
                 <!-- <a :href="`/products/${scope.row.id}`">{{ scope.row.name }}</a> -->
                 <span class="mr-10">
                   <img
-                    v-if="scope.row.avatar"
-                    :src="url + scope.row.avatar"
+                    v-if="scope.row.lister.avatar"
+                    :src="url + scope.row.lister.avatar"
                     alt="pic"
                     class="profile_avatar"
                   />
@@ -27,21 +27,22 @@
                   />
                 </span>
                 <span class="d-block mt-10"
-                  >{{ scope.row.first_name }} {{ scope.row.last_name }}</span
+                  >{{ scope.row.lister.first_name }}
+                  {{ scope.row.lister.last_name }}</span
                 >
               </div>
             </template>
           </el-table-column>
           <el-table-column label="Email address">
             <template slot-scope="scope">
-              <span>{{ scope.row.email }} </span>
+              <span>{{ scope.row.lister.email }} </span>
             </template>
           </el-table-column>
           <el-table-column label="Phone Number">
             <template slot-scope="props">
               <div class="d-flex clickable" @click="viewProfile(props.row)">
                 <span>
-                  {{ props.row.phone_number }}
+                  {{ props.row.lister.phone_number }}
                 </span>
               </div>
             </template>
@@ -49,7 +50,10 @@
           <el-table-column label="Status">
             <template slot-scope="props">
               <div class="d-flex clickable" @click="viewProfile(props.row)">
-                <el-tag type="error" size="small">
+                <el-tag
+                  :type="props.row.status == 'active' ? 'success' : 'error'"
+                  size="small"
+                >
                   {{ props.row.status }}</el-tag
                 >
               </div>
@@ -101,86 +105,6 @@
         </el-pagination>
       </div>
     </el-card>
-    <el-drawer
-      title="User lister information"
-      :visible.sync="drawer"
-      size="35%"
-    >
-      <div class="px-30 user_details">
-        <div class="d-flex">
-          <img v-if="profile" :src="url + profile.avatar" class="profile_img" />
-          <div class="pl-20 pt-20">
-            <el-button type="info">Reject profile photo</el-button>
-            <p class="pt-10">
-              A profile image can be reject if the image is not clear enough or
-              the face is covered or an inanimate object is used
-            </p>
-          </div>
-        </div>
-        <div class="pt-20 w-70">
-          <div class="d-flex justify_between pb-10">
-            <section>
-              <p class="pb-10">First name</p>
-              <p>
-                <b>{{ profile && profile.first_name }} </b>
-              </p>
-            </section>
-            <section class="pl-30">
-              <p class="pb-10">Last name</p>
-              <p>
-                <b>{{ profile && profile.last_name }}</b>
-              </p>
-            </section>
-          </div>
-          <section class="pt-10">
-            <p class="pb-10">DOB</p>
-            <p>
-              <b>{{ profile.dob }} </b>
-            </p>
-          </section>
-        </div>
-        <el-divider></el-divider>
-        <div class="pt-5 pb-10 d-flex justify_between">
-          <section>
-            <p class="pb-10">Email address</p>
-            <p>
-              <b>{{ profile && profile.email }}</b>
-            </p>
-          </section>
-          <section class="pl-30 pr-10">
-            <p class="pb-10">Phone</p>
-            <p>
-              <b>{{ profile && profile.phone_number }}</b>
-            </p>
-          </section>
-        </div>
-        <el-divider></el-divider>
-        <div class="pb-10">
-          <section class="pb-20">
-            <p class="pb-10">ID type</p>
-            <p><b>Drivers license</b></p>
-          </section>
-          <p><span>Image of ID</span></p>
-          <img
-            src="../../assets/img/nas.jpg"
-            class="identification_card pb-10"
-          />
-          <div class="d-flex pt-30 pb-30">
-            <el-button
-              type="success"
-              class="w-50"
-              :loading="loading"
-              @click="approveLister(profile)"
-              ><i class="el-icon-check pr-10"></i>Approve</el-button
-            >
-
-            <el-button type="info" class="w-50" @click="approveLister(profile)"
-              ><i class="el-icon-close pr-10"></i>Disapprove</el-button
-            >
-          </div>
-        </div>
-      </div>
-    </el-drawer>
   </div>
 </template>
 
@@ -206,38 +130,6 @@ export default Vue.extend({
       drawer: false,
       tableLoading: false,
       profile: {},
-      products: [
-        {
-          name: 'Themra Turkish',
-          description: 'Themra Turkish Honey Macun 240 Gr',
-          price: '200',
-          category: 'Alcoholic beverages',
-          has_discount: 'No',
-          user: {
-            name: 'Enugu Agness',
-            address: 'Enugu',
-            phone: '+233540571511',
-            email: 'youremail.com',
-            avatar:
-              'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-          },
-        },
-        {
-          name: 'Themra Turkish',
-          description: 'Themra Turkish Honey Macun 240 Gr',
-          price: '200',
-          category: 'Alcoholic beverages',
-          has_discount: 'No',
-          user: {
-            name: 'Enugu Agness',
-            address: 'Enugu',
-            phone: '+233540571511',
-            email: 'youremail.com',
-            avatar:
-              'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-          },
-        },
-      ] as Array<object>,
       search: '' as string,
     }
   },
