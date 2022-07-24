@@ -3,8 +3,8 @@
     <div class="box-card">
       <el-card class="py-20 px-10">
         <div slot="header" class="clearfix center">
-          <img src="/logo.png" alt="logo" width="270px" />
-          <p class="mt-10">Authorized login for Saharago Administrators.</p>
+          <img src="../assets/img/logo.png" alt="logo" width="200px" />
+          <p class="mt-10">Authorized login for Dwellys Administrators.</p>
         </div>
         <div class="text item">
           <el-form ref="loginForm" :model="loginForm" :rules="validation">
@@ -93,21 +93,31 @@ export default Vue.extend({
       })
     },
     async signIn(): Promise<any> {
-      try {
-        await this.$auth.loginWith('local', {
+      const login = await this.$auth
+        .loginWith('local', {
           data: this.loginForm,
         })
-        this.buttonLoading = false
-        this.$router.push({
-          name: 'index',
-        })
-      } catch (error: any) {
-        this.buttonLoading = false
-        // const err = Object.assign({}, error)
-        // const message = err.response.data.message
+        .then((response: any) => {
+          console.log(login)
+          const { user, token } = response.data.data
 
-        // ;(this as any as IMixinState).getNotification(message, 'error')
-      }
+          this.$auth.setUserToken(token)
+          this.$auth.setUser(user)
+          // this.$auth.$storage.setLocalStorage("user_data", user);
+          ;(this as any as IMixinState).$message({
+            showClose: true,
+            message: response.data.message,
+            type: 'success',
+          })
+          this.buttonLoading = false
+          this.$router.push({
+            name: 'index',
+          })
+        })
+        .catch((error) => {
+          console.log(error)
+          this.buttonLoading = false
+        })
     },
   },
 })
@@ -115,7 +125,6 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .login_container {
-  background: url('/auth_bg.png') no-repeat center center fixed;
   height: 100vh;
   display: flex;
   justify-content: center;
