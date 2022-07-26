@@ -15,51 +15,56 @@
           Orders</el-menu-item
         >
 
-        <el-menu-item index="3" :route="{ path: '/products' }">
+        <el-menu-item index="3" :route="{ path: '/customers' }">
+          <i class="el-icon-goods mr-5"></i>
+          Customers
+        </el-menu-item>
+
+        <el-menu-item index="4" :route="{ path: '/products' }">
           <i class="el-icon-goods mr-5"></i>
           Products
         </el-menu-item>
 
         <!-- <el-menu-item index="3">Memberships</el-menu-item> -->
-        <el-menu-item index="4" :route="{ path: '/vendors' }">
+        <el-menu-item index="5" :route="{ path: '/vendors' }">
           <i class="el-icon-s-custom"></i>
           Vendors</el-menu-item
         >
 
-        <el-menu-item index="5">
+        <el-menu-item index="6">
           <i class="el-icon-money"></i>
           Payments</el-menu-item
         >
 
-        <el-submenu index="6">
+        <el-submenu index="7">
           <template slot="title">
             <i class="el-icon-menu"></i>
             Manage</template
           >
           <el-menu-item-group>
-            <el-menu-item index="6-1" :route="{ path: '/trainers' }"
+            <el-menu-item index="7-1" :route="{ path: '/trainers' }"
               >Stores</el-menu-item
             >
-            <el-menu-item index="6-2" :route="{ path: '/facilities' }">
+            <el-menu-item index="7-2" :route="{ path: '/facilities' }">
               Categories</el-menu-item
             >
           </el-menu-item-group>
         </el-submenu>
 
-        <el-submenu index="7">
+        <el-submenu index="8">
           <template slot="title">
             <i class="el-icon-user-solid"></i>
             System</template
           >
           <el-menu-item-group>
-            <el-menu-item index="7-1" :route="{ path: '/memberships' }"
+            <el-menu-item index="8-1" :route="{ path: '/memberships' }"
               >Users</el-menu-item
             >
-            <el-menu-item index="7-2" :route="{ path: '/clients' }"
+            <el-menu-item index="8-2" :route="{ path: '/clients' }"
               >Currency</el-menu-item
             >
 
-            <el-menu-item index="7-3" :route="{ path: '/clients' }"
+            <el-menu-item index="8-3" :route="{ path: '/clients' }"
               >Country</el-menu-item
             >
           </el-menu-item-group>
