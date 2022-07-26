@@ -15,6 +15,10 @@
           Listings</el-menu-item
         >
 
+        <el-menu-item index="3" :route="{ path: '/customers' }">
+          <i class="el-icon-goods mr-5"></i>
+          Customers
+        </el-menu-item>
         <el-menu-item index="3" :route="{ path: '/listers' }">
           <i class="el-icon-goods mr-5"></i>
           Listers
