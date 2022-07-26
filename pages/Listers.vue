@@ -21,7 +21,7 @@
             <i class="el-icon-cold-drink mt-10"></i>
             <el-select v-model="value" filterable placeholder="Filter">
               <el-option
-                v-for="item in options"
+                v-for="item in listings"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -36,6 +36,9 @@
             prefix-icon="el-icon-search"
           >
           </el-input>
+          <el-button type="danger"
+            ><i class="el-icon-plus mr-10"></i>New Lister</el-button
+          >
         </div>
       </div>
     </el-card>
@@ -56,8 +59,8 @@ export default Vue.extend({
   },
   async created() {
     // this.pageLoad = true;
-    const listings = await this.$usersApi.index()
-    console.log(listings)
+    const listings = await this.$usersApi.show('lister')
+    console.log(listings, 'listers')
     this.listings = listings.data
   },
   methods: {

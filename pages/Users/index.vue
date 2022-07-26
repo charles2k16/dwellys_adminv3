@@ -4,7 +4,7 @@
       <el-card class="mt-20">
         <el-table
           v-loading="tableLoading"
-          :data="listings"
+          :data="users"
           stripe
           :default-sort="{ prop: 'name', order: 'descending' }"
         >
@@ -189,9 +189,9 @@ import Vue from 'vue'
 import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
-  name: 'ProductsSubmitted',
+  name: 'Users',
   props: {
-    listings: {
+    users: {
       required: true,
       type: Array,
     },

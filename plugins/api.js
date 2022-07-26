@@ -8,10 +8,11 @@ export default (ctx, inject) => {
 
   // You can reuse the repositoryWithAxios object:
 
-  inject('usersApi', apiService('/users'))
+  inject('usersApi', apiService('/users?type='))
   inject('classApi', apiService('/classes'))
   inject('productsApi', apiService('/products'))
   inject('categoriesApi', apiService('/categories'))
   inject('listingsApi', apiService('/listings'))
+  inject('toggleListingApi', apiService('/listings/togglestatus'))
   inject('approvalApi', apiService('/idcardapproval'))
 }

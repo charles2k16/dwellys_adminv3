@@ -49,6 +49,7 @@ p {
 b {
   font-family: var(--font-primary-md), sans-serif;
   font-weight: 500;
+  color: #334155;
 }
 small {
   font-size: 13px;
@@ -80,6 +81,14 @@ footer p {
   color: var(--color-primary);
 }
 
+.section {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1270px;
+  width: 100%;
+  height: auto;
+}
+
 .w-50 {
   width: 50%;
 }
@@ -90,6 +99,10 @@ footer p {
 
 .w-80 {
   width: 80%;
+}
+
+.w-100 {
+  width: 100%;
 }
 
 /* margin-top */
@@ -235,6 +248,10 @@ footer p {
 }
 .justify_center {
   justify-content: center;
+  align-items: center;
+}
+.justify_evenly {
+  justify-content: space-evenly;
   align-items: center;
 }
 .align_center {

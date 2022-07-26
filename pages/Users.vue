@@ -3,14 +3,14 @@
     <el-card class="p-20">
       <div class="lister_header">
         <div class="d-flex">
-          <h4 class="mr-20 pt-8">Listings accounts</h4>
-          <NuxtLink to="/listers/" class="ml-20 mr-10">
+          <h4 class="mr-20 pt-8">users accounts</h4>
+          <NuxtLink to="/users/" class="ml-20 mr-10">
             <el-button size="mini" round type="primary">All</el-button>
           </NuxtLink>
-          <NuxtLink to="/listings/verified">
+          <NuxtLink to="/users/verified">
             <el-button size="mini" round>Verified</el-button>
           </NuxtLink>
-          <NuxtLink to="/listings/unverified">
+          <NuxtLink to="/users/unverified">
             <el-button size="mini" round>Unverified</el-button>
           </NuxtLink>
         </div>
@@ -19,7 +19,7 @@
             <i class="el-icon-cold-drink mt-10"></i>
             <el-select v-model="value" filterable placeholder="Filter">
               <el-option
-                v-for="item in listings"
+                v-for="item in users"
                 :key="item.id"
                 :label="item.lister.first_name"
                 :value="item.lister.first_name"
@@ -35,31 +35,31 @@
           >
           </el-input>
           <el-button type="danger"
-            ><i class="el-icon-plus mr-10"></i>New Listing</el-button
+            ><i class="el-icon-plus mr-10"></i>Add new user</el-button
           >
         </div>
       </div>
     </el-card>
 
-    <NuxtChild :listings="listings" />
+    <NuxtChild :users="users" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-  name: 'ListingsPage',
+  name: 'UsersPage',
   data() {
     return {
-      listings: [],
+      users: [],
       value: '',
     }
   },
   async created() {
     // this.pageLoad = true;
-    const listings = await this.$listingsApi.index()
-    console.log(listings)
-    this.listings = listings.data
+    const users = await this.$usersApi.show('user')
+    console.log(users)
+    this.users = users.data
   },
   methods: {
     addProduct(): void {

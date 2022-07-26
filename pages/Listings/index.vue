@@ -8,54 +8,74 @@
           stripe
           :default-sort="{ prop: 'name', order: 'descending' }"
         >
-          <el-table-column label="Name">
+          <el-table-column label="ID">
             <template slot-scope="scope">
-              <div class="d-flex" @click="viewProfile(scope.row)">
-                <!-- <a :href="`/products/${scope.row.id}`">{{ scope.row.name }}</a> -->
-                <span class="mr-10">
-                  <img
-                    v-if="scope.row.lister.avatar"
-                    :src="url + scope.row.lister.avatar"
-                    alt="pic"
-                    class="profile_avatar"
-                  />
-                  <img
-                    v-else
-                    src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
-                    alt="pic"
-                    style="width: 40px"
-                  />
-                </span>
-                <span class="d-block mt-10"
+              <div
+                class="d-flex"
+                style="cursor: pointer"
+                @click="getListingDetails(scope.row.id)"
+              >
+                <span class="d-block mt-10">{{ scope.row.id }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Name of lister">
+            <template slot-scope="scope">
+              <div
+                class="d-flex"
+                style="cursor: pointer"
+                @click="getListingDetails(scope.row.id)"
+              >
+                <span class="d-block"
                   >{{ scope.row.lister.first_name }}
                   {{ scope.row.lister.last_name }}</span
                 >
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="Email address">
-            <template slot-scope="scope">
-              <span>{{ scope.row.lister.email }} </span>
-            </template>
-          </el-table-column>
+
           <el-table-column label="Phone Number">
             <template slot-scope="props">
-              <div class="d-flex clickable" @click="viewProfile(props.row)">
+              <div
+                class="d-flex clickable"
+                @click="getListingDetails(props.row.id)"
+              >
                 <span>
                   {{ props.row.lister.phone_number }}
                 </span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="Status">
+          <el-table-column label="Lister type">
+            <template slot-scope="scope">
+              <div
+                style="cursor: pointer"
+                @click="getListingDetails(scope.row.id)"
+              >
+                <span>{{ scope.row.property_type.name }} </span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Listing date">
             <template slot-scope="props">
-              <div class="d-flex clickable" @click="viewProfile(props.row)">
-                <el-tag
-                  :type="props.row.status == 'active' ? 'success' : 'error'"
-                  size="small"
-                >
-                  {{ props.row.status }}</el-tag
-                >
+              <div
+                class="d-flex clickable"
+                @click="getListingDetails(props.row.id)"
+              >
+                <span
+                  >{{ $moment(props.row.created_at).format('MMM DD, YY') }}
+                </span>
+                <!-- {{ moment(props.row.created_at) }} -->
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Amount">
+            <template slot-scope="props">
+              <div
+                class="d-flex clickable"
+                @click="getListingDetails(props.row.id)"
+              >
+                <span>{{ props.row.listing_detail.price }} </span>
               </div>
             </template>
           </el-table-column>
@@ -80,12 +100,26 @@
                 @click="deleteProduct(props.row.id)"
               ></el-button> -->
               <el-dropdown trigger="click">
-                <span class="el-dropdown-link">
+                <span style="cursor: pointer" class="el-dropdown-link">
                   <i class="el-icon-more"> </i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item style="color: red" @click="props.row"
-                    >Delete</el-dropdown-item
+                  <el-dropdown-item
+                    ><p
+                      class="p-10"
+                      @click="open(props.row.id, 'active', 'Approve')"
+                    >
+                      <i class="el-icon-check pr-10"></i>Approve
+                    </p></el-dropdown-item
+                  >
+                  <el-dropdown-item
+                    ><p
+                      style="color: red"
+                      class="p-10"
+                      @click="open(props.row.id, 'inactive', 'Disapprove')"
+                    >
+                      <i class="el-icon-close pr-10"></i>Disapprove
+                    </p></el-dropdown-item
                   >
                 </el-dropdown-menu>
               </el-dropdown>
@@ -139,13 +173,39 @@ export default Vue.extend({
       this.drawer = true
       console.log(profile)
     },
-    async approveLister(profile: any) {
+    open(listingId: string, active: string, btnText: string) {
+      console.log(listingId, 'profile')
+      // const h = this.$createElement
+      this.$confirm(
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum interdum quisque risus ornare tincidunt sed in. Neque elit nunc scelerisque lacinia ultrices adipiscing.',
+        'Are you sure you want approve the listing?',
+        {
+          cancelButtonText: 'Cancel',
+          confirmButtonText: btnText,
+        }
+      )
+        .then(() => {
+          this.approveLister(listingId, active)
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled',
+          })
+        })
+    },
+    getListingDetails(id: string) {
+      this.$router.push(`/listing_details/${id}`)
+    },
+    async approveLister(listingId: string, status: string) {
       try {
-        const listingResponse = await this.$approvalApi.create({
-          user_id: profile.id,
+        const listingResponse = await this.$toggleListingApi.create({
+          listing_id: listingId,
+          status,
         })
 
         console.log(listingResponse)
+        // console.log(listingId, active)
 
         this.loading = false
         ;(this as any as IMixinState).$message({
@@ -157,13 +217,6 @@ export default Vue.extend({
         console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
       }
-    },
-    deleteProduct(id: string) {
-      console.log(id)
-      this.$message({
-        message: 'Product Deleted',
-        type: 'success',
-      })
     },
     addProduct(): void {
       ;(this as any).$refs.handleAction.showAddClassModal()

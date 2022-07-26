@@ -22,6 +22,7 @@ interface apiService {
   index: Function
   delete: Function
   create: Function
+  show: Function
   userTypes: (path: string, params: object) => Promise<any>
   //  (query: object): Promise<any>
 }
@@ -34,6 +35,8 @@ declare module 'vue/types/vue' {
     $classApi: apiService
     $listingsApi: apiService
     $approvalApi: apiService
+    $toggleListingApi: apiService
+    $listersApi: apiService
     // $refs: { [key: string]: Vue | Element | (Vue | Element)[] | Function | undefined; }
   }
 }
