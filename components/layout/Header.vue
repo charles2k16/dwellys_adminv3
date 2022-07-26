@@ -2,7 +2,7 @@
   <div class="dashboard-header d-flex justify_between">
     <h2 class="page__title">{{ pageTitle }}</h2>
     <div class="d-flex">
-      <Notification />
+      <!-- <Notification /> -->
       <el-dropdown trigger="click">
         <span class="dashboard-header__user">
           <el-avatar

@@ -13,4 +13,5 @@ export default (ctx, inject) => {
   inject('productsApi', apiService('/products'))
   inject('categoriesApi', apiService('/categories'))
   inject('listingsApi', apiService('/listings'))
+  inject('approvalApi', apiService('/idcardapproval'))
 }
