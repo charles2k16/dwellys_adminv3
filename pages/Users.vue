@@ -65,7 +65,7 @@ export default Vue.extend({
     }
   },
   async created() {
-    const users = await this.$usersApi.show('lister')
+    const users = await this.$usersApi.show('user')
     console.log(users)
     this.users = users.data
   },
