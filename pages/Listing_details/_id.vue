@@ -71,7 +71,7 @@
     <div>
       <div>
         <p>Listing title</p>
-        <p class="pt-10">3 bed room house in Community 25, Tema</p>
+        <p class="pt-10"><b>3 bed room house in Community 25, Tema</b></p>
       </div>
       <div class="d-flex pt-30">
         <section class="pr-30">
@@ -100,9 +100,16 @@
         >
       </p>
     </section>
-    <!-- <div v-for="img in listing.listing_detail.photo" :key="img.id">
-      <img :src="url + img" />
-    </div> -->
+    <div v-if="listing.listing_detail" class="pt-30">
+      <p>Images</p>
+      <div class="property_images pt-10">
+        <img
+          v-for="img in listing.listing_detail.listing_images"
+          :key="img.id"
+          :src="url + img.photo"
+        />
+      </div>
+    </div>
     <div class="pt-30">
       <p>Basic information</p>
       <!-- <ul v-for="amenity in listing.amenities" :key="amenity.id">
@@ -161,10 +168,13 @@ export default Vue.extend({
   methods: {
     async approveLister(listingId: string, status: string) {
       try {
-        const listingResponse = await this.$toggleListingApi.create({
-          listing_id: listingId,
-          status,
-        })
+        const listingResponse = await this.$listingsApi.update(
+          '/togglestatus',
+          {
+            listing_id: listingId,
+            status,
+          }
+        )
 
         console.log(listingResponse)
         // console.log(listingId, active)
@@ -193,11 +203,22 @@ export default Vue.extend({
   width: 150px;
   padding-right: 10px;
 }
+.property_images {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(150px, 1fr));
+
+  img {
+    // border-radius: 20px;
+    height: 100px;
+    max-width: 300px;
+    width: 90%;
+  }
+}
 .amenites_list {
   padding-top: 20px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  width: 100%;
+  width: 80%;
 
   max-width: 500px;
 

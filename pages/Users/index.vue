@@ -101,7 +101,7 @@
         </el-pagination>
       </div>
     </el-card>
-    <el-drawer
+    <!-- <el-drawer
       title="User lister information"
       :visible.sync="drawer"
       size="35%"
@@ -180,7 +180,7 @@
           </div>
         </div>
       </div>
-    </el-drawer>
+    </el-drawer> -->
   </div>
 </template>
 

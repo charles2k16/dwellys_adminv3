@@ -51,7 +51,7 @@
           </section>
           <p><span>Image of ID</span></p>
           <img
-            src="../../assets/img/nas.jpg"
+            src="../../assets/img/profile.jpg"
             class="identification_card pb-10"
           />
           <div class="d-flex pt-30 pb-30">

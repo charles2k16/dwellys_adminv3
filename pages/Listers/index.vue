@@ -206,38 +206,6 @@ export default Vue.extend({
       drawer: false,
       tableLoading: false,
       profile: {},
-      products: [
-        {
-          name: 'Themra Turkish',
-          description: 'Themra Turkish Honey Macun 240 Gr',
-          price: '200',
-          category: 'Alcoholic beverages',
-          has_discount: 'No',
-          user: {
-            name: 'Enugu Agness',
-            address: 'Enugu',
-            phone: '+233540571511',
-            email: 'youremail.com',
-            avatar:
-              'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-          },
-        },
-        {
-          name: 'Themra Turkish',
-          description: 'Themra Turkish Honey Macun 240 Gr',
-          price: '200',
-          category: 'Alcoholic beverages',
-          has_discount: 'No',
-          user: {
-            name: 'Enugu Agness',
-            address: 'Enugu',
-            phone: '+233540571511',
-            email: 'youremail.com',
-            avatar:
-              'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-          },
-        },
-      ] as Array<object>,
       search: '' as string,
     }
   },

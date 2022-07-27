@@ -1,21 +1,30 @@
 <template>
-  <div class="property_account">
-    <div class="d-flex justify_between">
-      <div>
-        <span> <i class="el-icon-back"></i> </span>
-        <div>
-          <h2>Add new user</h2>
-          <p class="mt-10 text-grey">Add a new employee</p>
+  <div class="pb-20">
+    <div class="w-80">
+      <div class="d-flex justify_between">
+        <div class="d-flex">
+          <NuxtLink to="/users">
+            <span
+              ><i class="el-icon-back mr-20" style="font-size: 30px"></i>
+            </span>
+          </NuxtLink>
+          <div>
+            <h2>Add new user</h2>
+            <p class="mt-10 text-grey">Add a new employee</p>
+          </div>
+        </div>
+        <div class="mr-20">
+          <el-tag type="success" size="small"> active</el-tag>
         </div>
       </div>
-      <div>active</div>
+      <el-divider class="mr-20"></el-divider>
     </div>
-    <el-divider></el-divider>
+
     <div class="account_form mt-10">
       <el-form
-        ref="property_account"
+        ref="user_account"
         :rules="account_validation"
-        :model="property_account"
+        :model="user_account"
         label-position="top"
       >
         <div class="user_form">
@@ -27,27 +36,57 @@
                 identify which offer works best for their use case.
               </p>
             </div>
-
-            <div class="d-flex ml-20">
-              <el-form-item label="First Name" prop="first_name">
-                <el-input
-                  v-model="property_account.first_name"
-                  placeholder="First name"
-                  class="w-50"
-                >
-                </el-input>
-              </el-form-item>
-              <el-form-item label="Last Name" prop="last_name" class="pl-20">
-                <el-input
-                  v-model="property_account.last_name"
-                  placeholder="Last Name"
-                  class="w-50"
-                >
-                </el-input>
+            <div class="ml-20">
+              <div class="d-flex">
+                <el-form-item label="First Name" prop="first_name">
+                  <el-input
+                    v-model="user_account.first_name"
+                    placeholder="First name"
+                    class="w-50"
+                  >
+                  </el-input>
+                </el-form-item>
+                <el-form-item label="Last Name" prop="last_name" class="pl-20">
+                  <el-input
+                    v-model="user_account.last_name"
+                    placeholder="Last Name"
+                    class="w-50"
+                  >
+                  </el-input>
+                </el-form-item>
+              </div>
+              <el-row :gutter="20" class="ml-10">
+                <el-col :xs="24" :sm="24" :md="12">
+                  <el-form-item label="Password" prop="password">
+                    <el-input
+                      v-model="user_account.password"
+                      placeholder="Enter password"
+                      type="password"
+                    >
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :xs="24" :sm="24" :md="12">
+                  <el-form-item
+                    label="Confirm Password"
+                    prop="confirm_password"
+                  >
+                    <el-input
+                      v-model="user_account.confirm_password"
+                      placeholder="confirm password"
+                      type="password"
+                    >
+                    </el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-form-item label="Date of Birth" prop="dob">
+                <el-input v-model="user_account.dob" type="date"> </el-input>
               </el-form-item>
             </div>
           </div>
         </div>
+
         <el-divider></el-divider>
         <div>
           <div class="d-flex pb-20">
@@ -61,15 +100,16 @@
             <div class="ml-20">
               <el-form-item label="Email address" prop="email">
                 <el-input
-                  v-model="property_account.email"
+                  v-model="user_account.email"
                   type="email"
                   placeholder="Enter email"
                 >
                 </el-input>
               </el-form-item>
+
               <el-form-item
                 label="Phone number"
-                prop="phone"
+                prop="phone_number"
                 style="margin-top: 10px"
               >
                 <vue-phone-number-input
@@ -81,29 +121,45 @@
               </el-form-item>
             </div>
           </div>
+          <el-divider></el-divider>
           <div class="d-flex pb-20">
             <div class="account_label">
               <h4>Position & Access</h4>
               <p class="w-80 pt-10">Role based access control features</p>
             </div>
-            <div class="ml-20">
-              <el-form-item label="Email address" prop="email">
+            <div class="w-50">
+              <div v-for="(tier, index) in user_account.tierForm" :key="index">
                 <el-input
-                  v-for="tier in tierForm"
-                  :key="tier.value"
                   v-model="tier.value"
-                  type="email"
+                  type="text"
                   placeholder="Tier feature"
+                  class="mb-10"
+                />
+                <!-- </el-input> -->
+                <p
+                  v-if="index != 0"
+                  class="w-50 d-flex justify_end m-10"
+                  style="color: red"
+                  @click="removeTier(index)"
                 >
-                </el-input>
-              </el-form-item>
+                  <i class="el-icon-delete-solid" style="font-weight: 600"></i>
+                </p>
+              </div>
+              <p
+                style="color: red"
+                class="m-10 d-flex justify_end w-50"
+                @click="addTier"
+              >
+                <i class="el-icon-plus mr-10" style="font-weight: 600"></i>
+                Add new
+              </p>
             </div>
           </div>
           <div>
-            <div class="mt-20 d-flex justify_between">
-              <el-button class="back_btn" @click="toPrev">Cancel</el-button>
+            <div class="mt-20 d-flex w-50 justify_between">
+              <el-button class="back_btn">Cancel</el-button>
               <div class="register_btn">
-                <el-button type="info">Save</el-button>
+                <el-button type="info" @click="submit_account">Save</el-button>
                 <el-button
                   type="primary"
                   :loading="btnLoading"
@@ -122,33 +178,31 @@
 
 <script lang="ts">
 import Vue from 'vue'
-// import VuePhoneNumberInput from "vue-phone-number-input";
-// import 'vue-phone-number-input/dist/vue-phone-number-input.css'
-// import { IMixinState } from "@/types/mixinsTypes";
+import VuePhoneNumberInput from 'vue-phone-number-input'
+import 'vue-phone-number-input/dist/vue-phone-number-input.css'
+import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
   name: 'AccountPage',
   components: {
-    // VuePhoneNumberInput,
+    VuePhoneNumberInput,
   },
 
   data() {
-    const validatePass = (value: string, callback: any) => {
+    const validatePass = (rule: any, value: string, callback: any) => {
       if (value === '') {
         callback(new Error('Please input the password'))
       } else {
-        if ((this as any).property_account.confirm_password !== '') {
-          ;(this as any).$refs.property_account.validateField(
-            'confirm_password'
-          )
+        if ((this as any).user_account.confirm_password !== '') {
+          ;(this as any).$refs.user_account.validateField('confirm_password')
         }
         callback()
       }
     }
-    const validatePass2 = (value: string, callback: any) => {
+    const validatePass2 = (rule: any, value: string, callback: any) => {
       if (value === '') {
         callback(new Error('Please input the password again'))
-      } else if (value !== (this as any).property_account.password) {
+      } else if (value !== (this as any).user_account.password) {
         callback(new Error("Password don't match!"))
       } else {
         callback()
@@ -159,20 +213,20 @@ export default Vue.extend({
       step: 1 as number,
       phone: '',
       btnLoading: false as boolean,
-      property_account: {
-        avatar: '' as any,
+      user_account: {
         first_name: '' as string,
-        last_name: '' as string,
         dob: '' as string,
+        last_name: '' as string,
         sign_up_mode: 'email',
         email: '' as string,
+        phone_number: '' as string,
         password: '' as string,
         confirm_password: '' as string,
-        phone_number: '' as string,
         country_id: '39a40751-d7d2-4346-99e5-b0235b520ce5' as String,
-        user_type: 'lister',
+        user_type: 'visitor',
+        tierForm: [{ value: '' }],
       },
-      tierForm: [{ value: '' }],
+
       account_validation: {
         first_name: [
           {
@@ -195,13 +249,6 @@ export default Vue.extend({
             trigger: ['blur', 'change'],
           },
         ],
-        id_card_number: [
-          {
-            required: true,
-            message: 'Please enter ID number',
-            trigger: ['blur', 'change'],
-          },
-        ],
         email: [
           {
             required: true,
@@ -218,20 +265,6 @@ export default Vue.extend({
             trigger: ['blur', 'change'],
           },
         ],
-        id_card_type: [
-          {
-            required: true,
-            message: 'Please select ID type',
-            trigger: 'change',
-          },
-        ],
-        id_card_upload: [
-          {
-            required: true,
-            message: 'Please select an ID card',
-            trigger: 'change',
-          },
-        ],
         password: [
           { validator: validatePass, trigger: 'blur', required: true },
         ],
@@ -244,39 +277,60 @@ export default Vue.extend({
       countries: [],
     }
   },
-  async created() {},
+  async created() {
+    const countries = await this.$countriesApi.index()
+    this.countries = countries.data
+    console.log(countries)
+  },
   methods: {
-    // submit_account() {
-    //   this.btnLoading = true;
-    //   (this as any).$refs.property_account.validate((valid: boolean) => {
-    //     if (valid) {
-    //       this.signUp();
-    //       this.$router.replace("/login");
-    //     } else {
-    //       this.btnLoading = false;
-    //       (this as any as IMixinState).getNotification(
-    //         "Make sure all required fields are filled",
-    //         "error"
-    //       );
-    //       return false;
-    //     }
-    //   });
-    // },
-    // async signUp(): Promise<void> {
-    //   try {
-    //     const response = await this.$registerApi.create(this.property_account);
-    //     console.log(response);
-    //     (this as any as IMixinState).$confirm(response.message, {
-    //       confirmButtonText: "OK",
-    //       cancelButtonText: "Cancel",
-    //       type: "success",
-    //     });
-    //     this.btnLoading = false;
-    //   } catch (error) {
-    //     this.btnLoading = false;
-    //     (this as any as IMixinState).catchError(error);
-    //   }
-    // },
+    addTier() {
+      this.user_account.tierForm.push({ value: '' })
+    },
+    removeTier(index: number) {
+      this.user_account.tierForm.splice(index, 1)
+    },
+    onPhoneUpdate(e: any) {
+      console.log(e)
+      this.user_account.phone_number = e.formattedNumber
+      this.countries.filter((country: any) =>
+        country.short_name === e.countryCode
+          ? (this.user_account.country_id = country.id)
+          : ''
+      )
+    },
+    submit_account() {
+      //   this.user_account.activate = activate
+      console.log('send')
+      this.btnLoading = true
+      ;(this as any).$refs.user_account.validate((valid: boolean) => {
+        if (valid) {
+          this.signUp()
+          this.$router.replace('/users')
+        } else {
+          this.btnLoading = false
+          ;(this as any as IMixinState).getNotification(
+            'Make sure all required fields are filled',
+            'error'
+          )
+          return false
+        }
+      })
+    },
+    async signUp(): Promise<void> {
+      try {
+        const response = await this.$registerApi.create(this.user_account)
+        console.log(response)
+        ;(this as any as IMixinState).$message({
+          showClose: true,
+          message: response.message,
+          type: 'success',
+        })
+        this.btnLoading = false
+      } catch (error) {
+        this.btnLoading = false
+        ;(this as any as IMixinState).catchError(error)
+      }
+    },
   },
 })
 </script>
@@ -288,6 +342,7 @@ $small_screen: 426px;
   padding-left: 40px;
 }
 .account_label {
-  width: 200px;
+  width: 20%;
+  padding-top: 8px;
 }
 </style>

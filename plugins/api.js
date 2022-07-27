@@ -11,8 +11,10 @@ export default (ctx, inject) => {
   inject('usersApi', apiService('/users?type='))
   inject('classApi', apiService('/classes'))
   inject('productsApi', apiService('/products'))
+  inject('registerApi', apiService('/signup'))
   inject('categoriesApi', apiService('/categories'))
   inject('listingsApi', apiService('/listings'))
-  inject('toggleListingApi', apiService('/listings/togglestatus'))
+  inject('toggleListingApi', apiService('/listing/togglestatus'))
   inject('approvalApi', apiService('/idcardapproval'))
+  inject('countriesApi', apiService('/countries'))
 }

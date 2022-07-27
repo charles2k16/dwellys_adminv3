@@ -105,6 +105,10 @@ footer p {
   width: 100%;
 }
 
+.m-10 {
+  margin: 10px;
+}
+
 /* margin-top */
 .mt-5 {
   margin-top: 5px;
@@ -122,12 +126,19 @@ footer p {
   margin-top: 40px;
 }
 
+/* .select_filter {
+  width: 100px;
+} */
+
 /* margin-bottom */
 .mb-5 {
   margin-bottom: 5px;
 }
 .mb-10 {
   margin-bottom: 10px;
+}
+.mb-20 {
+  margin-bottom: 20px;
 }
 
 /* margin-left */
@@ -254,6 +265,10 @@ footer p {
   justify-content: space-evenly;
   align-items: center;
 }
+.justify_end {
+  justify-content: flex-end;
+  align-items: center;
+}
 .align_center {
   display: flex;
   align-items: center;
@@ -272,4 +287,33 @@ footer p {
 }
 .clickable {
   cursor: pointer;
+}
+.country-selector__label {
+  display: none;
+}
+.country-selector__country-flag[data-v-46e105de] {
+  top: 14px !important;
+}
+.country-selector.has-value .country-selector__input[data-v-46e105de] {
+  padding-top: 1px !important;
+  font-size: 14px !important;
+  border-radius: 8px !important;
+}
+.country-selector.has-value .country-selector__input:hover {
+  border: 1px solid var(--color-primary) !important;
+}
+.vue-phone-number-input .select-country-container {
+  width: 99px !important;
+  max-width: 98px !important;
+  margin-right: 10px !important;
+}
+.country-selector[data-v-46e105de] {
+  width: 109px !important;
+}
+
+.input-tel__input[data-v-e59be3b4] {
+  background: #f8fafc !important;
+}
+.country-selector.has-value .country-selector__input[data-v-46e105de] {
+  background: #f8fafc !important;
 }

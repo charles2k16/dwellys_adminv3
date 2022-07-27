@@ -3,8 +3,8 @@
     <el-card class="p-20">
       <div class="lister_header">
         <div class="d-flex">
-          <h4 class="mr-20 pt-8">users accounts</h4>
-          <NuxtLink to="/users/" class="ml-20 mr-10">
+          <h4 class="mr-20 pt-8">Users account</h4>
+          <NuxtLink to="/users" class="ml-20 mr-10">
             <el-button size="mini" round type="primary">All</el-button>
           </NuxtLink>
           <NuxtLink to="/users/verified">
@@ -15,27 +15,36 @@
           </NuxtLink>
         </div>
         <div class="d-flex">
-          <div class="d-flex filter ml-10">
-            <i class="el-icon-cold-drink mt-10"></i>
-            <el-select v-model="value" filterable placeholder="Filter">
+          <div class="d-flex ml-10">
+            <el-select
+              v-model="value"
+              filterable
+              placeholder="Filter"
+              class="select_filter"
+            >
+              <template slot="prefix"
+                ><i class="el-icon-cold-drink mt-10"></i
+              ></template>
               <el-option
                 v-for="item in users"
                 :key="item.id"
-                :label="item.lister.first_name"
-                :value="item.lister.first_name"
+                :label="item.first_name"
+                :value="item.first_name"
               >
               </el-option>
             </el-select>
           </div>
           <el-input
             v-model="value"
-            class="ml-10"
+            class="ml-10 mr-10"
             placeholder="Type something"
             prefix-icon="el-icon-search"
           >
           </el-input>
-          <el-button type="danger"
-            ><i class="el-icon-plus mr-10"></i>Add new user</el-button
+          <NuxtLink to="/add-user">
+            <el-button type="danger"
+              ><i class="el-icon-plus mr-10"></i>Add new user</el-button
+            ></NuxtLink
           >
         </div>
       </div>
@@ -56,8 +65,7 @@ export default Vue.extend({
     }
   },
   async created() {
-    // this.pageLoad = true;
-    const users = await this.$usersApi.show('user')
+    const users = await this.$usersApi.show('lister')
     console.log(users)
     this.users = users.data
   },
@@ -72,11 +80,5 @@ export default Vue.extend({
 .lister_header {
   display: flex;
   justify-content: space-between;
-}
-.filter {
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 0 5px;
-  width: 160px;
 }
 </style>
