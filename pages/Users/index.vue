@@ -46,12 +46,10 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="Status">
+          <el-table-column label="Date">
             <template slot-scope="props">
               <div class="d-flex clickable" @click="viewProfile(props.row)">
-                <el-tag type="error" size="small">
-                  {{ props.row.status }}</el-tag
-                >
+                {{ props.row.created_at }}
               </div>
             </template>
           </el-table-column>

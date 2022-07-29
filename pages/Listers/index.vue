@@ -46,11 +46,30 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column label="Verified">
+            <template slot-scope="props">
+              <div class="d-flex clickable" @click="viewProfile(props.row)">
+                <el-tag
+                  :type="
+                    props.row.is_id_card_verified == 1 ? 'success' : 'error'
+                  "
+                  size="small"
+                >
+                  {{
+                    props.row.is_id_card_verified == 1 ? 'Yes' : 'No'
+                  }}</el-tag
+                >
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column label="Status">
             <template slot-scope="props">
               <div class="d-flex clickable" @click="viewProfile(props.row)">
-                <el-tag type="error" size="small">
-                  {{ props.row.status }}</el-tag
+                <el-tag
+                  :type="props.row.status == 'active' ? 'success' : 'error'"
+                  size="small"
+                >
+                  {{ props.row.status == 'active' ? 'Yes' : 'No' }}</el-tag
                 >
               </div>
             </template>
@@ -165,17 +184,18 @@
             src="../../assets/img/profile.jpg"
             class="identification_card pb-10"
           />
-          <div class="d-flex pt-30 pb-30">
+          <div v-if="profile.is_id_card_verified == 1">Verfied</div>
+          <div v-else class="d-flex pt-30 pb-30">
             <el-button
               type="success"
               class="w-50"
               :loading="loading"
               @click="approveLister(profile)"
-              ><i class="el-icon-check pr-10"></i>Approve</el-button
+              ><i class="el-icon-check pr-10"></i>Verified</el-button
             >
 
             <el-button type="info" class="w-50" @click="approveLister(profile)"
-              ><i class="el-icon-close pr-10"></i>Disapprove</el-button
+              ><i class="el-icon-close pr-10"></i>Unverified</el-button
             >
           </div>
         </div>

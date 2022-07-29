@@ -24,6 +24,7 @@ interface apiService {
   update: Function
   create: Function
   show: Function
+  single: Function
   userTypes: (path: string, params: object) => Promise<any>
   //  (query: object): Promise<any>
 }

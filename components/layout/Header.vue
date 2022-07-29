@@ -67,6 +67,8 @@ export default Vue.extend({
           ? 'Dashboard'
           : routeName === 'products-approved'
           ? 'Products'
+          : routeName === 'Listing_details-id'
+          ? 'Listing details'
           : routeName
     },
   },

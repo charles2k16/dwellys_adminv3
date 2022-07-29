@@ -18,7 +18,7 @@
         </div>
         <div class="d-flex">
           <div class="d-flex ml-10">
-            <el-select
+            <!-- <el-select
               v-model="value"
               filterable
               placeholder="Filter"
@@ -28,13 +28,13 @@
                 ><i class="el-icon-cold-drink mt-10"></i
               ></template>
               <el-option
-                v-for="item in users"
+                v-for="item in listings"
                 :key="item.id"
                 :label="item.lister.first_name"
                 :value="item.lister.first_name"
               >
               </el-option>
-            </el-select>
+            </el-select> -->
           </div>
           <el-input
             v-model="value"

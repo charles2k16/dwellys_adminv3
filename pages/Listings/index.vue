@@ -8,7 +8,7 @@
           stripe
           :default-sort="{ prop: 'name', order: 'descending' }"
         >
-          <el-table-column label="ID">
+          <!-- <el-table-column label="ID">
             <template slot-scope="scope">
               <div
                 class="d-flex"
@@ -18,44 +18,45 @@
                 <span class="d-block mt-10">{{ scope.row.id }}</span>
               </div>
             </template>
-          </el-table-column>
-          <el-table-column label="Name of lister">
+          </el-table-column> -->
+          <el-table-column label="Listing">
             <template slot-scope="scope">
               <div
                 class="d-flex"
                 style="cursor: pointer"
                 @click="getListingDetails(scope.row.id)"
               >
-                <span class="d-block"
-                  >{{ scope.row.lister.first_name }}
-                  {{ scope.row.lister.last_name }}</span
-                >
+                <span class="d-block">
+                  {{ scope.row.listing_detail.name }}
+                  <!-- {{ scope.row.lister.last_name }} -->
+                </span>
               </div>
             </template>
           </el-table-column>
 
-          <el-table-column label="Phone Number">
+          <el-table-column label="Country">
             <template slot-scope="props">
               <div
                 class="d-flex clickable"
                 @click="getListingDetails(props.row.id)"
               >
                 <span>
-                  {{ props.row.lister.phone_number }}
+                  {{ props.row.listing_detail.country.short_name }}
                 </span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="Lister type">
+          <el-table-column label="City">
             <template slot-scope="scope">
               <div
                 style="cursor: pointer"
                 @click="getListingDetails(scope.row.id)"
               >
-                <span>{{ scope.row.property_type.name }} </span>
+                <span>{{ scope.row.listing_detail.city }} </span>
               </div>
             </template>
           </el-table-column>
+
           <el-table-column label="Listing date">
             <template slot-scope="props">
               <div
@@ -76,6 +77,25 @@
                 @click="getListingDetails(props.row.id)"
               >
                 <span>{{ props.row.listing_detail.price }} </span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column label="Approved">
+            <template slot-scope="scope">
+              <div
+                style="cursor: pointer"
+                @click="getListingDetails(scope.row.id)"
+              >
+                <el-tag
+                  :type="
+                    scope.row.is_id_card_verified == 1 ? 'success' : 'error'
+                  "
+                  size="small"
+                >
+                  {{
+                    scope.row.is_id_card_verified == 1 ? 'Yes' : 'No'
+                  }}</el-tag
+                >
               </div>
             </template>
           </el-table-column>
@@ -217,9 +237,6 @@ export default Vue.extend({
         console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
       }
-    },
-    addProduct(): void {
-      ;(this as any).$refs.handleAction.showAddClassModal()
     },
   },
 })

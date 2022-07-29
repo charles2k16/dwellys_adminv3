@@ -2,12 +2,12 @@
   <div class="">
     <div class="d-flex justify_between">
       <div class="d-flex">
-        <section class="listing_bar">
-          <p>Listing ID</p>
-          <p class="pt-10">
-            <b>{{ listing && listing.id }} </b>
-          </p>
-        </section>
+        <!-- <section class="listing_bar"> -->
+        <!-- <p>Lister</p> -->
+        <!-- <p class="pt-10"> -->
+        <!-- <b>{{ listing && listing.lister.first_name }} </b> -->
+        <!-- </p> -->
+        <!-- </section> -->
         <section class="listing_bar">
           <p>Listing type</p>
           <p class="pt-10">
@@ -158,12 +158,12 @@ export default Vue.extend({
   async created() {
     // this.pageLoad = true;
     console.log(this.$route.params)
-    const listings = await this.$listingsApi.index()
-    const listing = listings.data.find(
-      (listing: any) => listing.id === this.listing_id
-    )
+    const listing = await this.$listingsApi.single(this.$route.params.id)
+    // const listing = listings.data.find(
+    // (listing: any) => listing.id === this.listing_id
+    // )
     console.log(listing)
-    this.listing = listing
+    this.listing = listing.data
   },
   methods: {
     async approveLister(listingId: string, status: string) {
