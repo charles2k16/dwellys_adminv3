@@ -6,6 +6,10 @@ export default ($axios) => (resource) => ({
   },
 
   show(id) {
+    return $axios.$get(`${resource}${id}`)
+  },
+
+  single(id) {
     return $axios.$get(`${resource}/${id}`)
   },
 

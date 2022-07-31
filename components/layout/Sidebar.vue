@@ -14,10 +14,13 @@
           <i class="el-icon-shopping-cart-full"></i>
           Listings</el-menu-item
         >
-
         <el-menu-item index="3" :route="{ path: '/listers' }">
           <i class="el-icon-goods mr-5"></i>
           Listers
+        </el-menu-item>
+        <el-menu-item index="4" :route="{ path: '/users' }">
+          <i class="el-icon-user-solid mr-5"></i>
+          Users
         </el-menu-item>
       </el-menu>
     </div>

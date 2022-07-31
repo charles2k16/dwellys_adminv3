@@ -4,7 +4,7 @@
       <el-card class="mt-20">
         <el-table
           v-loading="tableLoading"
-          :data="listings"
+          :data="users"
           stripe
           :default-sort="{ prop: 'name', order: 'descending' }"
         >
@@ -46,31 +46,10 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="Verified">
+          <el-table-column label="Date">
             <template slot-scope="props">
               <div class="d-flex clickable" @click="viewProfile(props.row)">
-                <el-tag
-                  :type="
-                    props.row.is_id_card_verified == 1 ? 'success' : 'error'
-                  "
-                  size="small"
-                >
-                  {{
-                    props.row.is_id_card_verified == 1 ? 'Yes' : 'No'
-                  }}</el-tag
-                >
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="Status">
-            <template slot-scope="props">
-              <div class="d-flex clickable" @click="viewProfile(props.row)">
-                <el-tag
-                  :type="props.row.status == 'active' ? 'success' : 'error'"
-                  size="small"
-                >
-                  {{ props.row.status == 'active' ? 'Yes' : 'No' }}</el-tag
-                >
+                {{ props.row.created_at }}
               </div>
             </template>
           </el-table-column>
@@ -120,7 +99,7 @@
         </el-pagination>
       </div>
     </el-card>
-    <el-drawer
+    <!-- <el-drawer
       title="User lister information"
       :visible.sync="drawer"
       size="35%"
@@ -184,23 +163,22 @@
             src="../../assets/img/profile.jpg"
             class="identification_card pb-10"
           />
-          <div v-if="profile.is_id_card_verified == 1">Verfied</div>
-          <div v-else class="d-flex pt-30 pb-30">
+          <div class="d-flex pt-30 pb-30">
             <el-button
               type="success"
               class="w-50"
               :loading="loading"
               @click="approveLister(profile)"
-              ><i class="el-icon-check pr-10"></i>Verified</el-button
+              ><i class="el-icon-check pr-10"></i>Approve</el-button
             >
 
             <el-button type="info" class="w-50" @click="approveLister(profile)"
-              ><i class="el-icon-close pr-10"></i>Unverified</el-button
+              ><i class="el-icon-close pr-10"></i>Disapprove</el-button
             >
           </div>
         </div>
       </div>
-    </el-drawer>
+    </el-drawer> -->
   </div>
 </template>
 
@@ -209,9 +187,9 @@ import Vue from 'vue'
 import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
-  name: 'ProductsSubmitted',
+  name: 'Users',
   props: {
-    listings: {
+    users: {
       required: true,
       type: Array,
     },
@@ -226,6 +204,38 @@ export default Vue.extend({
       drawer: false,
       tableLoading: false,
       profile: {},
+      products: [
+        {
+          name: 'Themra Turkish',
+          description: 'Themra Turkish Honey Macun 240 Gr',
+          price: '200',
+          category: 'Alcoholic beverages',
+          has_discount: 'No',
+          user: {
+            name: 'Enugu Agness',
+            address: 'Enugu',
+            phone: '+233540571511',
+            email: 'youremail.com',
+            avatar:
+              'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+          },
+        },
+        {
+          name: 'Themra Turkish',
+          description: 'Themra Turkish Honey Macun 240 Gr',
+          price: '200',
+          category: 'Alcoholic beverages',
+          has_discount: 'No',
+          user: {
+            name: 'Enugu Agness',
+            address: 'Enugu',
+            phone: '+233540571511',
+            email: 'youremail.com',
+            avatar:
+              'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+          },
+        },
+      ] as Array<object>,
       search: '' as string,
     }
   },

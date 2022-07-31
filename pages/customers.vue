@@ -1,64 +1,78 @@
 <template>
   <div>
+    <!-- <ApplicationHandler ref="handleAction"></ApplicationHandler> -->
+
     <el-card class="p-20">
-      <div class="lister_header">
+      <div class="customer_header">
         <div class="d-flex">
-          <h4 class="mr-20 pt-8">Listings accounts</h4>
-          <NuxtLink to="/listers/" class="ml-20 mr-10">
+          <h4 class="mr-20 pt-8">User accounts</h4>
+          <NuxtLink to="/customers/" class="ml-20 mr-10">
             <el-button size="mini" round type="primary">All</el-button>
           </NuxtLink>
-          <NuxtLink to="/listings/verified">
+          <NuxtLink to="/customers/verified">
             <el-button size="mini" round>Verified</el-button>
           </NuxtLink>
-          <NuxtLink to="/listings/unverified">
+          <NuxtLink to="/customers/unverified">
             <el-button size="mini" round>Unverified</el-button>
           </NuxtLink>
         </div>
         <div class="d-flex">
-          <div class="d-flex ml-10">
-            <!-- <el-select
-              v-model="value"
-              filterable
-              placeholder="Filter"
-              class="select_filter"
-            >
-              <template slot="prefix"
-                ><i class="el-icon-cold-drink mt-10"></i
-              ></template>
+          <div class="d-flex filter ml-10">
+            <i class="el-icon-cold-drink mt-10"></i>
+            <el-select v-model="value" filterable placeholder="Filter">
               <el-option
-                v-for="item in listings"
-                :key="item.id"
-                :label="item.lister.first_name"
-                :value="item.lister.first_name"
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
               >
               </el-option>
-            </el-select> -->
+            </el-select>
           </div>
           <el-input
             v-model="value"
-            class="ml-10 mr-10"
+            class="ml-10"
             placeholder="Type something"
             prefix-icon="el-icon-search"
           >
           </el-input>
-          <el-button type="danger"
-            ><i class="el-icon-plus mr-10"></i>New Listing</el-button
-          >
         </div>
       </div>
     </el-card>
 
-    <NuxtChild :listings="listings" />
+    <NuxtChild />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-  name: 'ListingsPage',
+  name: 'ProductsPage',
   data() {
     return {
       listings: [],
+      options: [
+        {
+          value: 'Option1',
+          label: 'Option1',
+        },
+        {
+          value: 'Option2',
+          label: 'Option2',
+        },
+        {
+          value: 'Option3',
+          label: 'Option3',
+        },
+        {
+          value: 'Option4',
+          label: 'Option4',
+        },
+        {
+          value: 'Option5',
+          label: 'Option5',
+        },
+      ],
       value: '',
     }
   },
@@ -76,7 +90,7 @@ export default Vue.extend({
 })
 </script>
 <style>
-.lister_header {
+.customer_header {
   display: flex;
   justify-content: space-between;
 }

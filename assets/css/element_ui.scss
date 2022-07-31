@@ -1,8 +1,9 @@
 // All element ui classes starts with a 'el' word. Take note
+
 $--color-primary: #de0b0b;
 $--color-success: rgba(34, 197, 94, 1);
 $--color-warning: #f7ba2a;
-$--color-danger: #f73030;
+$--color-danger: #cf0100;
 $--color-info: #f1f5f9;
 
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
@@ -109,6 +110,22 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     border: 1px solid #9ca2b1;
   }
 }
+
+.el-input__inner {
+  border: 1px solid #e2e8f0;
+  height: 43px;
+  border-radius: 8px;
+  background: #f8fafc;
+  width: 320px;
+  // width: 100%;
+}
+
+.el-input.is-active .el-input__inner,
+.el-input__inner:focus {
+  border-color: var(--color-primary);
+  outline: 0;
+}
+
 .default_input.el-input-number {
   line-height: 40px;
 }
@@ -230,7 +247,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 }
 
 .el-input--suffix .el-input__inner {
-  padding-right: 30px;
+  // padding-right: 30px;
   height: 35px;
   border: none;
 }
@@ -253,4 +270,8 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   background-color: #f1f5f9;
   border-color: #f1f5f9;
   font-weight: 400;
+}
+
+.el-message-box__message p {
+  font-size: 12px;
 }

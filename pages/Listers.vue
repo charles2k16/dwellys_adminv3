@@ -17,25 +17,35 @@
           </NuxtLink>
         </div>
         <div class="d-flex">
-          <div class="d-flex filter ml-10">
-            <i class="el-icon-cold-drink mt-10"></i>
-            <el-select v-model="value" filterable placeholder="Filter">
+          <div class="d-flex ml-10">
+            <!-- <el-select
+              v-model="value"
+              filterable
+              placeholder="Filter"
+              class="select_filter"
+            >
+              <template slot="prefix"
+                ><i class="el-icon-cold-drink mt-10"></i
+              ></template>
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in listings"
+                :key="item.id"
+                :label="item.lister.first_name"
+                :value="item.lister.first_name"
               >
               </el-option>
-            </el-select>
+            </el-select> -->
           </div>
           <el-input
             v-model="value"
-            class="ml-10"
+            class="ml-10 mr-10"
             placeholder="Type something"
             prefix-icon="el-icon-search"
           >
           </el-input>
+          <el-button type="danger"
+            ><i class="el-icon-plus mr-10"></i>New Lister</el-button
+          >
         </div>
       </div>
     </el-card>
@@ -56,8 +66,8 @@ export default Vue.extend({
   },
   async created() {
     // this.pageLoad = true;
-    const listings = await this.$usersApi.index()
-    console.log(listings)
+    const listings = await this.$usersApi.show('lister')
+    console.log(listings, 'listers')
     this.listings = listings.data
   },
   methods: {
