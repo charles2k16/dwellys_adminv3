@@ -48,7 +48,7 @@
       </div>
     </el-card>
 
-    <NuxtChild :listings="listings" />
+    <NuxtChild :listings="listings" :fetch-data="fetchData" />
   </div>
 </template>
 
@@ -62,13 +62,14 @@ export default Vue.extend({
       value: '',
     }
   },
-  async created() {
-    // this.pageLoad = true;
-    const listings = await this.$listingsApi.index()
-    console.log(listings)
-    this.listings = listings.data
+  created() {
+    this.fetchData()
   },
   methods: {
+    async fetchData() {
+      const listings = await this.$listingsApi.index()
+      this.listings = listings.data
+    },
     addProduct(): void {
       ;(this as any).$refs.handleAction.showAddClassModal()
     },

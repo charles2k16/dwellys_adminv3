@@ -184,7 +184,14 @@
             src="../../assets/img/profile.jpg"
             class="identification_card pb-10"
           />
-          <div v-if="profile.is_id_card_verified == 1">Verfied</div>
+          <div
+            v-if="profile.is_id_card_verified == 1"
+            class="p-10 d-flex justify_center"
+          >
+            <p class="p-10 verified">
+              <i class="el-icon-check pr-10"></i>Verified
+            </p>
+          </div>
           <div v-else class="d-flex pt-30 pb-30">
             <el-button
               type="success"
@@ -194,7 +201,11 @@
               ><i class="el-icon-check pr-10"></i>Verified</el-button
             >
 
-            <el-button type="info" class="w-50" @click="approveLister(profile)"
+            <el-button
+              type="info"
+              class="w-50"
+              :loading="loading"
+              @click="approveLister(profile)"
               ><i class="el-icon-close pr-10"></i>Unverified</el-button
             >
           </div>
@@ -214,6 +225,10 @@ export default Vue.extend({
     listings: {
       required: true,
       type: Array,
+    },
+    fetchData: {
+      required: true,
+      type: Function,
     },
   },
   data() {
@@ -236,6 +251,7 @@ export default Vue.extend({
       console.log(profile)
     },
     async approveLister(profile: any) {
+      this.loading = true
       try {
         const listingResponse = await this.$approvalApi.create({
           user_id: profile.id,
@@ -244,6 +260,8 @@ export default Vue.extend({
         console.log(listingResponse)
 
         this.loading = false
+        this.drawer = false
+        this.fetchData()
         ;(this as any as IMixinState).$message({
           showClose: true,
           message: listingResponse.message,
@@ -251,6 +269,7 @@ export default Vue.extend({
         })
       } catch (error) {
         console.log(error, 'error')
+        this.loading = false
         ;(this as any as IMixinState).catchError(error)
       }
     },
@@ -288,6 +307,14 @@ export default Vue.extend({
     width: 100%;
     height: 200px;
     border-radius: 16.4815px;
+  }
+  .verified {
+    color: rgb(34, 197, 94);
+    font-size: 18px;
+    i {
+      font-size: 20px;
+      font-weight: 600;
+    }
   }
 }
 </style>
