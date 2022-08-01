@@ -173,6 +173,10 @@ export default Vue.extend({
       required: true,
       type: Array,
     },
+    fetchData: {
+      required: true,
+      type: Function,
+    },
   },
   data() {
     return {
