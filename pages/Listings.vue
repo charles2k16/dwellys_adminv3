@@ -69,6 +69,7 @@ export default Vue.extend({
     async fetchData() {
       const listings = await this.$listingsApi.index()
       this.listings = listings.data
+      console.log(listings.data)
     },
     addProduct(): void {
       ;(this as any).$refs.handleAction.showAddClassModal()

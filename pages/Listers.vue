@@ -72,6 +72,7 @@ export default Vue.extend({
     async fetchData() {
       // this.pageLoad = true;
       const listings = await this.$usersApi.show('lister')
+      console.log(listings)
       this.listings = listings.data
     },
     addProduct(): void {

@@ -11,7 +11,7 @@
         <Nuxt />
       </el-main>
       <footer class="d-flex justify_between">
-        <p>SaharaGo © 2022. All right reserved.</p>
+        <p>Dwellys © 2022. All right reserved.</p>
         <p>v-1.0.1</p>
       </footer>
     </el-container>

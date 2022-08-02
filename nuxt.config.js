@@ -7,14 +7,14 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Saharago',
+    title: 'Dwellys',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
-        content: 'Saharago management system',
+        content: 'Dwellys management system',
       },
       { name: 'format-detection', content: 'telephone=023023345' },
     ],
@@ -58,7 +58,10 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://127.0.0.1:8000/api/v3',
+    baseURL:
+      process.env.NODE_ENV === 'development'
+        ? 'http://127.0.0.1:8000/api/v3'
+        : 'https://newapi.dwellys.com/api',
   },
 
   auth: {
@@ -83,9 +86,9 @@ export default {
     },
   },
 
-  // router: {
-  //   middleware: ['auth'],
-  // },
+  router: {
+    middleware: ['auth'],
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
