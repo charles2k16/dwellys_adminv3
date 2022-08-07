@@ -68,12 +68,14 @@ hr.hr_rule {
 }
 footer {
   padding: 7px;
-  background: #c53117;
-  color: #fff;
+  background: var(--color-primary);
 }
+
 footer p {
   font-size: 11px;
+  color: #fff;
 }
+
 .text-black {
   color: var(--text-base);
 }

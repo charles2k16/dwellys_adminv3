@@ -56,6 +56,7 @@
 import Vue from 'vue'
 export default Vue.extend({
   name: 'ListingsPage',
+  middleware: 'auth',
   data() {
     return {
       listings: [],

@@ -1,85 +1,5 @@
 <template>
   <div class="section property_upload">
-    <!-- <el-drawer title="Add new Specifications" :visible.sync="drawer" size="30%">
-      <div class="px-30 user_details">
-        <section class="">
-          <section class="specs_icons">
-            <h3 class="pb-10 center">Specifications</h3>
-            <div class="icons_container">
-              <section
-                v-for="icon in icons"
-                :key="icon.icon"
-                :style="isSelected(icon.name) ? 'background:  #f8fafc' : ''"
-                class="info_card"
-                @click="getIcon(icon)"
-              >
-                <img
-                  :src="'../assets/icons/' + icon.icon"
-                  alt="icon"
-                  class="icon pr-10"
-                />
-                <p>{{ icon.name }}</p>
-              </section>
-            </div>
-          </section>
-        </section>
-        <el-divider></el-divider>
-        <div class="pb-10">
-          <div class="d-flex pt-30 pb-30">
-            <el-button
-              type="success"
-              class="w-50"
-              :loading="spec_loader"
-              @click="saveSpecifiactions"
-              ><i class="el-icon-check pr-10"></i>Add Amenities</el-button
-            >
-          </div>
-        </div>
-      </div>
-    </el-drawer> -->
-    <!-- <el-drawer
-      title="Add new Amenities"
-      :visible.sync="amenity_drawer"
-      size="30%"
-    >
-      <div class="px-30 user_details">
-        <div class="">
-          <section class="specs_icons">
-            <h3 class="pb-10 center">Amenities</h3>
-            <div class="icons_container">
-              <section
-                v-for="icon in amenities_icon"
-                :key="icon.icon"
-                :style="isAmenity(icon.name) ? 'background:  #f8fafc' : ''"
-                class="info_card"
-                @click="getAmenityIcon(icon)"
-              >
-                <img
-                  :src="'../assets/icons/' + icon.icon"
-                  alt="icon"
-                  class="icon pl-10"
-                />
-                <p>
-                  {{ icon.name }}
-                </p>
-              </section>
-            </div>
-          </section>
-        </div>
-        <el-divider></el-divider>
-        <div class="pb-10">
-          <div class="d-flex pt-30 pb-30">
-            <el-button
-              type="success"
-              class="w-50"
-              :loading="amenity_loader"
-              @click="saveAmenities"
-              ><i class="el-icon-check pr-10"></i>Submit</el-button
-            >
-          </div>
-        </div>
-      </div>
-    </el-drawer> -->
     <div>
       <div class="center">
         <div class="property_upload_head">
@@ -143,10 +63,11 @@
                   <section
                     v-for="icon in icons"
                     :key="icon.icon"
-                    :style="isSelected(icon.name) ? 'background: #f8fafc' : ''"
+                    :style="isSpecification(icon.name) ? 'background:red' : ''"
                     class="info_card"
-                    @click="getIcon(icon)"
+                    @click="getSpecification(icon)"
                   >
+                    <!-- #f8fafc -->
                     <img
                       :src="url() + '/' + icon.icon"
                       alt="icon"
@@ -166,7 +87,7 @@
                     class="info_card"
                     @click="getAmenityIcon(icon)"
                   >
-                    {{ isAmenity(icon.name) }}
+                    <!-- {{ isAmenity(icon.name) }} -->
                     <img
                       :src="'../assets/icons/' + icon.icon"
                       alt="icon"
@@ -214,6 +135,7 @@ export default Vue.extend({
       amenity_drawer: false as boolean,
       countries: [],
       iconUrl: '../assets/icons/',
+      property_type_id: this.$route.params.id,
       icons: [
         { icon: 'bed.svg', name: 'Bed room', description: 'bed rooms' },
         { icon: 'bath.svg', name: 'Bath room', description: 'bath rooms' },
@@ -261,67 +183,47 @@ export default Vue.extend({
   computed: {},
   async created() {
     // this.pageLoad = true;
-    console.log(this.$route.params)
     const property = await this.$propertyApi.single(this.$route.params.id)
 
-    console.log(property)
     this.property = property.data
+    console.log(this.property)
   },
   methods: {
     url() {
       return url()
     },
-    isSelected(iconSpec: any) {
-      // let isIcon = false;
-      const filtered = this.specifications.specifications.find(
-        (spec: any) => spec.name === iconSpec
-      )
+    isSpecification(iconSpec: any) {
+      const propSpecs = Object.assign([], this.property.specifications)
+      const filtered = propSpecs.find((spec: any) => spec.name === iconSpec)
       return filtered
     },
     isAmenity(iconSpec: any) {
-      // let isIcon = false;
-      // console.log(this.property.specifications)
-      const specs = this.specifications.specifications
-      let filter = false
-      // const filtered = this.specifications.specifications.filter(
-      //   (spec: any) => spec.name === iconSpec
-      // )
-      for (let i = 0; i < specs.length; i++) {
-        if (this.property.amenities[i].name === iconSpec) {
-          filter = true
-        } else {
-          filter = false
-        }
-        //  let filter = iconSpec === this.property.amenities[i].name ? true : false;
-      }
+      const propSpecs = Object.assign([], this.property.amenities)
+      const filtered = propSpecs.find((spec: any) => spec.name === iconSpec)
 
-      return filter
+      return filtered
     },
-    getIcon(icon: any) {
-      const mainSpec = Object.assign([], this.specifications.specifications)
+    getSpecification(icon: any) {
+      const mainSpec = Object.assign([], this.property.specifications)
 
-      this.specifications.specifications.find(
-        (spec: any) => spec.name === icon.name
-      )
-        ? this.specifications.specifications.splice(
+      this.property.specifications.find((spec: any) => spec.name === icon.name)
+        ? this.property.specifications.splice(
             mainSpec.findIndex((spec: any) => spec.name === icon.name),
             1
           )
-        : this.specifications.specifications.push(icon)
+        : this.property.specifications.push(icon)
 
-      console.log(this.specifications.specifications)
+      console.log(this.property.specifications)
     },
     getAmenityIcon(icon: any) {
-      const mainSpec = Object.assign([], this.amenities.amenities)
+      const mainSpec = Object.assign([], this.property.amenities)
 
-      this.amenities.amenities.find((spec: any) => spec.name === icon.name)
-        ? this.amenities.amenities.splice(
+      mainSpec.find((spec: any) => spec.name === icon.name)
+        ? this.property.amenities.splice(
             mainSpec.findIndex((spec: any) => spec.name === icon.name),
             1
           )
-        : this.amenities.amenities.push(icon)
-
-      console.log(this.amenities.amenities)
+        : this.property.amenities.push(icon)
     },
     toggleUpload(event: any) {
       const reader = new FileReader()
@@ -344,7 +246,7 @@ export default Vue.extend({
 
       this.spec_loader = true
       try {
-        const specificationResponse = await this.$specificationsTypeApi.create(
+        const specificationResponse = await this.$specificationsTypeApi.update(
           this.specifications
         )
         console.log(specificationResponse)
