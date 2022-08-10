@@ -9,7 +9,7 @@
           <NuxtLink to="/listers/" class="ml-20 mr-10">
             <el-button size="mini" round type="primary">All</el-button>
           </NuxtLink>
-          <NuxtLink to="/listers/verified">
+          <NuxtLink to="/listers/verified" class="mr-10">
             <el-button size="mini" round>Verified</el-button>
           </NuxtLink>
           <NuxtLink to="/listers/unverified">
@@ -28,7 +28,7 @@
                 ><i class="el-icon-cold-drink mt-10"></i
               ></template>
               <el-option
-                v-for="item in listings"
+                v-for="item in listers"
                 :key="item.id"
                 :label="item.lister.first_name"
                 :value="item.lister.first_name"
@@ -50,7 +50,13 @@
       </div>
     </el-card>
 
-    <NuxtChild :listings="listings" :fetch-data="fetchData" />
+    <NuxtChild
+      :listers="listers"
+      :fetch-data="fetchData"
+      :verifiedlisters="verified_listers"
+      :unverifiedlisters="unverified_listers"
+    />
+
     <!-- :type="listing_type" -->
   </div>
 </template>
@@ -62,8 +68,10 @@ export default Vue.extend({
   middleware: 'auth',
   data() {
     return {
-      listings: [],
+      listers: [],
       value: '',
+      verified_listers: [],
+      unverified_listers: [],
     }
   },
   created() {
@@ -73,10 +81,21 @@ export default Vue.extend({
   methods: {
     async fetchData() {
       // this.pageLoad = true;
-      const listings = await this.$usersApi.show('lister')
+      const listers = await this.$usersApi.show('lister')
+      // const verifiedlisters = await this.$usersApi.show('lister')
+      // const unverifiedlisters = await this.$usersApi.show('lister')
 
-      console.log(listings)
-      this.listings = listings.data
+      console.log(listers)
+      this.listers = listers.data
+
+      this.verified_listers = listers.data.filter(
+        (listing: any) => listing.is_id_card_verified === 1
+      )
+      // console.log('verified',this.verified_listers)
+      this.unverified_listers = listers.data.filter(
+        (listing: any) => listing.is_id_card_verified === 0
+      )
+      // console.log('unverified',this.unverified_listers)
     },
     addProduct(): void {
       ;(this as any).$refs.handleAction.showAddClassModal()

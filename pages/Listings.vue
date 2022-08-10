@@ -4,10 +4,10 @@
       <div class="lister_header">
         <div class="d-flex">
           <h4 class="mr-20 pt-8">Listings accounts</h4>
-          <NuxtLink to="/listers/" class="ml-20 mr-10">
+          <NuxtLink to="/listings/" class="ml-20 mr-10">
             <el-button size="mini" round type="primary">All</el-button>
           </NuxtLink>
-          <NuxtLink to="/listings/verified">
+          <NuxtLink to="/listings/verified" class="mr-10">
             <el-button size="mini" round>Verified</el-button>
           </NuxtLink>
           <NuxtLink to="/listings/unverified">
@@ -48,7 +48,12 @@
       </div>
     </el-card>
 
-    <NuxtChild :listings="listings" :fetch-data="fetchData" />
+    <NuxtChild
+      :listings="listings"
+      :verifiedlistings="verified_listings"
+      :unverifiedlistings="unverified_listings"
+      :fetch-data="fetchData"
+    />
   </div>
 </template>
 
@@ -60,6 +65,8 @@ export default Vue.extend({
   data() {
     return {
       listings: [],
+      verified_listings: [],
+      unverified_listings: [],
       value: '',
     }
   },
@@ -71,6 +78,15 @@ export default Vue.extend({
       const listings = await this.$listingsApi.index()
       this.listings = listings.data
       console.log(listings.data)
+
+      this.verified_listings = listings.data.filter(
+        (listing: any) => listing.status === 'active'
+      )
+      // console.log('verified',this.verified_listings)
+      this.unverified_listings = listings.data.filter(
+        (listing: any) => listing.status === 'inactive'
+      )
+      // console.log('unverified',this.unverified_listings)
     },
     addProduct(): void {
       ;(this as any).$refs.handleAction.showAddClassModal()
