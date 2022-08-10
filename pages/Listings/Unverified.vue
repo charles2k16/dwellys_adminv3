@@ -187,7 +187,6 @@ export default Vue.extend({
       activeTab: 'pendingReview',
       pendingTab: 'Pending Products',
       loading: false,
-      url: 'http://127.0.0.1:8000/',
       pendingTotal: 0,
       drawer: false,
       tableLoading: false,

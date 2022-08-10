@@ -11,7 +11,11 @@
         <section class="listing_bar">
           <p>Property name</p>
           <section class="d-flex pt-10">
-            <img v-if="property" :src="url + property.photo" height="30px" />
+            <img
+              v-if="property"
+              :src="url() + '/' + property.photo"
+              height="30px"
+            />
             <p class="pt-10">
               <b>{{ property && property.name }} </b>
             </p>
@@ -22,7 +26,7 @@
           <section class="d-flex pt-10">
             <img
               v-if="property.creator"
-              :src="url + property.creator.avatar"
+              :src="url() + '/' + property.creator.avatar"
               height="30px"
             />
             <img
@@ -102,6 +106,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import url from '../../../url'
 import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
@@ -115,7 +120,6 @@ export default Vue.extend({
   // },
   data() {
     return {
-      url: 'http://localhost:8000/',
       activeName: 'first' as string,
       image: '' as any,
       listing_id: this.$route.params.id,
@@ -132,6 +136,9 @@ export default Vue.extend({
     this.property = property.data
   },
   methods: {
+    url() {
+      return url()
+    },
     updateProperty(id: string) {
       this.$router.push(`/property_type/edit/${id}`)
     },

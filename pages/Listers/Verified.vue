@@ -15,7 +15,7 @@
                 <span class="mr-10">
                   <img
                     v-if="scope.row.avatar"
-                    :src="url + scope.row.avatar"
+                    :src="url() + '/' + scope.row.avatar"
                     alt="pic"
                     class="profile_avatar"
                   />
@@ -127,7 +127,11 @@
     >
       <div class="px-30 user_details">
         <div class="d-flex">
-          <img v-if="profile" :src="url + profile.avatar" class="profile_img" />
+          <img
+            v-if="profile"
+            :src="url() + '/' + profile.avatar"
+            class="profile_img"
+          />
           <div class="pl-20 pt-20">
             <el-button type="info">Reject profile photo</el-button>
             <p class="pt-10">
@@ -218,6 +222,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import url from '../../url'
 import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
@@ -245,7 +250,6 @@ export default Vue.extend({
       activeTab: 'pendingReview',
       pendingTab: 'Pending Products',
       loading: false,
-      url: 'http://127.0.0.1:8000/',
       pendingTotal: 0,
       drawer: false,
       tableLoading: false,
@@ -254,6 +258,9 @@ export default Vue.extend({
     }
   },
   methods: {
+    url() {
+      return url()
+    },
     viewProfile(profile: any) {
       this.profile = profile
       this.drawer = true

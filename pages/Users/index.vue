@@ -15,7 +15,7 @@
                 <span class="mr-10">
                   <img
                     v-if="scope.row.avatar"
-                    :src="url + scope.row.avatar"
+                    :src="url() + '/' + scope.row.avatar"
                     alt="pic"
                     class="profile_avatar"
                   />
@@ -184,6 +184,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import url from '../../url'
 import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
@@ -199,7 +200,6 @@ export default Vue.extend({
       activeTab: 'pendingReview',
       pendingTab: 'Pending Products',
       loading: false,
-      url: 'http://127.0.0.1:8000/',
       pendingTotal: 0,
       drawer: false,
       tableLoading: false,
@@ -240,6 +240,9 @@ export default Vue.extend({
     }
   },
   methods: {
+    url() {
+      return url()
+    },
     viewProfile(profile: any) {
       this.profile = profile
       this.drawer = true

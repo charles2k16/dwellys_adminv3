@@ -123,7 +123,7 @@
           <el-card class="w-100">
             <div class="property_content">
               <div class="category w-50">
-                <label for="category-name" class="pb-10">Property Name</label>
+                <label for="category-name" class="pb-10">Property Type</label>
                 <el-input
                   id="category-name"
                   v-model="propertyUpload.name"
@@ -135,7 +135,7 @@
 
               <div class="category w-50">
                 <label for="category-description" class="pb-10"
-                  >Property Description</label
+                  >Property Type Description</label
                 >
                 <el-input
                   id="category-description"
@@ -148,7 +148,9 @@
                 </el-input>
               </div>
               <div class="image_category">
-                <label for="category-image" class="pb-10">Property Image</label>
+                <label for="category-image" class="pb-10"
+                  >Property Type Image</label
+                >
                 <el-upload
                   id="category-image"
                   class="upload-demo"

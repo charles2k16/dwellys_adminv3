@@ -25,7 +25,7 @@
           <section class="d-flex pt-10">
             <img
               v-if="listing.lister"
-              :src="url + listing.lister.avatar"
+              :src="url() + '/' + listing.lister.avatar"
               height="30px"
             />
             <img
@@ -106,7 +106,7 @@
         <img
           v-for="img in listing.listing_detail.listing_images"
           :key="img.id"
-          :src="url + img.photo"
+          :src="url() + '/' + img.photo"
         />
       </div>
     </div>
@@ -134,6 +134,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import url from '../../url'
 import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
@@ -147,7 +148,6 @@ export default Vue.extend({
   // },
   data() {
     return {
-      url: 'http://localhost:8000/',
       activeName: 'first' as string,
       image: '' as any,
       listing_id: this.$route.params.id,
@@ -166,6 +166,9 @@ export default Vue.extend({
     this.listing = listing.data
   },
   methods: {
+    url() {
+      return url()
+    },
     async approveLister(listingId: string, status: string) {
       try {
         const listingResponse = await this.$listingsApi.update(
