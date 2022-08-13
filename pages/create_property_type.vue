@@ -1,6 +1,6 @@
 <template>
   <div class="section property_upload">
-    <el-drawer title="Add new Specifications" :visible.sync="drawer" size="30%">
+    <el-drawer title="Add new Specifications" :visible.sync="drawer" size="35%">
       <div class="px-30 user_details">
         <section class="">
           <section class="specs_icons">
@@ -39,12 +39,12 @@
         </section>
         <el-divider></el-divider>
         <div class="pb-10">
-          <div class="d-flex pt-30 pb-30">
+          <div class="d-flex justify_center pt-30 pb-30">
             <el-button
               type="success"
-              class="w-50"
+              class=""
               :loading="spec_loader"
-              @click="saveSpecifiactions"
+              @click="showAmenities"
               ><i class="el-icon-check pr-10"></i>Add Amenities</el-button
             >
           </div>
@@ -54,7 +54,7 @@
     <el-drawer
       title="Add new Amenities"
       :visible.sync="amenity_drawer"
-      size="30%"
+      size="35%"
     >
       <div class="px-30 user_details">
         <div class="">
@@ -100,12 +100,12 @@
         </div>
         <el-divider></el-divider>
         <div class="pb-10">
-          <div class="d-flex pt-30 pb-30">
+          <div class="d-flex justify_end pt-30 pb-30">
             <el-button
               type="success"
               class="w-50"
               :loading="amenity_loader"
-              @click="saveAmenities"
+              @click="submitUpload"
               ><i class="el-icon-check pr-10"></i>Submit</el-button
             >
           </div>
@@ -171,8 +171,9 @@
               <el-button
                 type="success"
                 class="btn_sm submit_register_button"
+                :disabled="!propertyValidation"
                 :loading="loading"
-                @click="submitUpload"
+                @click="drawer = true"
               >
                 Add Specifications</el-button
               >
@@ -237,32 +238,46 @@ export default Vue.extend({
         name: '' as string,
         description: '' as string,
         photo: '' as any,
+        specifications: [] as Array<object>,
+        amenities: [] as Array<object>,
       },
       drawer: false,
       profile: {},
-      specifications: {
-        property_type_id: '' as string,
-        specifications: [] as Array<object>,
-      },
-      amenities: {
-        property_type_id: '' as string,
-        amenities: [] as Array<object>,
-      },
+      // specifications: {
+      //   property_type_id: '' as string,
+      //  ,
+      // },
+      // amenities: {
+      //   property_type_id: '' as string,
+      //  ,
+      // },
     }
   },
 
-  computed: {},
+  computed: {
+    propertyValidation() {
+      let valid = false
+      if (
+        this.propertyUpload.name !== '' &&
+        this.propertyUpload.photo !== '' &&
+        this.propertyUpload.description !== ''
+      ) {
+        valid = true
+      }
+      return valid
+    },
+  },
   methods: {
     isSelected(iconSpec: any) {
       // let isIcon = false;
-      const filtered = this.specifications.specifications.find(
+      const filtered = this.propertyUpload.specifications.find(
         (spec: any) => spec.name === iconSpec
       )
       return filtered
     },
     isAmenity(iconSpec: any) {
       // let isIcon = false;
-      const filtered = this.amenities.amenities.find(
+      const filtered = this.propertyUpload.amenities.find(
         (spec: any) => spec.name === iconSpec
       )
       return filtered
@@ -272,30 +287,30 @@ export default Vue.extend({
       this.amenity_drawer = true
     },
     getIcon(icon: any) {
-      const mainSpec = Object.assign([], this.specifications.specifications)
+      const mainSpec = Object.assign([], this.propertyUpload.specifications)
 
-      this.specifications.specifications.find(
+      this.propertyUpload.specifications.find(
         (spec: any) => spec.name === icon.name
       )
-        ? this.specifications.specifications.splice(
+        ? this.propertyUpload.specifications.splice(
             mainSpec.findIndex((spec: any) => spec.name === icon.name),
             1
           )
-        : this.specifications.specifications.push(icon)
+        : this.propertyUpload.specifications.push(icon)
 
-      console.log(this.specifications.specifications)
+      console.log(this.propertyUpload.specifications)
     },
     getAmenityIcon(icon: any) {
-      const mainSpec = Object.assign([], this.amenities.amenities)
+      const mainSpec = Object.assign([], this.propertyUpload.amenities)
 
-      this.amenities.amenities.find((spec: any) => spec.name === icon.name)
-        ? this.amenities.amenities.splice(
+      this.propertyUpload.amenities.find((spec: any) => spec.name === icon.name)
+        ? this.propertyUpload.amenities.splice(
             mainSpec.findIndex((spec: any) => spec.name === icon.name),
             1
           )
-        : this.amenities.amenities.push(icon)
+        : this.propertyUpload.amenities.push(icon)
 
-      console.log(this.amenities.amenities)
+      console.log(this.propertyUpload.amenities)
     },
     toggleUpload(event: any) {
       const reader = new FileReader()
@@ -313,102 +328,24 @@ export default Vue.extend({
         this.propertyUpload.photo = reader.result
       }
     },
-    async saveSpecifiactions() {
-      console.log(this.specifications)
-
-      this.spec_loader = true
-
-      try {
-        if (this.amenities.amenities.length > 0) {
-          const specificationResponse =
-            await this.$specificationsTypeApi.create(this.specifications)
-          console.log(specificationResponse)
-
-          this.spec_loader = false
-          ;(this as any as IMixinState).$message({
-            showClose: true,
-            message: specificationResponse.message,
-            type: 'success',
-          })
-          this.drawer = false
-          this.amenity_drawer = true
-        } else {
-          ;(this as any as IMixinState).$message({
-            showClose: true,
-            message: 'Add one or more specification to property type',
-            type: 'error',
-          })
-          this.spec_loader = false
-        }
-      } catch (error) {
-        console.log(error, 'error')
-        ;(this as any as IMixinState).catchError(error)
-        this.spec_loader = false
-      }
-    },
     async submitUpload() {
       console.log(this.propertyUpload)
       this.loading = true
       try {
-        if (
-          this.propertyUpload.name !== '' ||
-          this.propertyUpload.photo !== ''
-        ) {
-          const propertyResponse = await this.$propertyApi.create(
-            this.propertyUpload
-          )
-          console.log(propertyResponse)
-          this.specifications.property_type_id = propertyResponse.data.id
-          this.amenities.property_type_id = propertyResponse.data.id
-          this.loading = false
-          ;(this as any as IMixinState).$message({
-            showClose: true,
-            message: propertyResponse.message,
-            type: 'success',
-          })
-          this.drawer = true
-        } else {
-          ;(this as any as IMixinState).$message({
-            showClose: true,
-            message: 'Property type name and photo is required',
-            type: 'error',
-          })
-          this.loading = false
-        }
+        const propertyResponse = await this.$propertyApi.create(
+          this.propertyUpload
+        )
+        console.log(propertyResponse)
+        this.loading = false
+        ;(this as any as IMixinState).$message({
+          showClose: true,
+          message: propertyResponse.message,
+          type: 'success',
+        })
+        this.$router.replace('/property_types')
       } catch (error: any) {
         console.log(error?.response?.data, 'error')
         ;(this as any as IMixinState).catchError(error?.response?.data?.message)
-      }
-    },
-    async saveAmenities() {
-      console.log(this.amenities)
-      this.amenity_loader = true
-      try {
-        if (this.amenities.amenities.length > 0) {
-          const amenitiesResponse = await this.$AmenitiesApi.create(
-            this.amenities
-          )
-          console.log(amenitiesResponse)
-
-          this.amenity_loader = false
-          ;(this as any as IMixinState).$message({
-            showClose: true,
-            message: amenitiesResponse.message,
-            type: 'success',
-          })
-          this.amenity_drawer = false
-          this.$router.replace('/property_types')
-        } else {
-          ;(this as any as IMixinState).$message({
-            showClose: true,
-            message: 'Add one or more amenities to property type',
-            type: 'error',
-          })
-          this.amenity_loader = false
-        }
-      } catch (error) {
-        console.log(error, 'error')
-        ;(this as any as IMixinState).catchError(error)
       }
     },
   },

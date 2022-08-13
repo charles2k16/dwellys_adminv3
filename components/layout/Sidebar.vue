@@ -22,16 +22,20 @@
           <i class="el-icon-user-solid mr-5"></i>
           Users
         </el-menu-item>
-        <el-submenu index="5">
+        <el-menu-item index="5" :route="{ path: '/plans' }">
+          <i class="el-icon-user-solid mr-5"></i>
+          Plans
+        </el-menu-item>
+        <el-submenu index="6">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>Property Type</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="5-1" :route="{ path: '/create_property_type' }"
+            <el-menu-item index="6-1" :route="{ path: '/create_property_type' }"
               >Create Property Type</el-menu-item
             >
-            <el-menu-item index="5-2" :route="{ path: '/property_types' }"
+            <el-menu-item index="6-2" :route="{ path: '/property_types' }"
               >Property Types</el-menu-item
             >
           </el-menu-item-group>

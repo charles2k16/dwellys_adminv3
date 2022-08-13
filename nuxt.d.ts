@@ -39,6 +39,7 @@ declare module 'vue/types/vue' {
     $approvalApi: apiService
     $toggleListingApi: apiService
     $listersApi: apiService
+    $listingPlanApi: apiService
     $countriesApi: apiService
     $registerApi: apiService
     $propertyApi: apiService

@@ -116,8 +116,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   height: 43px;
   border-radius: 8px;
   background: #f8fafc;
-  max-width: 320px;
-
+  // max-width: 320px;
   width: 100%;
 }
 
@@ -275,4 +274,13 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 .el-message-box__message p {
   font-size: 12px;
+}
+.el-select {
+  border: 1px solid #e2e8f0;
+  height: 43px;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+.el-card__header {
+  padding-bottom: 0;
 }
