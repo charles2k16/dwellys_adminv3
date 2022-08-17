@@ -274,7 +274,25 @@ export default Vue.extend({
     },
     async newPlan(): Promise<void> {
       try {
-        const response = await this.$listingPlanApi.create(this.plan)
+        const data = {
+          name: this.plan.name,
+          description: this.plan.description,
+          price: this.plan.is_plan_in_percentage === true ? 0 : this.plan.price,
+          is_plan_in_percentage: this.plan.price > 0 ? 'no' : 'yes',
+          percentage_fraction_on_value:
+            this.plan.is_plan_in_percentage === true
+              ? this.plan.percentage_fraction_on_value
+              : '',
+          currency:
+            this.plan.is_plan_in_percentage === true ? '' : this.plan.currency,
+          no_of_days:
+            this.plan.is_plan_in_percentage === true
+              ? ''
+              : this.plan.no_of_days,
+          features: this.plan.features,
+        }
+        console.log(data)
+        const response = await this.$listingPlanApi.create(data)
         console.log(response)
         ;(this as any as IMixinState).$message({
           showClose: true,
