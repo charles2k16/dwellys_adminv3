@@ -165,6 +165,9 @@
                     Drop file here or <em>click to upload</em>
                   </div>
                 </el-upload>
+                <div>
+                  <img src="" />
+                </div>
               </div>
             </div>
             <div class="property_upload_btns pt-10">

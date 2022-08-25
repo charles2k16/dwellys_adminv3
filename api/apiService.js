@@ -16,9 +16,11 @@ export default ($axios) => (resource) => ({
   create(payload) {
     return $axios.$post(`${resource}`, payload)
   },
-
-  update(id, payload) {
+  toggle(id, payload) {
     return $axios.$post(`${resource}/${id}`, payload)
+  },
+  update(id, payload) {
+    return $axios.$put(`${resource}/${id}`, payload)
   },
 
   delete(id) {

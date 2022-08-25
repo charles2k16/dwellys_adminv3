@@ -25,6 +25,7 @@ interface apiService {
   create: Function
   show: Function
   single: Function
+  toggle: Function
   userTypes: (path: string, params: object) => Promise<any>
   //  (query: object): Promise<any>
 }

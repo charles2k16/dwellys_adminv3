@@ -171,7 +171,7 @@ export default Vue.extend({
     },
     async approveLister(listingId: string, status: string) {
       try {
-        const listingResponse = await this.$listingsApi.update(
+        const listingResponse = await this.$listingsApi.toggle(
           '/togglestatus',
           {
             listing_id: listingId,

@@ -246,7 +246,7 @@ export default Vue.extend({
 
       this.spec_loader = true
       try {
-        const specificationResponse = await this.$specificationsTypeApi.update(
+        const specificationResponse = await this.$specificationsTypeApi.toggle(
           this.specifications
         )
         console.log(specificationResponse)
