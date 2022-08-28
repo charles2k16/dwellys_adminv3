@@ -1,25 +1,29 @@
 <template>
   <div class="">
-    <div class="d-flex justify_between">
-      <div class="d-flex">
+    <div class="listing_top_container">
+      <div class="listing_top_content">
         <!-- <section class="listing_bar"> -->
         <!-- <p>Lister</p> -->
         <!-- <p class="pt-10"> -->
         <!-- <b>{{ listing && listing.lister.first_name }} </b> -->
         <!-- </p> -->
         <!-- </section> -->
-        <section class="listing_bar">
-          <p>Listing type</p>
-          <p class="pt-10">
-            <b>{{ listing.property_type && listing.property_type.name }} </b>
-          </p>
-        </section>
-        <section class="listing_bar">
-          <p>Amount</p>
-          <p class="pt-10">
-            <b>{{ listing.listing_detail && listing.listing_detail.price }} </b>
-          </p>
-        </section>
+        <div>
+          <section class="listing_bar">
+            <p>Listing type</p>
+            <p class="pt-10">
+              <b>{{ listing.property_type && listing.property_type.name }} </b>
+            </p>
+          </section>
+          <section class="listing_bar">
+            <p>Amount</p>
+            <p class="pt-10">
+              <b
+                >{{ listing.listing_detail && listing.listing_detail.price }}
+              </b>
+            </p>
+          </section>
+        </div>
         <section class="listing_bar">
           <p>Lister</p>
           <section class="d-flex pt-10">
@@ -46,7 +50,7 @@
           </section>
         </section>
       </div>
-      <div>
+      <div class="listing_approval">
         <p>Do you want to approve this listing?</p>
 
         <div class="d-flex pt-10">
@@ -202,13 +206,32 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.listing_bar {
-  width: 150px;
-  padding-right: 10px;
+$medium_screen: 769px;
+.listing_top_container {
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: $medium_screen) {
+    flex-direction: column;
+  }
+  .listing_top_content {
+    display: flex;
+    @media (max-width: $medium_screen) {
+      flex-direction: column;
+    }
+    .listing_bar {
+      width: 150px;
+      padding-right: 10px;
+    }
+  }
+  .listing_approval {
+    @media (max-width: $medium_screen) {
+      padding-top: 20px;
+    }
+  }
 }
 .property_images {
   display: grid;
-  grid-template-columns: repeat(5, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 
   img {
     // border-radius: 20px;

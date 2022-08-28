@@ -123,10 +123,10 @@
     <el-drawer
       title="User lister information"
       :visible.sync="drawer"
-      size="30%"
+      size="40%"
     >
       <div class="px-30 user_details">
-        <div class="d-flex">
+        <div class="about_image">
           <img
             v-if="profile"
             :src="url() + '/' + profile.avatar"
@@ -135,8 +135,8 @@
           <div class="pl-20 pt-20">
             <el-button type="info">Reject profile photo</el-button>
             <p class="pt-10">
-              A profile image can be reject if the image is not clear enough or
-              the face is covered or an inanimate object is used
+              A profile image can be rejected if the image is not clear enough
+              or the face is covered or an inanimate object is used
             </p>
           </div>
         </div>
@@ -303,6 +303,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss" scoped>
+$medium_screen: 769px;
 .profile_avatar {
   width: 40px;
   height: 40px;
@@ -318,6 +319,9 @@ export default Vue.extend({
     width: 42%;
     border-radius: 50%;
     height: 150px;
+    @media (max-width: $medium_screen) {
+      margin: 0 auto;
+    }
   }
   .identification_card {
     width: 100%;
@@ -330,6 +334,12 @@ export default Vue.extend({
     i {
       font-size: 20px;
       font-weight: 600;
+    }
+  }
+  .about_image {
+    display: flex;
+    @media (max-width: $medium_screen) {
+      flex-direction: column;
     }
   }
 }

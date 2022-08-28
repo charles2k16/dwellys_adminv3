@@ -1,20 +1,20 @@
 <template>
   <div>
-    <el-card class="p-20">
-      <div class="lister_header">
+    <el-card class="">
+      <div class="users_header">
         <div class="d-flex">
           <h4 class="mr-20 pt-8">Users account</h4>
           <NuxtLink to="/users" class="ml-20 mr-10">
             <el-button size="mini" round type="primary">All</el-button>
           </NuxtLink>
-          <NuxtLink to="/users/verified">
+          <NuxtLink to="/users/verified" class="mr-10">
             <el-button size="mini" round>Verified</el-button>
           </NuxtLink>
           <NuxtLink to="/users/unverified">
             <el-button size="mini" round>Unverified</el-button>
           </NuxtLink>
         </div>
-        <div class="d-flex">
+        <div class="d-flex search_filter">
           <div class="d-flex ml-10">
             <el-select
               v-model="value"
@@ -34,13 +34,15 @@
               </el-option>
             </el-select>
           </div>
-          <el-input
-            v-model="value"
-            class="ml-10 mr-10"
-            placeholder="Type something"
-            prefix-icon="el-icon-search"
-          >
-          </el-input>
+          <div>
+            <el-input
+              v-model="value"
+              class="ml-10 mr-10"
+              placeholder="Type something"
+              prefix-icon="el-icon-search"
+            >
+            </el-input>
+          </div>
           <NuxtLink to="/add-user">
             <el-button type="danger"
               ><i class="el-icon-plus mr-10"></i>Add new user</el-button
@@ -78,8 +80,18 @@ export default Vue.extend({
 })
 </script>
 <style>
-.lister_header {
+.users_header {
   display: flex;
   justify-content: space-between;
+}
+@media (max-width: 1024px) {
+  .users_header {
+    display: flex;
+    flex-direction: column;
+  }
+  .search_filter {
+    padding-top: 10px;
+    /* justify-content: space-between; */
+  }
 }
 </style>
