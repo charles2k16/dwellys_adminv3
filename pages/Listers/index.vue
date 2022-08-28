@@ -126,12 +126,17 @@
       size="40%"
     >
       <div class="px-30 user_details">
-        <div class="about_image">
+        <div class="about_image pb-10">
           <img
-            v-if="profile"
+            v-if="
+              profile.avatar &&
+              avatar ===
+                'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+            "
             :src="url() + '/' + profile.avatar"
             class="profile_img"
           />
+          <img v-else :src="avatar" alt="avatar" class="profile_img" />
           <div class="pl-20 pt-20">
             <el-button type="info">Reject profile photo</el-button>
             <p class="pt-10">
@@ -140,19 +145,33 @@
             </p>
           </div>
         </div>
+        <el-upload
+          class="upload-demo"
+          action="#"
+          :multiple="false"
+          :auto-upload="false"
+          :on-change="getAvatar"
+          :show-file-list="false"
+        >
+          <el-button type="info" size="mini">Change Photo</el-button>
+        </el-upload>
         <div class="pt-20 w-70">
           <div class="d-flex justify_between pb-10">
             <section>
               <p class="pb-10">First name</p>
-              <p>
+              <!-- <p>
                 <b>{{ profile && profile.first_name }} </b>
-              </p>
+              </p> -->
+              <el-input v-model="profile.first_name" placeholder="First name">
+              </el-input>
             </section>
             <section class="pl-30">
               <p class="pb-10">Last name</p>
-              <p>
+              <!-- <p>
                 <b>{{ profile && profile.last_name }}</b>
-              </p>
+              </p> -->
+              <el-input v-model="profile.last_name" placeholder="Last Name">
+              </el-input>
             </section>
           </div>
           <section class="pt-10">
@@ -160,21 +179,33 @@
             <p>
               <b>{{ profile.dob }} </b>
             </p>
+            <el-input v-model="profile.date" type="date"> </el-input>
           </section>
         </div>
         <el-divider></el-divider>
         <div class="pt-5 pb-10 d-flex justify_between">
           <section>
             <p class="pb-10">Email address</p>
-            <p>
+            <!-- <p>
               <b>{{ profile && profile.email }}</b>
-            </p>
+            </p> -->
+            <el-input
+              v-model="profile.email"
+              type="email"
+              placeholder="Enter email"
+            />
           </section>
           <section class="pl-30 pr-10">
             <p class="pb-10">Phone</p>
             <p>
               <b>{{ profile && profile.phone_number }}</b>
             </p>
+            <vue-phone-number-input
+              v-model="phone"
+              :border-radius="7"
+              default-country-code="GH"
+              @update="onPhoneUpdate"
+            />
           </section>
         </div>
         <el-divider></el-divider>
@@ -196,7 +227,7 @@
               <i class="el-icon-check pr-10"></i>Verified
             </p>
           </div> -->
-          <div class="d-flex justify_center pt-30 pb-30">
+          <div class="d-flex justify_between pt-30 pb-30">
             <el-button
               v-if="profile.is_id_card_verified != 1"
               type="success"
@@ -213,6 +244,13 @@
               @click="approveLister(profile)"
               ><i class="el-icon-close pr-10"></i>Unverify</el-button
             >
+            <el-button
+              :type="'primary'"
+              :loading="loading"
+              class="btn_sm"
+              @click="updateUser"
+              >Save information
+            </el-button>
           </div>
         </div>
       </div>
@@ -249,17 +287,43 @@ export default Vue.extend({
     return {
       activeTab: 'pendingReview',
       pendingTab: 'Pending Products',
+      phone: '',
       loading: false,
+      countries: [],
       pendingTotal: 0,
       drawer: false,
       tableLoading: false,
-      profile: {},
+      profile: {} as any,
       search: '' as string,
+      avatar:
+        'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png' as any,
     }
+  },
+  async created() {
+    const countries = await this.$countriesApi.index()
+    this.countries = countries.data
   },
   methods: {
     url() {
       return url()
+    },
+    getAvatar(file: any) {
+      console.log(file)
+
+      const reader = new FileReader()
+      reader.readAsDataURL(file.raw)
+      reader.onloadend = () => {
+        this.avatar = reader.result
+      }
+    },
+    onPhoneUpdate(e: any) {
+      console.log(e)
+      this.profile.phone_number = e.formattedNumber
+      this.countries.filter((country: any) =>
+        country.short_name === e.countryCode
+          ? (this.profile.country_id = country.id)
+          : ''
+      )
     },
     viewProfile(profile: any) {
       this.profile = profile
@@ -289,15 +353,41 @@ export default Vue.extend({
         ;(this as any as IMixinState).catchError(error)
       }
     },
-    deleteProduct(id: string) {
-      console.log(id)
-      this.$message({
-        message: 'Product Deleted',
-        type: 'success',
-      })
-    },
-    addProduct(): void {
-      ;(this as any).$refs.handleAction.showAddClassModal()
+    async updateUser(): Promise<void> {
+      this.loading = true
+      // console.log(this.lister);
+      const data = {
+        avatar:
+          this.avatar !==
+          'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
+            ? this.avatar
+            : null,
+        dob: this.profile.dob,
+        email: this.profile.email,
+        first_name: this.profile.first_name,
+        last_name: this.profile.last_name,
+        phone_number: this.profile.phone_number,
+        country_id: this.profile.country_id,
+        user_type: this.profile.user_type,
+      }
+      console.log(data)
+      try {
+        const profileResponse = await this.$listerUpdateApi.update(
+          'update',
+          data
+        )
+        console.log('profile response', profileResponse)
+        this.$auth.setUser(profileResponse.data.user)
+
+        this.loading = false
+        ;(this as any as IMixinState).getNotification(
+          'Update successfull!',
+          'success'
+        )
+      } catch (error) {
+        this.loading = false
+        ;(this as any as IMixinState).catchError(error)
+      }
     },
   },
 })

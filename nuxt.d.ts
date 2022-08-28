@@ -40,12 +40,14 @@ declare module 'vue/types/vue' {
     $approvalApi: apiService
     $toggleListingApi: apiService
     $listersApi: apiService
+    $listingImagesApi: apiService
     $listingPlanApi: apiService
     $countriesApi: apiService
     $registerApi: apiService
     $propertyApi: apiService
     $specificationsTypeApi: apiService
     $AmenitiesApi: apiService
+    $listerUpdateApi: apiService
     // $refs: { [key: string]: Vue | Element | (Vue | Element)[] | Function | undefined; }
   }
 }

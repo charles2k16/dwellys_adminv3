@@ -21,4 +21,6 @@ export default (ctx, inject) => {
   inject('specificationsTypeApi', apiService('/propertytypespecifications'))
   inject('AmenitiesApi', apiService('/propertytypeamenities'))
   inject('listingPlanApi', apiService('/listingplans'))
+  inject('listingImagesApi', apiService('/listingimages'))
+  inject('listerUpdateApi', apiService('/auth/account'))
 }

@@ -127,7 +127,7 @@
                 <el-input
                   id="category-name"
                   v-model="propertyUpload.name"
-                  placeholder="Apartment"
+                  placeholder="E.g Apartment"
                   class="pt-10 d-flex_justify_center"
                 >
                 </el-input>
@@ -143,7 +143,7 @@
                   class="pt-10"
                   type="textarea"
                   :rows="2"
-                  placeholder="Please input"
+                  placeholder="Enter description"
                 >
                 </el-input>
               </div>
