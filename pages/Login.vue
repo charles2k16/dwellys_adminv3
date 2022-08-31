@@ -3,7 +3,7 @@
     <div class="box-card">
       <el-card class="py-20 px-10">
         <div slot="header" class="clearfix center">
-          <img src="../assets/img/logo.png" alt="logo" width="200px" />
+          <img src="../assets/img/logo.png" alt="logo" width="100px" />
           <p class="mt-10">Authorized login for Dwellys Administrators.</p>
         </div>
         <div class="text item">
@@ -13,14 +13,14 @@
             :rules="validation"
             class="d-flex_column_center"
           >
-            <el-form-item prop="email" class="pb-20 w-70">
+            <el-form-item prop="email" class="w-100">
               <el-input
                 v-model="loginForm.email"
                 placeholder="youremail@email.com"
               ></el-input>
             </el-form-item>
 
-            <el-form-item prop="password" class="w-70">
+            <el-form-item prop="password" class="w-100">
               <el-input
                 v-model="loginForm.password"
                 type="password"
@@ -29,7 +29,7 @@
             </el-form-item>
           </el-form>
 
-          <div class="mt-40">
+          <div class="mt-20">
             <el-button
               class="full_width"
               type="primary"
@@ -142,7 +142,7 @@ export default Vue.extend({
   align-items: center;
 
   .box-card {
-    max-width: 600px;
+    max-width: 450px;
     width: 100%;
 
     .login_title {
