@@ -100,13 +100,22 @@
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item
                     ><NuxtLink :to="`/property_type/details/${props.row.id}`"
-                      ><p class="px-20 py-10">Details</p></NuxtLink
+                      ><p class="p-10">Details</p></NuxtLink
                     ></el-dropdown-item
                   >
                   <el-dropdown-item @click="props.row">
                     <NuxtLink :to="`/property_type/edit/${props.row.id}`"
-                      ><p class="px-20 py-10">Edit</p></NuxtLink
+                      ><p class="p-10">Edit</p></NuxtLink
                     ></el-dropdown-item
+                  >
+                  <el-dropdown-item
+                    ><p
+                      style="color: red"
+                      class="p-10"
+                      @click="open(props.row.id)"
+                    >
+                      Delete
+                    </p></el-dropdown-item
                   >
                 </el-dropdown-menu>
               </el-dropdown>
@@ -131,7 +140,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-// import { IMixinState } from '@/types/mixinsTypes'
+import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
   name: 'PropertyTypes',
@@ -149,6 +158,34 @@ export default Vue.extend({
     this.fetchData()
   },
   methods: {
+    open(id: string) {
+      // const h = this.$createElement
+      this.$confirm(
+        'Are you sure you want to delete ? You cannot undo this action.',
+        {
+          cancelButtonText: 'No, i want to keep',
+          confirmButtonText: 'Yes,I want to Delete',
+        }
+      ).then(() => {
+        this.deletePropertyType(id)
+      })
+    },
+    async deletePropertyType(id: string) {
+      console.log(id)
+      try {
+        const propertyResponse = await this.$propertyApi.delete(id)
+        console.log(propertyResponse)
+        ;(this as any as IMixinState).$message({
+          showClose: true,
+          message: propertyResponse.message,
+          type: 'success',
+        })
+        this.fetchData()
+      } catch (error) {
+        console.log(error, 'error')
+        ;(this as any as IMixinState).catchError(error)
+      }
+    },
     viewProfile(profile: any) {
       this.profile = profile
       console.log(profile)

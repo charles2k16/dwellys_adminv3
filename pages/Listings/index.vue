@@ -212,7 +212,7 @@ export default Vue.extend({
         }
       )
         .then(() => {
-          this.approveLister(listingId, active)
+          this.approveLister(listingId, active, btnText)
         })
         .catch(() => {
           this.$message({
@@ -224,8 +224,7 @@ export default Vue.extend({
     getListingDetails(id: string) {
       this.$router.push(`/listing_details/${id}`)
     },
-    async approveLister(listingId: string, status: string) {
-      this.loading = true
+    async approveLister(listingId: string, status: string, btnText: string) {
       console.log(status)
       try {
         const listingResponse = await this.$toggleListingApi.create({
@@ -235,14 +234,12 @@ export default Vue.extend({
 
         console.log(listingResponse)
         // console.log(listingId, active)
-
-        this.loading = false
-        this.fetchData()
         ;(this as any as IMixinState).$message({
           showClose: true,
-          message: listingResponse.message,
+          message: `Listing ${btnText}d Successfully!`,
           type: 'success',
         })
+        this.fetchData()
       } catch (error) {
         console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
