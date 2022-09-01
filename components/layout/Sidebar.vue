@@ -79,6 +79,7 @@ export default {
     padding-left: 30px;
     padding-top: 20px;
     background-color: #fff;
+    height: 68px;
   }
 }
 

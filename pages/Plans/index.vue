@@ -1,7 +1,7 @@
 <template>
   <div class="pt-20 plans_container">
     <el-dialog
-      title="Tips"
+      title="Update Plan"
       :visible.sync="dialogVisible"
       class="edit_pricing_log"
       width="40%"
@@ -125,7 +125,7 @@
         >
       </span>
     </el-dialog>
-    <el-card v-for="plan in plans" :key="plan.id" class="d-flex_column">
+    <el-card v-for="plan in plans" :key="plan.id" class="d-flex_column mb-10">
       <div slot="header" class="clearfix pb-5">
         <div><small class="tier_header">Pricing tier</small></div>
         <div class="d-flex justify_between">
@@ -181,7 +181,6 @@
       <!-- slot="footer" -->
       <div class="deactive_btn bottom clearfix">
         <el-button
-          v-loading="loading"
           type="primary"
           class="full_width"
           @click="toggleListingPlan(plan.id)"
@@ -218,17 +217,17 @@ export default Vue.extend({
   },
   data() {
     return {
-      dialogVisible: false,
       activeTab: 'pendingReview',
       pendingTab: 'Pending Products',
       counter: 0,
+      dialogVisible: false,
+      pricing: {} as any,
       loading: false,
       pendingTotal: 0,
       drawer: false,
       tableLoading: false,
       profile: {},
       search: '' as string,
-      pricing: {} as any,
       currencies: [],
     }
   },
@@ -318,7 +317,7 @@ export default Vue.extend({
     async toggleListingPlan(planId: string) {
       this.loading = true
       try {
-        const planResponse = await this.$listingPlanApi.update('togglestatus', {
+        const planResponse = await this.$listingPlanApi.toggle('togglestatus', {
           listing_plan_id: planId,
         })
 
@@ -342,7 +341,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .plans_container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 350px));
   column-gap: 10px;
   p {
     color: black !important;

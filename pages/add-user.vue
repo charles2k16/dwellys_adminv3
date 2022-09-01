@@ -223,7 +223,7 @@ export default Vue.extend({
         password: '' as string,
         confirm_password: '' as string,
         country_id: '39a40751-d7d2-4346-99e5-b0235b520ce5' as String,
-        user_type: 'visitor',
+        user_type: 'staff',
         tierForm: [{ value: '' }],
       },
 

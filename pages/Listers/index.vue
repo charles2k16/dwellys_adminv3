@@ -15,7 +15,7 @@
                 <span class="mr-10">
                   <img
                     v-if="scope.row.avatar"
-                    :src="url() + '/' + scope.row.avatar"
+                    :src="apiUrl + '/' + scope.row.avatar"
                     alt="pic"
                     class="profile_avatar"
                   />
@@ -133,7 +133,7 @@
               avatar ===
                 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
             "
-            :src="url() + '/' + profile.avatar"
+            :src="apiUrl + '/' + profile.avatar"
             class="profile_img"
           />
           <img v-else :src="avatar" alt="avatar" class="profile_img" />
@@ -212,11 +212,13 @@
         <div class="pb-10">
           <section class="pb-20">
             <p class="pb-10">ID type</p>
-            <p><b>Drivers license</b></p>
+            <p>
+              <b>{{ profile && profile.id_card_type }} </b>
+            </p>
           </section>
           <p><span>Image of ID</span></p>
           <img
-            src="../../assets/img/profile.jpg"
+            :src="apiUrl + '/' + profile.id_card_upload"
             class="identification_card pb-10"
           />
           <!-- <div
@@ -238,7 +240,7 @@
             >
             <el-button
               v-else
-              type="info"
+              type="primary"
               class="w-50"
               :loading="loading"
               @click="approveLister(profile)"
@@ -246,7 +248,7 @@
             >
             <el-button
               :type="'primary'"
-              :loading="loading"
+              :loading="saveLoading"
               class="btn_sm"
               @click="updateUser"
               >Save information
@@ -289,6 +291,7 @@ export default Vue.extend({
       pendingTab: 'Pending Products',
       phone: '',
       loading: false,
+      saveLoading: false,
       countries: [],
       pendingTotal: 0,
       drawer: false,
@@ -354,7 +357,7 @@ export default Vue.extend({
       }
     },
     async updateUser(): Promise<void> {
-      this.loading = true
+      this.saveLoading = true
       // console.log(this.lister);
       const data = {
         avatar:
@@ -379,13 +382,13 @@ export default Vue.extend({
         console.log('profile response', profileResponse)
         this.$auth.setUser(profileResponse.data.user)
 
-        this.loading = false
+        this.saveLoading = false
         ;(this as any as IMixinState).getNotification(
           'Update successfull!',
           'success'
         )
       } catch (error) {
-        this.loading = false
+        this.saveLoading = false
         ;(this as any as IMixinState).catchError(error)
       }
     },

@@ -6,6 +6,14 @@ export default Vue.extend( {
   components: {
     ApplicationHandler,
   },
+   data () {
+    return {
+      apiUrl:
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:8000"
+          : "https://newapi.dwellys.com",
+    };
+  },
   methods: <IMixinState> {
     getFullName ( firstName: string, lastName: string ): string {
       return `${ firstName } ${ lastName }`

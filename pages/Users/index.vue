@@ -15,7 +15,7 @@
                 <span class="mr-10">
                   <img
                     v-if="scope.row.avatar"
-                    :src="url() + '/' + scope.row.avatar"
+                    :src="apiUrl + '/' + scope.row.avatar"
                     alt="pic"
                     class="profile_avatar"
                   />
@@ -55,24 +55,6 @@
           </el-table-column>
           <el-table-column>
             <template slot-scope="props">
-              <!-- <el-tooltip
-                class="item"
-                effect="dark"
-                content="Edit Product"
-                placement="top"
-              >
-                <el-button
-                  type="primary"
-                  icon="el-icon-edit"
-                  circle
-                ></el-button>
-              </el-tooltip>
-              <el-button
-                type="danger"
-                icon="el-icon-delete"
-                circle
-                @click="deleteProduct(props.row.id)"
-              ></el-button> -->
               <el-dropdown trigger="click">
                 <span class="el-dropdown-link">
                   <i class="el-icon-more"> </i>
@@ -99,86 +81,6 @@
         </el-pagination>
       </div>
     </el-card>
-    <!-- <el-drawer
-      title="User lister information"
-      :visible.sync="drawer"
-      size="35%"
-    >
-      <div class="px-30 user_details">
-        <div class="d-flex">
-          <img v-if="profile" :src="url + profile.avatar" class="profile_img" />
-          <div class="pl-20 pt-20">
-            <el-button type="info">Reject profile photo</el-button>
-            <p class="pt-10">
-              A profile image can be reject if the image is not clear enough or
-              the face is covered or an inanimate object is used
-            </p>
-          </div>
-        </div>
-        <div class="pt-20 w-70">
-          <div class="d-flex justify_between pb-10">
-            <section>
-              <p class="pb-10">First name</p>
-              <p>
-                <b>{{ profile && profile.first_name }} </b>
-              </p>
-            </section>
-            <section class="pl-30">
-              <p class="pb-10">Last name</p>
-              <p>
-                <b>{{ profile && profile.last_name }}</b>
-              </p>
-            </section>
-          </div>
-          <section class="pt-10">
-            <p class="pb-10">DOB</p>
-            <p>
-              <b>{{ profile.dob }} </b>
-            </p>
-          </section>
-        </div>
-        <el-divider></el-divider>
-        <div class="pt-5 pb-10 d-flex justify_between">
-          <section>
-            <p class="pb-10">Email address</p>
-            <p>
-              <b>{{ profile && profile.email }}</b>
-            </p>
-          </section>
-          <section class="pl-30 pr-10">
-            <p class="pb-10">Phone</p>
-            <p>
-              <b>{{ profile && profile.phone_number }}</b>
-            </p>
-          </section>
-        </div>
-        <el-divider></el-divider>
-        <div class="pb-10">
-          <section class="pb-20">
-            <p class="pb-10">ID type</p>
-            <p><b>Drivers license</b></p>
-          </section>
-          <p><span>Image of ID</span></p>
-          <img
-            src="../../assets/img/profile.jpg"
-            class="identification_card pb-10"
-          />
-          <div class="d-flex pt-30 pb-30">
-            <el-button
-              type="success"
-              class="w-50"
-              :loading="loading"
-              @click="approveLister(profile)"
-              ><i class="el-icon-check pr-10"></i>Approve</el-button
-            >
-
-            <el-button type="info" class="w-50" @click="approveLister(profile)"
-              ><i class="el-icon-close pr-10"></i>Disapprove</el-button
-            >
-          </div>
-        </div>
-      </div>
-    </el-drawer> -->
   </div>
 </template>
 

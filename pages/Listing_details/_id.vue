@@ -194,7 +194,7 @@
           class="pb-5"
         >
           <img
-            :src="url + img.photo"
+            :src="apiUrl + '/' + img.photo"
             class="img_border"
             :style="img.id == imageId && 'border: 1px solid green'"
             @click="getImage(img.id)"

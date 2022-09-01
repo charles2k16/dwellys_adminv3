@@ -15,7 +15,7 @@
                 <span class="mr-10">
                   <img
                     v-if="scope.row.avatar"
-                    :src="url() + '/' + scope.row.avatar"
+                    :src="apiUrl + '/' + scope.row.avatar"
                     alt="pic"
                     class="profile_avatar"
                   />
@@ -129,7 +129,7 @@
         <div class="d-flex">
           <img
             v-if="profile"
-            :src="url() + '/' + profile.avatar"
+            :src="apiUrl + '/' + profile.avatar"
             class="profile_img"
           />
           <div class="pl-20 pt-20">
@@ -181,11 +181,13 @@
         <div class="pb-10">
           <section class="pb-20">
             <p class="pb-10">ID type</p>
-            <p><b>Drivers license</b></p>
+            <p>
+              <b>{{ profile && profile.id_card_type }} </b>
+            </p>
           </section>
           <p><span>Image of ID</span></p>
           <img
-            src="../../assets/img/profile.jpg"
+            :src="apiUrl + '/' + profile.id_card_upload"
             class="identification_card pb-10"
           />
           <!-- <div
