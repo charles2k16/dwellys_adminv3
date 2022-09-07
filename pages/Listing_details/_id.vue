@@ -573,6 +573,7 @@ export default Vue.extend({
           message: listingResponse.message,
           type: 'success',
         })
+        this.$router.push('/listings')
       } catch (error: any) {
         console.log(error, 'error')
         ;(this as any as IMixinState).$message({

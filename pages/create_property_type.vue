@@ -9,7 +9,11 @@
               <section
                 v-for="icon in icons"
                 :key="icon.icon"
-                :style="isSelected(icon.name) ? 'background:  #f8fafc' : ''"
+                :style="
+                  propertyUpload.specifications.includes(icon)
+                    ? { background: '#81f78166' }
+                    : { background: '#fff' }
+                "
                 class="info_card"
                 @click="getIcon(icon)"
               >
@@ -64,7 +68,11 @@
               <section
                 v-for="icon in amenities_icon"
                 :key="icon.icon"
-                :style="isAmenity(icon.name) ? 'background:  #f8fafc' : ''"
+                :style="
+                  propertyUpload.amenities.includes(icon)
+                    ? { background: '#81f78166' }
+                    : ''
+                "
                 class="info_card"
                 @click="getAmenityIcon(icon)"
               >
@@ -230,11 +238,11 @@ export default Vue.extend({
           name: 'Washing Machine',
           description: 'Washing Machine',
         },
-        {
-          svg: 'database.svg',
-          name: 'Water Storage',
-          description: 'water storage',
-        },
+        // {
+        //   svg: 'database.svg',
+        //   name: 'Water Storage',
+        //   description: 'water storage',
+        // },
       ],
       listing_photos: [] as any,
       propertyUpload: {
@@ -262,7 +270,6 @@ export default Vue.extend({
       let valid = false
       if (
         this.propertyUpload.name !== '' &&
-        this.propertyUpload.photo !== '' &&
         this.propertyUpload.description !== ''
       ) {
         valid = true
@@ -361,6 +368,7 @@ $medium_screen: 769px;
 
 .property_upload {
   //   margin: 0 auto;
+  // background: #81f78166;
   .property_upload_head {
     padding-bottom: 20px;
     h3 {

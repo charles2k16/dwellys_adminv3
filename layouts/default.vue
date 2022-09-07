@@ -13,7 +13,7 @@
       <footer class="d-flex justify_between">
         <p>Dwellys © 2022. All right reserved.</p>
 
-        <p>v-0.4.0</p>
+        <p>v-0.4.1</p>
       </footer>
     </el-container>
   </el-container>

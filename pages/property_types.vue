@@ -27,7 +27,7 @@
           stripe
           :default-sort="{ prop: 'name', order: 'descending' }"
         >
-          <el-table-column label="Property Image">
+          <!-- <el-table-column label="Property Type Image">
             <template slot-scope="scope">
               <div class="d-flex">
                 <span class="mr-10">
@@ -46,15 +46,29 @@
                 </span>
               </div>
             </template>
-          </el-table-column>
-          <el-table-column label="Property Name">
+          </el-table-column> -->
+          <el-table-column label="Property Type Name">
             <template slot-scope="scope">
               <div class="d-flex">
-                <span class="d-block mt-10">{{ scope.row.name }}</span>
+                <span>
+                  <img
+                    v-if="scope.row.photo"
+                    :src="url + scope.row.photo"
+                    alt="pic"
+                    class="profile_avatar"
+                  />
+                  <img
+                    v-else
+                    src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+                    alt="pic"
+                    style="width: 40px"
+                  />
+                </span>
+                <span class="d-block pl-10 mt-10">{{ scope.row.name }}</span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="Property Lister">
+          <el-table-column label="Property Type Lister">
             <template slot-scope="scope">
               <div class="d-flex">
                 <!-- <a :href="`/products/${scope.row.id}`">{{ scope.row.name }}</a> -->

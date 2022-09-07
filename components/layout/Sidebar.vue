@@ -7,7 +7,7 @@
       <br />
       <el-menu :default-openeds="['1']" router active-text-color="black">
         <el-menu-item index="1" :route="{ path: '/' }">
-          <i class="el-icon-s-data"></i>
+          <i class="el-icon-s-marketing"></i>
           Dasboard</el-menu-item
         >
         <el-menu-item index="2" :route="{ path: '/listings' }">
@@ -23,7 +23,7 @@
           Users
         </el-menu-item>
         <el-menu-item index="5" :route="{ path: '/plans' }">
-          <i class="el-icon-user-solid mr-5"></i>
+          <i class="el-icon-s-data mr-5"></i>
           Plans
         </el-menu-item>
         <el-submenu index="6">
@@ -40,6 +40,10 @@
             >
           </el-menu-item-group>
         </el-submenu>
+        <el-menu-item index="5" :route="{ path: '/discounts' }">
+          <i class="el-icon-coin mr-5"></i>
+          Discounts
+        </el-menu-item>
       </el-menu>
     </div>
 
