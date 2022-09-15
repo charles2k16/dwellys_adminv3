@@ -128,7 +128,7 @@
                       <i class="el-icon-check pr-10"></i>Approve
                     </p></el-dropdown-item
                   >
-                  <el-dropdown-item
+                  <!-- <el-dropdown-item v-else
                     ><p
                       style="color: red"
                       class="p-10"
@@ -136,7 +136,7 @@
                     >
                       <i class="el-icon-close pr-10"></i>Disapprove
                     </p></el-dropdown-item
-                  >
+                  > -->
                 </el-dropdown-menu>
               </el-dropdown>
             </template>

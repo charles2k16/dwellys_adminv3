@@ -120,14 +120,14 @@
                   <i class="el-icon-more"> </i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item
+                  <!-- <el-dropdown-item
                     ><p
                       class="p-10"
                       @click="open(props.row.id, 'active', 'Approve')"
                     >
                       <i class="el-icon-check pr-10"></i>Approve
                     </p></el-dropdown-item
-                  >
+                  > -->
                   <el-dropdown-item
                     ><p
                       style="color: red"

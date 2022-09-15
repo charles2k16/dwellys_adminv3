@@ -5,6 +5,7 @@
   --font-primary: Circular_std;
   --font-primary-md: Circular_med;
   --font-primary-light: Circular_light;
+  --disable-button: #de0b0b80;
 }
 
 @font-face {

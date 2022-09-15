@@ -104,7 +104,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="amenityVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="addAmenities" :loading="loading"
+        <el-button :loading="loading" type="primary" @click="addAmenities"
           >Add Amenitie(s)</el-button
         >
       </span>
@@ -134,16 +134,19 @@
 
         <div class="d-flex pt-10">
           <el-button
-            type="danger"
-            class="w-50 pt-5"
-            :loading="loading"
+            v-if="listing.status != 'active'"
+            type="primary"
+            class="w-100 pt-5"
+            :loading="approvalLoader"
             @click="openDialog('active', 'Approve')"
             ><i class="el-icon-check pr-10"></i>Approve</el-button
           >
 
           <el-button
-            type="info"
-            class="w-50 p-0"
+            v-else
+            type="primary"
+            class="w-100 p-0"
+            :loading="approvalLoader"
             @click="openDialog('inactive', 'Disapprove')"
             ><i class="el-icon-close pr-10"></i>Disapprove</el-button
           >
@@ -208,7 +211,7 @@
           </div>
         </div>
       </div>
-      <el-button type="success" @click="dialogVisible = true"
+      <el-button type="success" class="btn_small" @click="dialogVisible = true"
         >Add Image(s)</el-button
       >
       <!-- <el-upload class="upload-demo" :on-change="newImage" multiple>
@@ -242,7 +245,7 @@
           ></i>
         </li>
       </ul>
-      <el-button type="success" @click="specVisible = true"
+      <el-button type="success" class="btn_small" @click="specVisible = true"
         >Add Specification(s)</el-button
       >
     </div>
@@ -269,7 +272,10 @@
           ></i>
         </li>
       </ul>
-      <el-button type="success" @click="otherSpecVisible = true"
+      <el-button
+        type="success"
+        class="btn_small"
+        @click="otherSpecVisible = true"
         >Add Other Specification(s)</el-button
       >
     </div>
@@ -286,17 +292,23 @@
           <p>{{ amenity.name ? amenity.name : amenity.amenity.name }}</p>
         </li>
       </ul>
-      <el-button type="success" @click="amenityVisible = true"
+      <el-button type="success" class="btn_small" @click="amenityVisible = true"
         >Add Amenitie(s)</el-button
       >
     </div>
-    <div class="d-flex justify_end pt-10">
-      <el-button type="info" @click="updateListing">
+    <div class="d-flex justify_end pt-10 mr-20">
+      <el-button type="primary" class="mr-10" @click="updateListing">
         <i class="el-icon-check pr-10"></i>Save Changes</el-button
       >
-      <el-button type="primary" :loading="loading" @click="deleteListingModal"
-        ><i class="el-icon-close pr-10"></i>Delete</el-button
+      <p
+        type="primary"
+        class="pr-10 ml-20"
+        :loading="loading"
+        @click="deleteListingModal"
       >
+        <i class="el-icon-delete-solid deleteImgIcon"></i
+        ><span class="pl-5" style="color: red">Delete</span>
+      </p>
     </div>
   </div>
 </template>
@@ -319,6 +331,8 @@ export default Vue.extend({
       url: 'http://localhost:8000/',
       activeName: 'first' as string,
       image: '' as any,
+      approvalLoader: false,
+      deleteLoading: false,
       listing_id: this.$route.params.id,
       newOtherSpec: {
         name: '',
@@ -538,13 +552,13 @@ export default Vue.extend({
       }
     },
     async deleteListingImage() {
-      this.loading = true
+      this.deleteLoading = true
       try {
         const ListingResponse = await this.$listingsApi.delete(this.listing_id)
 
         console.log(ListingResponse)
 
-        this.loading = false
+        this.deleteLoading = false
         this.fetchData()
         ;(this as any as IMixinState).$message({
           showClose: true,
@@ -553,11 +567,13 @@ export default Vue.extend({
         })
         this.$router.replace('/profile')
       } catch (error) {
+        this.deleteLoading = false
         console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
       }
     },
     async approveLister(status: string) {
+      this.approvalLoader = true
       try {
         const listingResponse = await this.$toggleListingApi.create({
           listing_id: this.listing_id,
@@ -567,7 +583,7 @@ export default Vue.extend({
         console.log(listingResponse)
         // console.log(listingId, active)
 
-        this.loading = false
+        this.approvalLoader = false
         ;(this as any as IMixinState).$message({
           showClose: true,
           message: listingResponse.message,
@@ -575,6 +591,7 @@ export default Vue.extend({
         })
         this.$router.push('/listings')
       } catch (error: any) {
+        this.approvalLoader = false
         console.log(error, 'error')
         ;(this as any as IMixinState).$message({
           showClose: true,
@@ -682,6 +699,9 @@ export default Vue.extend({
 <style lang="scss" scoped>
 $small_screen: 426px;
 $medium_screen: 769px;
+.btn_small {
+  padding: 5px !important;
+}
 .listing_bar {
   width: 150px;
   padding-right: 10px;

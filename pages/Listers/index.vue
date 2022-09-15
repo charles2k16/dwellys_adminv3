@@ -3,7 +3,7 @@
     <el-card class="mt-20">
       <el-card class="mt-20">
         <el-table
-          v-loading="tableLoading"
+          v-loading="listers.length < 1"
           :data="listers"
           stripe
           :default-sort="{ prop: 'name', order: 'descending' }"
@@ -34,7 +34,9 @@
           </el-table-column>
           <el-table-column label="Email address">
             <template slot-scope="scope">
-              <span>{{ scope.row.email }} </span>
+              <span @click="viewProfile(scope.row)"
+                >{{ scope.row.email }}
+              </span>
             </template>
           </el-table-column>
           <el-table-column label="Phone Number">
@@ -76,24 +78,6 @@
           </el-table-column>
           <el-table-column>
             <template slot-scope="props">
-              <!-- <el-tooltip
-                class="item"
-                effect="dark"
-                content="Edit Product"
-                placement="top"
-              >
-                <el-button
-                  type="primary"
-                  icon="el-icon-edit"
-                  circle
-                ></el-button>
-              </el-tooltip>
-              <el-button
-                type="danger"
-                icon="el-icon-delete"
-                circle
-                @click="deleteProduct(props.row.id)"
-              ></el-button> -->
               <el-dropdown trigger="click">
                 <span class="el-dropdown-link">
                   <i class="el-icon-more"> </i>

@@ -34,7 +34,9 @@
           </el-table-column>
           <el-table-column label="Email address">
             <template slot-scope="scope">
-              <span>{{ scope.row.email }} </span>
+              <span @click="viewProfile(scope.row)"
+                >{{ scope.row.email }}
+              </span>
             </template>
           </el-table-column>
           <el-table-column label="Phone Number">
@@ -209,7 +211,7 @@
             >
             <el-button
               v-else
-              type="info"
+              type="primary"
               class="w-50"
               :loading="loading"
               @click="approveLister(profile)"
