@@ -203,7 +203,7 @@ export default Vue.extend({
         },
         {
           icon: 'armchair.svg',
-          name: 'Property height',
+          name: 'Property length',
           description: 'land height',
         },
       ],
@@ -264,11 +264,6 @@ export default Vue.extend({
           svg: 'building-warehouse.svg',
           name: 'Water Storage',
           description: 'water storage',
-        },
-        {
-          svg: 'building-warehouse.svg',
-          name: 'Pop Ceiling',
-          description: 'pop ceiling',
         },
         {
           svg: 'building-warehouse.svg',
@@ -426,7 +421,7 @@ export default Vue.extend({
             message: 'Check your network connectivity',
             type: 'error',
           })
-          ;(this as any as IMixinState).catchError(error)
+          // ;(this as any as IMixinState).catchError(error)
         }
       }
     },

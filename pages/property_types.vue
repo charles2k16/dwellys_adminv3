@@ -22,7 +22,7 @@
     <el-card class="mt-20">
       <el-card class="mt-20">
         <el-table
-          v-loading="tableLoading"
+          v-loading="properties.length < 1"
           :data="properties"
           stripe
           :default-sort="{ prop: 'name', order: 'descending' }"
@@ -53,7 +53,7 @@
                 <span>
                   <img
                     v-if="scope.row.photo"
-                    :src="url + scope.row.photo"
+                    :src="apiUrl + '/' + scope.row.photo"
                     alt="pic"
                     class="profile_avatar"
                   />
@@ -161,7 +161,6 @@ export default Vue.extend({
 
   data() {
     return {
-      url: 'http://127.0.0.1:8000/',
       tableLoading: false,
       profile: {},
       search: '' as string,

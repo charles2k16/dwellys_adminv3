@@ -3,7 +3,7 @@
     <el-card class="mt-20">
       <el-card class="mt-20">
         <el-table
-          v-loading="tableLoading"
+          v-loading="users.length < 1"
           :data="users"
           stripe
           :default-sort="{ prop: 'name', order: 'descending' }"
@@ -86,7 +86,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import url from '../../url'
 import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
@@ -142,9 +141,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    url() {
-      return url()
-    },
     viewProfile(profile: any) {
       this.profile = profile
       this.drawer = true

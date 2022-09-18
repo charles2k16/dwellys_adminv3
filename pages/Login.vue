@@ -100,7 +100,10 @@ export default Vue.extend({
     async signIn(): Promise<any> {
       const login = await this.$auth
         .loginWith('local', {
-          data: this.loginForm,
+          data: {
+            email: this.loginForm.email,
+            password: this.loginForm.password,
+          },
         })
         .then((response: any) => {
           console.log(login)
@@ -122,8 +125,14 @@ export default Vue.extend({
         .catch((error) => {
           console.log(error)
           if (error?.response?.data) {
+            console.log(error.response.data)
             ;(this as any as IMixinState).getNotification(
               'User Not Recognized',
+              'warning'
+            )
+          } else {
+            ;(this as any as IMixinState).getNotification(
+              'Check Internet connectivity',
               'warning'
             )
           }

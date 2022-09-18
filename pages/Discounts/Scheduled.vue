@@ -4,7 +4,7 @@
       <el-card class="mt-20">
         <el-table
           v-loading="tableLoading"
-          :data="unverifiedlistings"
+          :data="scheduleddiscounts"
           stripe
           :default-sort="{ prop: 'name', order: 'descending' }"
         >
@@ -19,79 +19,60 @@
               </div>
             </template>
           </el-table-column> -->
-          <el-table-column label="Listing">
+          <el-table-column label="Name">
             <template slot-scope="scope">
-              <div
-                class="d-flex"
-                style="cursor: pointer"
-                @click="getListingDetails(scope.row.id)"
-              >
+              <div class="d-flex">
                 <span class="d-block">
-                  {{ scope.row.listing_detail.name }}
+                  {{ scope.row.name }}
                   <!-- {{ scope.row.lister.last_name }} -->
                 </span>
               </div>
             </template>
           </el-table-column>
 
-          <el-table-column label="Country">
+          <el-table-column label="code">
             <template slot-scope="props">
-              <div
-                class="d-flex clickable"
-                @click="getListingDetails(props.row.id)"
-              >
-                <span>
-                  {{ props.row.listing_detail.country.short_name }}
-                </span>
+              <div class="d-flex clickable">
+                <el-tag type="success"> {{ props.row.code }}</el-tag>
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="City">
+          <el-table-column label="No of redeems">
             <template slot-scope="scope">
-              <div
-                style="cursor: pointer"
-                @click="getListingDetails(scope.row.id)"
-              >
-                <span>{{ scope.row.listing_detail.city }} </span>
+              <div>
+                <span>{{ scope.row.no_of_redeems }} </span>
               </div>
             </template>
           </el-table-column>
 
-          <el-table-column label="Listing date">
+          <el-table-column label="Percentage Value">
             <template slot-scope="props">
-              <div
-                class="d-flex clickable"
-                @click="getListingDetails(props.row.id)"
-              >
-                <span
-                  >{{ $moment(props.row.created_at).format('MMM DD, YY') }}
-                </span>
+              <div class="d-flex clickable">
+                <span> {{ props.row.percentage_value }}% </span>
+
                 <!-- {{ moment(props.row.created_at) }} -->
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="Amount">
+          <el-table-column label="Expiry Date">
             <template slot-scope="props">
-              <div
-                class="d-flex clickable"
-                @click="getListingDetails(props.row.id)"
-              >
-                <span>{{ props.row.listing_detail.price }} </span>
+              <div class="d-flex clickable">
+                <span
+                  >{{ $moment(props.row.expiry_date).format('MMM DD, YY') }}
+                </span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="Approved">
+          <el-table-column label="Plan Type">
             <template slot-scope="scope">
-              <div
-                style="cursor: pointer"
-                @click="getListingDetails(scope.row.id)"
-              >
-                <el-tag
-                  :type="scope.row.status == 'active' ? 'success' : 'error'"
-                  size="small"
-                >
-                  {{ scope.row.status == 'active' ? 'Yes' : 'No' }}</el-tag
-                >
+              <div>
+                <p>
+                  {{
+                    scope.row.plan_type == 'all_plan'
+                      ? 'All Plans'
+                      : 'Selected Plan'
+                  }}
+                </p>
               </div>
             </template>
           </el-table-column>
@@ -108,37 +89,13 @@
                   icon="el-icon-edit"
                   circle
                 ></el-button>
-              </el-tooltip>
+              </el-tooltip> -->
               <el-button
                 type="danger"
                 icon="el-icon-delete"
                 circle
-                @click="deleteProduct(props.row.id)"
-              ></el-button> -->
-              <el-dropdown trigger="click">
-                <span style="cursor: pointer" class="el-dropdown-link">
-                  <i class="el-icon-more"> </i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item
-                    ><p
-                      class="p-10"
-                      @click="open(props.row.id, 'active', 'Approve')"
-                    >
-                      <i class="el-icon-check pr-10"></i>Approve
-                    </p></el-dropdown-item
-                  >
-                  <el-dropdown-item
-                    ><p
-                      style="color: red"
-                      class="p-10"
-                      @click="open(props.row.id, 'inactive', 'Disapprove')"
-                    >
-                      <i class="el-icon-close pr-10"></i>Disapprove
-                    </p></el-dropdown-item
-                  >
-                </el-dropdown-menu>
-              </el-dropdown>
+                @click="open(props.row.id)"
+              ></el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -163,17 +120,21 @@ import Vue from 'vue'
 import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
-  name: 'UnVerifiedListings',
+  name: 'ScheduledDiscounts',
   props: {
-    listings: {
+    discounts: {
       required: true,
       type: Array,
     },
-    verifiedlistings: {
+    activediscounts: {
       required: true,
       type: Array,
     },
-    unverifiedlistings: {
+    scheduleddiscounts: {
+      required: true,
+      type: Array,
+    },
+    expireddiscounts: {
       required: true,
       type: Array,
     },
@@ -200,19 +161,14 @@ export default Vue.extend({
       this.drawer = true
       console.log(profile)
     },
-    open(listingId: string, active: string, btnText: string) {
-      console.log(listingId, 'profile')
+    open(discountId: string) {
       // const h = this.$createElement
-      this.$confirm(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum interdum quisque risus ornare tincidunt sed in. Neque elit nunc scelerisque lacinia ultrices adipiscing.',
-        'Are you sure you want approve the listing?',
-        {
-          cancelButtonText: 'Cancel',
-          confirmButtonText: btnText,
-        }
-      )
+      this.$confirm('Are you sure you want to delete discount?', {
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Delete',
+      })
         .then(() => {
-          this.approveLister(listingId, active)
+          this.deleteDiscount(discountId)
         })
         .catch(() => {
           this.$message({
@@ -221,28 +177,18 @@ export default Vue.extend({
           })
         })
     },
-    getListingDetails(id: string) {
-      this.$router.push(`/listing_details/${id}`)
-    },
-    async approveLister(listingId: string, status: string) {
-      this.loading = true
-      console.log(status)
+    async deleteDiscount(id: string) {
       try {
-        const listingResponse = await this.$toggleListingApi.create({
-          listing_id: listingId,
-          status,
-        })
+        const discountResponse = await this.$discountApi.delete(id)
 
-        console.log(listingResponse)
+        console.log(discountResponse)
         // console.log(listingId, active)
-
-        this.loading = false
-        this.fetchData()
         ;(this as any as IMixinState).$message({
           showClose: true,
-          message: listingResponse.message,
+          message: `Discount Deleted Successfully!`,
           type: 'success',
         })
+        this.fetchData()
       } catch (error) {
         console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)

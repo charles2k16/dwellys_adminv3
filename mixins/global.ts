@@ -1,50 +1,47 @@
 import Vue from 'vue'
 import { IMixinState } from '@/types/mixinsTypes'
-const ApplicationHandler = () => import( '../handlers/ApplicationHandler.vue' )
+const ApplicationHandler = () => import('../handlers/ApplicationHandler.vue')
 
-export default Vue.extend( {
+export default Vue.extend({
   components: {
     ApplicationHandler,
   },
-   data () {
+  data() {
     return {
-      apiUrl:
-        process.env.NODE_ENV === "development"
-          ? "http://localhost:8000"
-          : "https://newapi.dwellys.com",
-    };
+      apiUrl: 'https://newapi.dwellys.com',
+    }
   },
-  methods: <IMixinState> {
-    getFullName ( firstName: string, lastName: string ): string {
-      return `${ firstName } ${ lastName }`
+  methods: <IMixinState>{
+    getFullName(firstName: string, lastName: string): string {
+      return `${firstName} ${lastName}`
     },
-    getFormatedDate ( currentDate: string, type: string ): string {
-      if ( !currentDate ) return 'None'
+    getFormatedDate(currentDate: string, type: string): string {
+      if (!currentDate) return 'None'
 
-      const date = new Date( currentDate )
-      const dateTimeFormat = new Intl.DateTimeFormat( 'en', {
+      const date = new Date(currentDate)
+      const dateTimeFormat = new Intl.DateTimeFormat('en', {
         year: 'numeric',
         month: type === 'long' ? 'long' : 'short',
         day: '2-digit',
-      } )
-      const [ { value: month }, , { value: day }, , { value: year } ] =
-        dateTimeFormat.formatToParts( date )
+      })
+      const [{ value: month }, , { value: day }, , { value: year }] =
+        dateTimeFormat.formatToParts(date)
 
-      return `${ day }-${ month }-${ year }`
+      return `${day}-${month}-${year}`
     },
-    getNotification ( message: string, type: string ) {
-      this.$notify( {
+    getNotification(message: string, type: string) {
+      this.$notify({
         title:
           type === 'success'
             ? 'Success'
             : type === 'error'
-              ? 'Error'
-              : type === 'warning'
-                ? 'Warning'
-                : 'Info',
+            ? 'Error'
+            : type === 'warning'
+            ? 'Warning'
+            : 'Info',
         message,
         type,
-      } )
+      })
     },
   },
-} )
+})

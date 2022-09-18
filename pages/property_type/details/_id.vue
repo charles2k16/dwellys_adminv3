@@ -8,12 +8,19 @@
         <!-- <b>{{ listing && property.lister.first_name }} </b> -->
         <!-- </p> -->
         <!-- </section> -->
+        <section class="mr-10 mt-10">
+          <NuxtLink to="/property_types">
+            <span
+              ><i class="el-icon-back mr-20" style="font-size: 30px"></i>
+            </span>
+          </NuxtLink>
+        </section>
         <section class="listing_bar">
           <p>Property name</p>
           <section class="d-flex pt-10">
             <img
               v-if="property"
-              :src="url() + '/' + property.photo"
+              :src="apiUrl + '/' + property.photo"
               height="30px"
             />
             <p class="pt-10">
@@ -26,7 +33,7 @@
           <section class="d-flex pt-10">
             <img
               v-if="property.creator"
-              :src="url() + '/' + property.creator.avatar"
+              :src="apiUrl + '/' + property.creator.avatar"
               height="30px"
             />
             <img
@@ -106,7 +113,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import url from '../../../url'
 import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
@@ -136,9 +142,6 @@ export default Vue.extend({
     this.property = property.data
   },
   methods: {
-    url() {
-      return url()
-    },
     updateProperty(id: string) {
       this.$router.push(`/property_type/edit/${id}`)
     },

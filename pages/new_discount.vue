@@ -18,12 +18,7 @@
     </div>
 
     <div class="account_form mt-10">
-      <el-form
-        ref="plan"
-        :rules="plan_validation"
-        :model="plan"
-        label-position="top"
-      >
+      <el-form ref="plan" :model="plan" label-position="top">
         <div class="user_form">
           <div class="d-flex w-100">
             <div class="account_label">
@@ -32,11 +27,7 @@
             </div>
             <div class="pl-20 w-80">
               <div class="plan_info d-flex_column">
-                <el-form-item
-                  label="Name of discount"
-                  class="plan_name"
-                  prop="name"
-                >
+                <el-form-item label="Name of discount" class="plan_name">
                   <el-input
                     v-model="plan.name"
                     placeholder="First name"
@@ -44,13 +35,9 @@
                   >
                   </el-input>
                 </el-form-item>
-                <el-form-item
-                  label="Discount code"
-                  prop="description"
-                  class="plan_name"
-                >
+                <el-form-item label="Discount code" class="plan_name">
                   <el-input
-                    v-model="plan.description"
+                    v-model="plan.code"
                     placeholder="enter a discount code"
                     class="w-100"
                   >
@@ -79,35 +66,51 @@
                 ></el-checkbox>
               </el-form-item> -->
               <div class="">
-                <el-form-item label="Discount type" class="discount">
+                <el-form-item label="Plan Type" class="discount">
                   <el-select
                     v-model="plan.currency"
-                    placeholder="Select a discount type"
+                    placeholder="Select a plan type"
                     class="pt-10 select"
                   >
                     <el-option
-                      v-for="(currency, index) in currencies"
+                      v-for="(type, index) in plan_types"
                       :key="index"
-                      :label="currency.short_name"
-                      :value="currency.short_name"
+                      :label="type"
+                      :value="type"
                     >
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="Pricing tier" class="discount">
+                <el-form-item label="Discount Plan" class="discount">
                   <el-select
-                    v-model="plan.currency"
-                    placeholder="Select a pricing tier"
+                    v-model="plan.listing_plan_id"
+                    placeholder="Select a discount plan"
                     class="pt-10 select"
                   >
                     <el-option
-                      v-for="(currency, index) in currencies"
+                      v-for="(selected_plan, index) in plans"
                       :key="index"
-                      :label="currency.short_name"
-                      :value="currency.short_name"
+                      :label="selected_plan.name"
+                      :value="selected_plan.id"
                     >
                     </el-option>
                   </el-select>
+                </el-form-item>
+                <el-form-item label="Number of days" class="plan_name">
+                  <el-input
+                    v-model="plan.no_of_days"
+                    placeholder="enter a number or days"
+                    class="w-100"
+                  >
+                  </el-input>
+                </el-form-item>
+                <el-form-item label="Number of redeems" class="plan_name">
+                  <el-input
+                    v-model="plan.no_of_redeems"
+                    placeholder="enter a number or redeems"
+                    class="w-100"
+                  >
+                  </el-input>
                 </el-form-item>
               </div>
             </div>
@@ -122,28 +125,30 @@
               </p>
             </div>
             <div class="w-50">
-              <el-form-item label="Discount percent" prop="no_of_days">
+              <el-form-item label="Discount percent">
                 <el-input
-                  v-model="plan.no_of_days"
+                  v-model="plan.percentage_value"
                   type="number"
                   placeholder="Enter percentage fraction."
                   class="w-100"
                 >
+                  <template slot="append"><p>&#37;</p> </template>
                 </el-input>
               </el-form-item>
             </div>
           </div>
           <div>
             <div class="mt-20 d-flex w-50 justify_between">
-              <el-button class="back_btn">Cancel</el-button>
+              <NuxtLink to="/discounts"
+                ><el-button class="back_btn">Cancel</el-button></NuxtLink
+              >
               <div class="register_btn">
-                <el-button type="info" @click="submit_plan">Save</el-button>
                 <el-button
-                  type="primary"
+                  type="Primary"
                   :loading="btnLoading"
                   class="second_next submit_register_button"
-                  @click="submit_plan"
-                  >Save and activate</el-button
+                  @click="submit_discount"
+                  >Save</el-button
                 >
               </div>
             </div>
@@ -169,68 +174,34 @@ export default Vue.extend({
       phone: '',
       btnLoading: false as boolean,
       counter: 1,
+      plan_types: ['All Plans', 'Select Plan'],
       currencies: [],
       plan: {
         name: '' as string,
-        description: '' as string,
-        price: 0 as number,
-        is_plan_in_percentage: null,
-        percentage_fraction_on_value: '',
-        currency: '',
+        code: '' as string,
+        plan_type: '' as string,
+        percentage_value: '' as string,
+        listing_plan_id: '' as string,
+        no_of_redeems: '' as string,
         no_of_days: '' as string,
-        features: [''] as Array<string>,
-      },
-
-      plan_validation: {
-        name: [
-          {
-            required: true,
-            message: 'Please enter plan name',
-            trigger: ['blur', 'change'],
-          },
-        ],
-        description: [
-          {
-            required: true,
-            message: 'Please enter description',
-            trigger: ['blur', 'change'],
-          },
-        ],
-        no_of_days: [
-          {
-            required: true,
-            message: 'Please enter duration',
-            trigger: ['blur', 'change'],
-          },
-        ],
       },
 
       user: '' as string,
-      countries: [],
+      plans: [],
     }
   },
   async created() {
-    const currencies = await this.$countriesApi.index()
-    this.currencies = currencies.data
-    console.log(this.currencies)
+    const plans = await this.$listingPlanApi.index()
+    this.plans = plans.data.filter((plan: any) => plan.is_active === 1)
   },
   methods: {
-    addTier() {
-      this.counter++
-      this.plan.features.push('')
-    },
-    removeTier(index: number) {
-      this.counter--
-      this.plan.features.splice(index, 1)
-    },
-    submit_plan() {
-      //   this.plan.activate = activate
+    submit_discount() {
       console.log(this.plan)
       this.btnLoading = true
       ;(this as any).$refs.plan.validate((valid: boolean) => {
         if (valid) {
           this.newPlan()
-          // this.$router.replace('/users')
+          this.$router.replace('/discounts')
         } else {
           this.btnLoading = false
           ;(this as any as IMixinState).getNotification(
@@ -245,23 +216,18 @@ export default Vue.extend({
       try {
         const data = {
           name: this.plan.name,
-          description: this.plan.description,
-          price: this.plan.is_plan_in_percentage === true ? 0 : this.plan.price,
-          is_plan_in_percentage: this.plan.price > 0 ? 'no' : 'yes',
-          percentage_fraction_on_value:
-            this.plan.is_plan_in_percentage === true
-              ? this.plan.percentage_fraction_on_value
-              : '',
-          currency:
-            this.plan.is_plan_in_percentage === true ? '' : this.plan.currency,
-          no_of_days:
-            this.plan.is_plan_in_percentage === true
-              ? ''
-              : this.plan.no_of_days,
-          features: this.plan.features,
+          plan_type:
+            this.plan.plan_type === 'Select Plan'
+              ? 'selected_plan'
+              : 'all_plan',
+          code: this.plan.code,
+          no_of_redeems: this.plan.no_of_redeems,
+          percentage_value: this.plan.percentage_value,
+          listing_plan_id: this.plan.listing_plan_id,
+          no_of_days: this.plan.no_of_days,
         }
         console.log(data)
-        const response = await this.$listingPlanApi.create(data)
+        const response = await this.$discountApi.create(data)
         console.log(response)
         ;(this as any as IMixinState).$message({
           showClose: true,

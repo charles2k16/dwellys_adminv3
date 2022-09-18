@@ -29,7 +29,7 @@
                 ><i class="el-icon-cold-drink mt-10"></i
               ></template>
               <el-option
-                v-for="item in listings"
+                v-for="item in discounts"
                 :key="item.id"
                 :label="item.lister.first_name"
                 :value="item.lister.first_name"
@@ -54,10 +54,12 @@
     </el-card>
 
     <NuxtChild
-      :listings="listings"
-      :verifiedlistings="verified_listings"
-      :unverifiedlistings="unverified_listings"
+      :discounts="discounts"
+      :activediscounts="active_discounts"
+      :scheduleddiscounts="scheduled_discounts"
+      :expireddiscounts="expired_discounts"
       :fetch-data="fetchData"
+      :loading="loading"
     />
   </div>
 </template>
@@ -65,13 +67,15 @@
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-  name: 'ListingsPage',
+  name: 'DiscountsPage',
   middleware: 'auth',
   data() {
     return {
-      listings: [],
-      verified_listings: [],
-      unverified_listings: [],
+      loading: false,
+      discounts: [],
+      active_discounts: [],
+      scheduled_discounts: [],
+      expired_discounts: [],
       value: '',
     }
   },
@@ -80,18 +84,20 @@ export default Vue.extend({
   },
   methods: {
     async fetchData() {
-      const listings = await this.$listingsApi.index()
-      this.listings = listings.data
-      console.log(listings.data)
+      const discounts = await this.$discountApi.index()
+      this.discounts = discounts.data
+      if (!this.discounts) {
+        this.loading = true
+      }
 
-      this.verified_listings = listings.data.filter(
-        (listing: any) => listing.status === 'active'
-      )
-      // console.log('verified',this.verified_listings)
-      this.unverified_listings = listings.data.filter(
-        (listing: any) => listing.status === 'inactive'
-      )
-      // console.log('unverified',this.unverified_listings)
+      // this.verified_discounts = discounts.data.filter(
+      //   (listing: any) => listing.status === 'active'
+      // )
+      // // console.log('verified',this.verified_discounts)
+      // this.unverified_discounts = discounts.data.filter(
+      //   (listing: any) => listing.status === 'inactive'
+      // )
+      // console.log('unverified',this.unverified_discounts)
     },
     addProduct(): void {
       ;(this as any).$refs.handleAction.showAddClassModal()

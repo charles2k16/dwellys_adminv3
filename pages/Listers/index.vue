@@ -246,7 +246,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import url from '../../url'
 import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
@@ -291,9 +290,6 @@ export default Vue.extend({
     this.countries = countries.data
   },
   methods: {
-    url() {
-      return url()
-    },
     getAvatar(file: any) {
       console.log(file)
 

@@ -48,6 +48,8 @@ declare module 'vue/types/vue' {
     $specificationsTypeApi: apiService
     $AmenitiesApi: apiService
     $listerUpdateApi: apiService
+    $listingUpdateApi: apiService
+    $discountApi: apiService
     // $refs: { [key: string]: Vue | Element | (Vue | Element)[] | Function | undefined; }
   }
 }

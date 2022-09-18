@@ -3,7 +3,8 @@
     <el-card class="mt-20">
       <el-card class="mt-20">
         <el-table
-          :data="activediscounts"
+          v-loading="tableLoading"
+          :data="expireddiscounts"
           stripe
           :default-sort="{ prop: 'name', order: 'descending' }"
         >
@@ -143,7 +144,7 @@ import Vue from 'vue'
 import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
-  name: 'ActiveDiscounts',
+  name: 'ExpiredDiscounts',
   props: {
     discounts: {
       required: true,

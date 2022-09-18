@@ -19,8 +19,14 @@
           Drop file here or <em>click to upload</em>
         </div>
       </el-upload>
+      <div class="uploadImgs">
+        <div v-for="image in photos" :key="image.photo">
+          <img :src="image.photo" width="70px" class="mx-10 my-10" />
+        </div>
+      </div>
+      <p v-if="imageErr" style="color: red">{{ imageErr }}</p>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button @click="closeImgUpload">Cancel</el-button>
         <el-button type="primary" :loading="loading" @click="addImages"
           >Add Image(s)</el-button
         >
@@ -39,7 +45,7 @@
             </p>
           </div>
           <div class="d-flex">
-            <el-input-number :min="0" size="small" v-model="spec.number">
+            <el-input-number v-model="spec.number" :min="0" size="small">
               {{ spec.number ? spec.number : 0 }}
               <!-- v-model="propertyUpload.specifications.number" -->
             </el-input-number>
@@ -47,10 +53,12 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="specVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="addSpecs" :loading="loading"
-          >Add Specification(s)</el-button
-        >
+        <div class="pb-10 pr-10">
+          <el-button @click="specVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="addSpecs"
+            >Add Specification(s)</el-button
+          >
+        </div>
       </span>
     </el-dialog>
     <el-dialog
@@ -64,7 +72,7 @@
           <el-input v-model="newOtherSpec.name" />
         </div>
         <div class="d-flex">
-          <el-input-number :min="0" size="small" v-model="newOtherSpec.number">
+          <el-input-number v-model="newOtherSpec.number" :min="0" size="small">
             {{ newOtherSpec.number ? newOtherSpec.number : 0 }}
             <!-- v-model="propertyUpload.specifications.number" -->
           </el-input-number>
@@ -72,10 +80,12 @@
       </div>
       <!-- </div> -->
       <span slot="footer" class="dialog-footer">
-        <el-button @click="otherSpecVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="addOtherSpecs" :loading="loading"
-          >Add Other Specification(s)</el-button
-        >
+        <div class="pb-10 pr-10">
+          <el-button @click="otherSpecVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="addOtherSpecs"
+            >Add Other Specification(s)</el-button
+          >
+        </div>
       </span>
     </el-dialog>
     <el-dialog
@@ -103,10 +113,12 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="amenityVisible = false">Cancel</el-button>
-        <el-button :loading="loading" type="primary" @click="addAmenities"
-          >Add Amenitie(s)</el-button
-        >
+        <div class="pb-10 pr-10">
+          <el-button @click="amenityVisible = false">Cancel</el-button>
+          <el-button :loading="loading" type="primary" @click="addAmenities"
+            >Add Amenitie(s)</el-button
+          >
+        </div>
       </span>
     </el-dialog>
     <div class="d-flex justify_between">
@@ -130,7 +142,7 @@
         </section>
       </div>
       <div class="listing_approval">
-        <p>Do you want to approve this listing?</p>
+        <p>Do you want to approve this listing ?</p>
 
         <div class="d-flex pt-10">
           <el-button
@@ -300,7 +312,7 @@
       <el-button type="primary" class="mr-10" @click="updateListing">
         <i class="el-icon-check pr-10"></i>Save Changes</el-button
       >
-      <p
+      <!-- <p
         type="primary"
         class="pr-10 ml-20"
         :loading="loading"
@@ -308,7 +320,7 @@
       >
         <i class="el-icon-delete-solid deleteImgIcon"></i
         ><span class="pl-5" style="color: red">Delete</span>
-      </p>
+      </p> -->
     </div>
   </div>
 </template>
@@ -328,8 +340,8 @@ export default Vue.extend({
   // },
   data() {
     return {
-      url: 'http://localhost:8000/',
       activeName: 'first' as string,
+      imageErr: '' as string,
       image: '' as any,
       approvalLoader: false,
       deleteLoading: false,
@@ -408,15 +420,23 @@ export default Vue.extend({
         })
     },
     newImage(file: any) {
-      const reader = new FileReader()
-      reader.readAsDataURL(file.raw)
-      reader.onloadend = () => {
-        this.photos.push({
-          tag: 'front',
-          is_featured: false,
-          photo: reader.result,
-        })
+      if (file.size >= 5000000) {
+        this.imageErr = 'Image must not exceed 5 Mb.'
+      } else {
+        const reader = new FileReader()
+        reader.readAsDataURL(file.raw)
+        reader.onloadend = () => {
+          this.photos.push({
+            tag: 'front',
+            is_featured: false,
+            photo: reader.result,
+          })
+        }
       }
+    },
+    closeImgUpload() {
+      this.dialogVisible = false
+      this.photos = []
     },
     removeSpec(index: number) {
       console.log('specification id', index)
@@ -602,14 +622,47 @@ export default Vue.extend({
     },
     async updateListing() {
       this.loading = true
+      const specifications = this.listing.property_specifications.map(
+        (specification: any) => {
+          return {
+            id: specification.specification ? specification.id : '',
+            property_type_specification_id: specification.specification
+              ? specification.specification.id
+              : specification.id,
+            number: specification.number,
+          }
+        }
+      )
+
+      const otherSpecifications = this.listing.other_specifications.map(
+        (OtherSpecification: any) => {
+          return {
+            id: OtherSpecification ? OtherSpecification.id : '',
+            name: OtherSpecification.name,
+            number: OtherSpecification.number,
+          }
+        }
+      )
+
+      const amenities = this.listing.amenities.map((amenity: any) => {
+        return {
+          id: amenity.amenity ? amenity.id : '',
+          property_type_amenity_id: amenity.amenity
+            ? amenity.amenity.id
+            : amenity.id,
+          icon: amenity.icon,
+        }
+      })
+      console.log(amenities)
+
       try {
-        const ListingResponse = await this.$listingsApi.update(
-          this.listing_id,
+        const listingResponse = await this.$listingUpdateApi.update(
+          `${this.listing_id}/admin`,
           {
             property_type_id: this.listing.property_type.id,
-            specifications: this.listing.property_specifications,
-            amenities: this.listing.amenities,
-            other_specifications: this.listing.other_specifications,
+            specifications,
+            amenities,
+            other_specifications: otherSpecifications,
             name: this.listing.listing_detail.name,
             location: this.listing.listing_detail.location,
             region: this.listing.listing_detail.region,
@@ -623,27 +676,20 @@ export default Vue.extend({
           }
         )
 
-        console.log(ListingResponse)
+        console.log(listingResponse)
 
         this.loading = false
         this.fetchData()
         ;(this as any as IMixinState).$message({
           showClose: true,
-          message: ListingResponse.message,
+          message: listingResponse.message,
           type: 'success',
         })
-        this.$router.replace('/profile')
-      } catch (error: any) {
+        // this.$router.replace("/profile");
+      } catch (error) {
         console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
         this.loading = false
-        if (error?.response.data) {
-          ;(this as any as IMixinState).$message({
-            showClose: true,
-            message: error.response.data.message,
-            type: 'success',
-          })
-        }
       }
     },
     async setFeatureImage(imageId: string) {

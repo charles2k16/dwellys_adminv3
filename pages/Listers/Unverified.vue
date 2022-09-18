@@ -226,7 +226,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import url from '../../url'
 import { IMixinState } from '@/types/mixinsTypes'
 
 export default Vue.extend({
@@ -262,9 +261,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    url() {
-      return url()
-    },
     viewProfile(profile: any) {
       this.profile = profile
       this.drawer = true

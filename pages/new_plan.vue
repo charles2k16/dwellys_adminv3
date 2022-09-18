@@ -3,7 +3,7 @@
     <div class="w-80">
       <div class="d-flex justify_between">
         <div class="d-flex">
-          <NuxtLink to="/users">
+          <NuxtLink to="/plans">
             <span
               ><i class="el-icon-back mr-20" style="font-size: 30px"></i>
             </span>

@@ -14,6 +14,7 @@ export default (ctx, inject) => {
   inject('registerApi', apiService('/signup'))
   inject('categoriesApi', apiService('/categories'))
   inject('listingsApi', apiService('/listings'))
+  inject('listingUpdateApi', apiService('/updatelisting'))
   inject('toggleListingApi', apiService('/listing/togglestatus'))
   inject('approvalApi', apiService('/idcardapproval'))
   inject('countriesApi', apiService('/countries'))
@@ -23,4 +24,5 @@ export default (ctx, inject) => {
   inject('listingPlanApi', apiService('/listingplans'))
   inject('listingImagesApi', apiService('/listingimages'))
   inject('listerUpdateApi', apiService('/auth/account'))
+  inject('discountApi', apiService('/discounts'))
 }

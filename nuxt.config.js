@@ -62,10 +62,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'https://dwellys-adminv3.vercel.app/',
-    // process.env.NODE_ENV === 'production'  ?
-
-    // : 'http://127.0.0.1:8000/api/v3',
+    baseURL: 'https://newapi.dwellys.com/api/v3',
     headers: {
       'Access-Control-Allow-Origin': '*',
     },

@@ -3,7 +3,7 @@
     <el-card class="mt-20">
       <el-card class="mt-20">
         <el-table
-          v-loading="tableLoading"
+          v-loading="listings.length < 1"
           :data="listings"
           stripe
           :default-sort="{ prop: 'name', order: 'descending' }"
