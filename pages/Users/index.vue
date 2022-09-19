@@ -49,7 +49,7 @@
           <el-table-column label="Date">
             <template slot-scope="props">
               <div class="d-flex clickable" @click="viewProfile(props.row)">
-                {{ props.row.created_at }}
+                {{ $moment(props.row.created_at).format('MMM DD, YY') }}
               </div>
             </template>
           </el-table-column>

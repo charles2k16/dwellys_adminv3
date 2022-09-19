@@ -120,7 +120,10 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="editPricing(pricing.id)"
+        <el-button
+          type="primary"
+          :loading="loading"
+          @click="editPricing(pricing.id)"
           >Confirm</el-button
         >
       </span>
@@ -241,7 +244,7 @@ export default Vue.extend({
       this.pricing.listing_plan_features.push({ feature: '', id: '' })
     },
     removeTier(index: number) {
-      this.pricing.features.splice(index, 1)
+      this.pricing.listing_plan_features.splice(index, 1)
     },
     getPlan(plan: any) {
       this.pricing = plan
@@ -267,7 +270,7 @@ export default Vue.extend({
       })
     },
     async editPricing(id: string) {
-      this.dialogVisible = false
+      this.loading = true
       try {
         const planResponse = await this.$listingPlanApi.update(id, {
           name: this.pricing.name,
@@ -282,7 +285,7 @@ export default Vue.extend({
         })
 
         console.log(planResponse)
-
+        this.dialogVisible = false
         this.loading = false
         this.fetchData()
         ;(this as any as IMixinState).$message({
@@ -306,7 +309,7 @@ export default Vue.extend({
         this.fetchData()
         ;(this as any as IMixinState).$message({
           showClose: true,
-          message: planResponse.message,
+          message: 'Plan Deleted Successfully!',
           type: 'success',
         })
       } catch (error) {

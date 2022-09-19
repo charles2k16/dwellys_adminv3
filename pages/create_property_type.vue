@@ -137,20 +137,20 @@
                 >
                 <el-upload
                   id="category-image"
-                  class="upload-demo"
-                  drag
-                  :on-change="getImage"
                   action="#"
-                  :multiple="false"
+                  class="upload-demo mb-10"
+                  :on-change="getImage"
                   :auto-upload="false"
                 >
-                  <i class="el-icon-upload"></i>
-                  <div class="el-upload__text">
-                    Drop file here or <em>click to upload</em>
-                  </div>
+                  <el-button size="small" type="primary"
+                    >Select Image</el-button
+                  >
+                  <!-- <div slot="tip" class="el-upload__tip">
+                    jpg/png files with a size less than 5mb
+                  </div> -->
                 </el-upload>
                 <div>
-                  <img src="" />
+                  <img :src="propertyUpload.photo" class="property_image" />
                 </div>
               </div>
             </div>
@@ -251,49 +251,49 @@ export default Vue.extend({
         },
         { icon: 'plug.svg', name: 'Solar Panel', description: 'solar' },
         {
-          icon: 'building-warehouse.svg',
+          icon: 'warehouse.svg',
           name: 'Washing Machine',
           description: 'Washing Machine',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'water.svg',
           name: 'Water Supply',
           description: 'water supply',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'storage.svg',
           name: 'Water Storage',
           description: 'water storage',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'ceiling.svg',
+          name: 'Pop Ceiling',
+          description: 'pop ceiling',
+        },
+        {
+          icon: 'floor.svg',
           name: 'Tiled Floor',
           description: 'tiled floor',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'wardrobe.svg',
           name: 'Wardrobe',
           description: 'wardrobe',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'dish.svg',
           name: 'Dishwasher',
           description: 'dish washer',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'light.svg',
           name: 'Chandeller',
           description: 'chandeller',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'tv.svg',
           name: 'TV',
           description: 'television',
-        },
-        {
-          svg: 'building-warehouse.svg',
-          name: 'Pop Ceiling',
-          description: 'pop ceiling',
         },
       ],
       listing_photos: [] as any,
@@ -476,6 +476,11 @@ $medium_screen: 769px;
         flex-direction: column;
         align-items: center;
         padding: 20px 0;
+        .property_image {
+          width: 100%;
+          max-width: 400px;
+          height: 200px;
+        }
       }
     }
   }

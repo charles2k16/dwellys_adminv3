@@ -40,7 +40,7 @@
             >
           </el-menu-item-group>
         </el-submenu>
-        <el-menu-item index="5" :route="{ path: '/discounts' }">
+        <el-menu-item index="7" :route="{ path: '/discounts' }">
           <i class="el-icon-coin mr-5"></i>
           Discounts
         </el-menu-item>

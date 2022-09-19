@@ -310,7 +310,7 @@ export default Vue.extend({
         this.fetchData()
         ;(this as any as IMixinState).$message({
           showClose: true,
-          message: planResponse.message,
+          message: 'Plan Deleted Successfully!',
           type: 'success',
         })
       } catch (error) {

@@ -45,22 +45,22 @@
                 class="property_image"
               />
               <img v-else :src="avatar" alt="avatar" class="property_image" />
-              <label for="category-image" class="pb-10">Change Image</label>
-              <el-upload
-                id="category-image"
-                class="upload-demo"
-                drag
-                :on-change="getImage"
-                action="#"
-                :multiple="false"
-                accept="image/*"
-                :auto-upload="false"
-              >
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">
-                  Drop file here or <em>click to upload</em>
-                </div>
-              </el-upload>
+
+              <div class="w-50 d-flex justify_end">
+                <el-upload
+                  id="category-image"
+                  action="#"
+                  class="upload-demo mt-10"
+                  :on-change="getImage"
+                >
+                  <el-button size="small" type="primary"
+                    >Change Image</el-button
+                  >
+                  <!-- <div slot="tip" class="el-upload__tip">
+                    jpg/png files with a size less than 5mb
+                  </div> -->
+                </el-upload>
+              </div>
             </div>
             <section class="specs_icons">
               <h3 class="pb-10 center">Specifications</h3>
@@ -196,47 +196,47 @@ export default Vue.extend({
         },
         { icon: 'plug.svg', name: 'Solar Panel', description: 'solar' },
         {
-          icon: 'building-warehouse.svg',
+          icon: 'warehouse.svg',
           name: 'Washing Machine',
           description: 'Washing Machine',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'water.svg',
           name: 'Water Supply',
           description: 'water supply',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'storage.svg',
           name: 'Water Storage',
           description: 'water storage',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'ceiling.svg',
           name: 'Pop Ceiling',
           description: 'pop ceiling',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'floor.svg',
           name: 'Tiled Floor',
           description: 'tiled floor',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'wardrobe.svg',
           name: 'Wardrobe',
           description: 'wardrobe',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'dish.svg',
           name: 'Dishwasher',
           description: 'dish washer',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'light.svg',
           name: 'Chandeller',
           description: 'chandeller',
         },
         {
-          svg: 'building-warehouse.svg',
+          icon: 'tv.svg',
           name: 'TV',
           description: 'television',
         },
@@ -306,15 +306,32 @@ export default Vue.extend({
       }
     },
     async submitChanges() {
-      console.log(this.property)
+      // console.log(this.property)
       this.loading = true
+      const specifications = this.property.specifications.map(
+        (specification: any) => {
+          return {
+            ...specification,
+            id: specification.id ? specification.id : '',
+          }
+        }
+      )
+
+      const amenities = this.property.amenities.map((amenity: any) => {
+        return {
+          ...amenity,
+          id: amenity.id ? amenity.id : '',
+        }
+      })
+      console.log(amenities)
+
       try {
         const propertyResponse = await this.$propertyApi.update(
           this.property_type_id,
           {
-            amenities: this.property.amenities,
-            specifications: this.property.specifications,
-            photo: this.avatar ? this.avatar : this.property.photo,
+            amenities,
+            specifications,
+            photo: this.avatar ? this.avatar : null,
             name: this.property.name,
             id: this.property.id,
             description: this.property.description,
@@ -386,7 +403,7 @@ $medium_screen: 769px;
         padding: 20px 0;
         .property_image {
           width: 100%;
-          max-width: 300px;
+          max-width: 400px;
           height: 200px;
         }
       }

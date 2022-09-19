@@ -285,6 +285,10 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   padding-bottom: 0;
 }
 
+.el-upload-list {
+  display: none;
+}
+
 .edit_pricing_log > .el-dialog > .el-dialog__footer {
   padding: 10px 10px 15px;
 }

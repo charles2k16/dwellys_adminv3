@@ -30,9 +30,9 @@
         </section>
         <section class="listing_bar">
           <p>Lister</p>
-          <section class="d-flex pt-10">
+          <section v-if="property.creator" class="d-flex pt-10">
             <img
-              v-if="property.creator"
+              v-if="property.creator.avatar != null"
               :src="apiUrl + '/' + property.creator.avatar"
               height="30px"
             />
@@ -66,10 +66,7 @@
             ><i class="el-icon-check pr-10"></i>Update</el-button
           >
 
-          <el-button
-            type="info"
-            class="w-50 p-0"
-            @click="approveLister(property.id, 'inactive')"
+          <el-button type="info" class="w-50 p-0" @click="open(property.id)"
             ><i class="el-icon-close pr-10"></i>Delete</el-button
           >
         </div>
@@ -145,32 +142,31 @@ export default Vue.extend({
     updateProperty(id: string) {
       this.$router.push(`/property_type/edit/${id}`)
     },
-    async approveLister(listingId: string, status: string) {
+    open(id: string) {
+      // const h = this.$createElement
+      this.$confirm(
+        'Are you sure you want to delete ? You cannot undo this action.',
+        {
+          cancelButtonText: 'No, i want to keep',
+          confirmButtonText: 'Yes,I want to Delete',
+        }
+      ).then(() => {
+        this.deletePropertyType(id)
+      })
+    },
+    async deletePropertyType(id: string) {
+      console.log(id)
       try {
-        const listingResponse = await this.$listingsApi.toggle(
-          '/togglestatus',
-          {
-            listing_id: listingId,
-            status,
-          }
-        )
-
-        console.log(listingResponse)
-        // console.log(listingId, active)
-
-        this.loading = false
+        const propertyResponse = await this.$propertyApi.delete(id)
+        console.log(propertyResponse)
         ;(this as any as IMixinState).$message({
           showClose: true,
-          message: listingResponse.message,
+          message: propertyResponse.message,
           type: 'success',
         })
-      } catch (error: any) {
+      } catch (error) {
         console.log(error, 'error')
-        ;(this as any as IMixinState).$message({
-          showClose: true,
-          message: error.message,
-          type: 'success',
-        })
+        ;(this as any as IMixinState).catchError(error)
       }
     },
   },
