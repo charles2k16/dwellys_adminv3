@@ -8,7 +8,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      apiUrl: 'https://newapi.dwellys.com',
+      apiUrl: process.env.API_URL,
     }
   },
   methods: <IMixinState>{

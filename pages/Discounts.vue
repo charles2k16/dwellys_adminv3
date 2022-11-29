@@ -85,6 +85,7 @@ export default Vue.extend({
   methods: {
     async fetchData() {
       const discounts = await this.$discountApi.index()
+      console.log(discounts.data)
       this.discounts = discounts.data
       if (!this.discounts) {
         this.loading = true
