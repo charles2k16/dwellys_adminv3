@@ -40,7 +40,7 @@
             <div class="image_category">
               <img
                 v-if="property.photo && !avatar"
-                :src="apiUrl + '/' + property.photo"
+                :src="property.photo"
                 alt="property image"
                 class="property_image"
               />
