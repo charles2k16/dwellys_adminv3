@@ -84,8 +84,6 @@ export default Vue.extend({
       this.buttonLoading = true
       ;(this as any).$refs.loginForm.validate((valid: boolean) => {
         if (valid) {
-          console.log(this.loginForm)
-
           this.signIn()
         } else {
           this.buttonLoading = false

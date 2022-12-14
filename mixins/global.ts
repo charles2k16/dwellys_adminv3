@@ -8,7 +8,8 @@ export default Vue.extend({
   },
   data() {
     return {
-      apiUrl: process.env.API_URL,
+      // apiUrl: process.env.API_URL,
+      apiUrl: 'http://127.0.0.1:8000/',
     }
   },
   methods: <IMixinState>{

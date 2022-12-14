@@ -87,7 +87,11 @@
                 <section
                   v-for="(icon, index) in amenities_icon"
                   :key="index"
-                  :style="isAmenity(icon.name) ? 'background: red' : ''"
+                  :style="
+                    isAmenity(icon.name)
+                      ? { background: ' #de0b0b', color: 'white' }
+                      : ''
+                  "
                   class="info_card"
                   @click="getAmenityIcon(icon)"
                 >
