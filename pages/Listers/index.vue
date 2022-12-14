@@ -15,7 +15,7 @@
                 <span class="mr-10">
                   <img
                     v-if="scope.row.avatar"
-                    :src="apiUrl + '/' + scope.row.avatar"
+                    :src="scope.row.avatar"
                     alt="pic"
                     class="profile_avatar"
                   />
@@ -117,7 +117,7 @@
               avatar ===
                 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
             "
-            :src="apiUrl + '/' + profile.avatar"
+            :src="profile.avatar"
             class="profile_img"
           />
           <img v-else :src="avatar" alt="avatar" class="profile_img" />
@@ -202,7 +202,7 @@
           </section>
           <p><span>Image of ID</span></p>
           <img
-            :src="apiUrl + '/' + profile.id_card_upload"
+            :src="profile.id_card_upload"
             class="identification_card pb-10"
           />
           <!-- <div

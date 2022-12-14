@@ -15,7 +15,7 @@
                 <span class="mr-10">
                   <img
                     v-if="scope.row.avatar"
-                    :src="apiUrl + '/' + scope.row.avatar"
+                    :src="scope.row.avatar"
                     alt="pic"
                     class="profile_avatar"
                   />
@@ -129,11 +129,7 @@
     >
       <div class="px-30 user_details">
         <div class="d-flex">
-          <img
-            v-if="profile"
-            :src="apiUrl + '/' + profile.avatar"
-            class="profile_img"
-          />
+          <img v-if="profile" :src="profile.avatar" class="profile_img" />
           <div class="pl-20 pt-20">
             <el-button type="info">Reject profile photo</el-button>
             <p class="pt-10">
@@ -189,7 +185,7 @@
           </section>
           <p><span>Image of ID</span></p>
           <img
-            :src="apiUrl + '/' + profile.id_card_upload"
+            :src="profile.id_card_upload"
             class="identification_card pb-10"
           />
           <!-- <div

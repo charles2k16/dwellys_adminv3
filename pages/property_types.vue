@@ -53,7 +53,7 @@
                 <span>
                   <img
                     v-if="scope.row.photo"
-                    :src="apiUrl + '/' + scope.row.photo"
+                    :src="scope.row.photo"
                     alt="pic"
                     class="profile_avatar"
                   />

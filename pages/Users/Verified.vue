@@ -15,7 +15,7 @@
                 <span class="mr-10">
                   <img
                     v-if="scope.row.avatar"
-                    :src="apiUrl + '/' + scope.row.avatar"
+                    :src="scope.row.avatar"
                     alt="pic"
                     class="profile_avatar"
                   />

@@ -18,11 +18,7 @@
         <section class="listing_bar">
           <p>Property name</p>
           <section class="d-flex pt-10">
-            <img
-              v-if="property"
-              :src="apiUrl + '/' + property.photo"
-              height="30px"
-            />
+            <img v-if="property" :src="property.photo" height="30px" />
             <p class="pt-10">
               <b>{{ property && property.name }} </b>
             </p>
@@ -33,7 +29,7 @@
           <section v-if="property.creator" class="d-flex pt-10">
             <img
               v-if="property.creator.avatar != null"
-              :src="apiUrl + '/' + property.creator.avatar"
+              :src="property.creator.avatar"
               height="30px"
             />
             <img
