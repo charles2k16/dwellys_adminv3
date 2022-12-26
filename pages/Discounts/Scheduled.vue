@@ -1,14 +1,13 @@
 <template>
   <div>
     <el-card class="mt-20">
-      <el-card class="mt-20">
-        <el-table
-          v-loading="tableLoading"
-          :data="scheduleddiscounts"
-          stripe
-          :default-sort="{ prop: 'name', order: 'descending' }"
-        >
-          <!-- <el-table-column label="ID">
+      <el-table
+        v-loading="tableLoading"
+        :data="scheduleddiscounts"
+        stripe
+        :default-sort="{ prop: 'name', order: 'descending' }"
+      >
+        <!-- <el-table-column label="ID">
             <template slot-scope="scope">
               <div
                 class="d-flex"
@@ -19,66 +18,66 @@
               </div>
             </template>
           </el-table-column> -->
-          <el-table-column label="Name">
-            <template slot-scope="scope">
-              <div class="d-flex">
-                <span class="d-block">
-                  {{ scope.row.name }}
-                  <!-- {{ scope.row.lister.last_name }} -->
-                </span>
-              </div>
-            </template>
-          </el-table-column>
+        <el-table-column label="Name">
+          <template slot-scope="scope">
+            <div class="d-flex">
+              <span class="d-block">
+                {{ scope.row.name }}
+                <!-- {{ scope.row.lister.last_name }} -->
+              </span>
+            </div>
+          </template>
+        </el-table-column>
 
-          <el-table-column label="code">
-            <template slot-scope="props">
-              <div class="d-flex clickable">
-                <el-tag type="success"> {{ props.row.code }}</el-tag>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="No of redeems">
-            <template slot-scope="scope">
-              <div>
-                <span>{{ scope.row.no_of_redeems }} </span>
-              </div>
-            </template>
-          </el-table-column>
+        <el-table-column label="code">
+          <template slot-scope="props">
+            <div class="d-flex clickable">
+              <el-tag type="success"> {{ props.row.code }}</el-tag>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="Redemptions">
+          <template slot-scope="scope">
+            <div class="d-flex justify_center">
+              <span>{{ scope.row.no_of_redeems }} </span>
+            </div>
+          </template>
+        </el-table-column>
 
-          <el-table-column label="Percentage Value">
-            <template slot-scope="props">
-              <div class="d-flex clickable">
-                <span> {{ props.row.percentage_value }}% </span>
+        <el-table-column label="Amount">
+          <template slot-scope="props">
+            <div class="d-flex clickable">
+              <span> {{ props.row.percentage_value }}% </span>
 
-                <!-- {{ moment(props.row.created_at) }} -->
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="Expiry Date">
-            <template slot-scope="props">
-              <div class="d-flex clickable">
-                <span
-                  >{{ $moment(props.row.expiry_date).format('MMM DD, YY') }}
-                </span>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="Plan Type">
-            <template slot-scope="scope">
-              <div>
-                <p>
-                  {{
-                    scope.row.plan_type == 'all_plan'
-                      ? 'All Plans'
-                      : 'Selected Plan'
-                  }}
-                </p>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column>
-            <template slot-scope="props">
-              <!-- <el-tooltip
+              <!-- {{ moment(props.row.created_at) }} -->
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="Expiry Date">
+          <template slot-scope="props">
+            <div class="d-flex clickable">
+              <span
+                >{{ $moment(props.row.expiry_date).format('MMM DD, YY') }}
+              </span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="Products">
+          <template slot-scope="scope">
+            <div>
+              <p>
+                {{
+                  scope.row.plan_type == 'all_plan'
+                    ? 'All Plans'
+                    : 'Selected Plan'
+                }}
+              </p>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column>
+          <template slot-scope="props">
+            <!-- <el-tooltip
                 class="item"
                 effect="dark"
                 content="Edit Product"
@@ -90,26 +89,51 @@
                   circle
                 ></el-button>
               </el-tooltip> -->
-              <el-button
-                type="danger"
-                icon="el-icon-delete"
-                circle
-                @click="open(props.row.id)"
-              ></el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-card>
+            <el-button
+              type="danger"
+              icon="el-icon-delete"
+              circle
+              @click="open(props.row.id)"
+            ></el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
 
-      <div class="mt-40 center pb-10">
-        <el-pagination
-          background
-          :page-sizes="[15, 30, 50]"
-          :page-size="15"
-          layout="prev, pager, next, sizes, total"
-          :total="0"
-        >
-        </el-pagination>
+    <el-card class="mt-20">
+      <div class="center d-flex justify_between">
+        <div class="align_center">
+          <span class="pr-10">View</span>
+          <el-select v-model="value" placeholder="Select" style="width: 80px">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+          <span class="pl-10">users per page</span>
+        </div>
+        <!-- layout="prev, pager, next, sizes, total" -->
+        <div v-if="discountsPagination" class="align_center">
+          <span
+            >{{ discountsPagination.current_page }}-{{
+              discountsPagination.per_page
+            }}
+            0f 100</span
+          >
+          <el-pagination
+            background
+            :page-size="discountsPagination.per_page"
+            :current-page="discountsPagination.current_page"
+            @curent-change="handleCurrentChange"
+            :page-sizes="[30, 50, 100]"
+            layout="prev, pager, next"
+            :total="discountsPagination.total"
+          >
+          </el-pagination>
+        </div>
       </div>
     </el-card>
   </div>
@@ -142,9 +166,28 @@ export default Vue.extend({
       required: true,
       type: Function,
     },
+    discountsPagination: {
+      required: true,
+      type: Object,
+    },
   },
   data() {
     return {
+      value: '30',
+      options: [
+        {
+          value: '30',
+          label: '30',
+        },
+        {
+          value: '50',
+          label: '50',
+        },
+        {
+          value: '100',
+          label: '100',
+        },
+      ],
       activeTab: 'pendingReview',
       pendingTab: 'Pending Products',
       loading: false,
@@ -161,6 +204,7 @@ export default Vue.extend({
       this.drawer = true
       console.log(profile)
     },
+    handleCurrentChange() {},
     open(discountId: string) {
       // const h = this.$createElement
       this.$confirm('Are you sure you want to delete discount?', {

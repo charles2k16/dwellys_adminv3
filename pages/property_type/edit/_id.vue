@@ -68,12 +68,9 @@
                 <section
                   v-for="(icon, index) in specifications"
                   :key="index"
-                  :style="
-                    isSpecification(icon.name)
-                      ? { background: '#de0b0b', color: 'white' }
-                      : ''
-                  "
-                  class="info_card"
+                  :class="`info_card ${
+                    isSpecification(icon.name) ? 'change_color' : ''
+                  }`"
                   @click="getSpecification(icon)"
                 >
                   <!-- #f8fafc -->
@@ -84,15 +81,17 @@
             <section class="specs_icons">
               <h3 class="pb-10 center">Amenities</h3>
               <div class="icons_container">
+                <!-- :style="
+                    isAmenity(icon.name)
+                      ? { background: ' #de0b0b', color: 'white !important' }
+                      : ''
+                  " -->
                 <section
                   v-for="(icon, index) in amenities_icon"
                   :key="index"
-                  :style="
-                    isAmenity(icon.name)
-                      ? { background: ' #de0b0b', color: 'white' }
-                      : ''
-                  "
-                  class="info_card"
+                  :class="`info_card ${
+                    isAmenity(icon.name) ? 'change_color' : ''
+                  }`"
                   @click="getAmenityIcon(icon)"
                 >
                   <!-- {{ isAmenity(icon.name) }} -->
@@ -349,10 +348,11 @@ export default Vue.extend({
           message: propertyResponse.message,
           type: 'success',
         })
-        this.$router.replace('/property_types')
+        // this.$router.replace('/property_types')
       } catch (error: any) {
+        this.loading = false
         console.log(error?.response?.data, 'error')
-        ;(this as any as IMixinState).catchError(error?.response?.data?.message)
+        // ;(this as any as IMixinState).catchError(error?.response?.data?.message)
       }
     },
   },
@@ -362,6 +362,13 @@ export default Vue.extend({
 <style lang="scss">
 $small_screen: 426px;
 $medium_screen: 769px;
+
+.change_color {
+  background: #de0b0b !important;
+  p {
+    color: white !important;
+  }
+}
 
 .property_upload {
   //   margin: 0 auto;
@@ -435,6 +442,7 @@ $medium_screen: 769px;
         // background: #f8fafc;
         background: #fcfcfc;
         padding: 5px 10px;
+        cursor: pointer;
         border: 1px solid #e2e8f0;
         border-radius: 12px;
         margin: 10px 10px;

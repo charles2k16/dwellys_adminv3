@@ -1,17 +1,32 @@
 <template>
   <div>
-    <el-card class="p-20">
+    <el-card class="py-20">
       <div class="lister_header">
         <div class="d-flex">
           <h4 class="mr-20 pt-8">Listings accounts</h4>
-          <NuxtLink to="/listings/" class="ml-20 mr-10">
-            <el-button size="mini" round type="primary">All</el-button>
+          <NuxtLink to="/listings" class="ml-20 mr-10">
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/listings' ? 'primary' : ''"
+              >All</el-button
+            >
           </NuxtLink>
           <NuxtLink to="/listings/verified" class="mr-10">
-            <el-button size="mini" round>Verified</el-button>
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/listings/verified' ? 'primary' : ''"
+              >Verified</el-button
+            >
           </NuxtLink>
           <NuxtLink to="/listings/unverified">
-            <el-button size="mini" round>Unverified</el-button>
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/listings/unverified' ? 'primary' : ''"
+              >Unverified</el-button
+            >
           </NuxtLink>
         </div>
         <div class="d-flex">
@@ -53,6 +68,7 @@
       :verifiedlistings="verified_listings"
       :unverifiedlistings="unverified_listings"
       :fetch-data="fetchData"
+      :listingsPageDetails="listingsPageDetails"
     />
   </div>
 </template>
@@ -68,6 +84,7 @@ export default Vue.extend({
       verified_listings: [],
       unverified_listings: [],
       value: '',
+      listingsPageDetails: {},
     }
   },
   created() {
@@ -77,7 +94,8 @@ export default Vue.extend({
     async fetchData() {
       const listings = await this.$listingsApi.index()
       this.listings = listings.data
-      console.log(listings.data)
+      console.log(listings)
+      this.listingsPageDetails = listings.pagination
 
       this.verified_listings = listings.data.filter(
         (listing: any) => listing.status === 'active'

@@ -149,7 +149,7 @@
                     jpg/png files with a size less than 5mb
                   </div> -->
                 </el-upload>
-                <div>
+                <div v-if="propertyUpload.photo">
                   <img :src="propertyUpload.photo" class="property_image" />
                 </div>
               </div>

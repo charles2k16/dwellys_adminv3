@@ -94,6 +94,10 @@ export default Vue.extend({
           ? 'Property Types'
           : routeName === 'create_property_type'
           ? 'Create Property Type'
+          : routeName === 'property_type-details-id'
+          ? 'Property Type Details'
+          : routeName === 'property_type-edit-id'
+          ? 'Edit Property Type'
           : routeName === 'Listing_details-id'
           ? 'Listing details'
           : routeName

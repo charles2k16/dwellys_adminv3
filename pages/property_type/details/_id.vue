@@ -24,7 +24,7 @@
             </p>
           </section>
         </section>
-        <section class="listing_bar">
+        <!-- <section class="listing_bar">
           <p>Lister</p>
           <section v-if="property.creator" class="d-flex pt-10">
             <img
@@ -38,9 +38,6 @@
               alt="pic"
               style="width: 40px"
             />
-            <!-- <p class="p user_placeholder">
-              <i class="el-icon-user-solid"></i>
-            </p> -->
             <p class="pt-5 pl-5">
               <b>
                 {{ property.creator && property.creator.first_name }}
@@ -48,11 +45,9 @@
               </b>
             </p>
           </section>
-        </section>
+        </section> -->
       </div>
       <div>
-        <p>Do you want to approve this listing?</p>
-
         <div class="d-flex pt-10">
           <el-button
             type="danger"

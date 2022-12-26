@@ -2,18 +2,33 @@
   <div>
     <!-- <ApplicationHandler ref="handleAction"></ApplicationHandler> -->
 
-    <el-card class="p-20">
+    <el-card class="py-20">
       <div class="lister_header">
         <div class="d-flex">
           <h4 class="mr-20 pt-8">Lister accounts</h4>
-          <NuxtLink to="/listers/" class="ml-20 mr-10">
-            <el-button size="mini" round type="primary">All</el-button>
+          <NuxtLink to="/listers" class="ml-20 mr-10">
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/listers' ? 'primary' : ''"
+              >All</el-button
+            >
           </NuxtLink>
           <NuxtLink to="/listers/verified" class="mr-10">
-            <el-button size="mini" round>Verified</el-button>
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/listers/verified' ? 'primary' : ''"
+              >Verified</el-button
+            >
           </NuxtLink>
           <NuxtLink to="/listers/unverified">
-            <el-button size="mini" round>Unverified</el-button>
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/listers/unverified' ? 'primary' : ''"
+              >Unverified</el-button
+            >
           </NuxtLink>
         </div>
         <div class="d-flex">
@@ -55,6 +70,7 @@
       :fetch-data="fetchData"
       :verifiedlisters="verified_listers"
       :unverifiedlisters="unverified_listers"
+      :listersPageDetails="listersPageDetails"
     />
 
     <!-- :type="listing_type" -->
@@ -72,6 +88,7 @@ export default Vue.extend({
       value: '',
       verified_listers: [],
       unverified_listers: [],
+      listersPageDetails: {},
     }
   },
   created() {
@@ -87,6 +104,7 @@ export default Vue.extend({
 
       console.log(listers)
       this.listers = listers.data
+      this.listersPageDetails = listers.pagination
 
       this.verified_listers = listers.data.filter(
         (listing: any) => listing.is_id_card_verified === 1

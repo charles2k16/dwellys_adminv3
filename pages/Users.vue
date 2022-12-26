@@ -5,13 +5,28 @@
         <div class="d-flex">
           <h4 class="mr-20 pt-8">Users account</h4>
           <NuxtLink to="/users" class="ml-20 mr-10">
-            <el-button size="mini" round type="primary">All</el-button>
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/users' ? 'primary' : ''"
+              >All</el-button
+            >
           </NuxtLink>
           <NuxtLink to="/users/verified" class="mr-10">
-            <el-button size="mini" round>Verified</el-button>
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/users/verified' ? 'primary' : ''"
+              >Verified</el-button
+            >
           </NuxtLink>
           <NuxtLink to="/users/unverified">
-            <el-button size="mini" round>Unverified</el-button>
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/users/unverified' ? 'primary' : ''"
+              >Unverified</el-button
+            >
           </NuxtLink>
         </div>
         <div class="d-flex search_filter">
@@ -52,7 +67,12 @@
       </div>
     </el-card>
 
-    <NuxtChild :users="users" />
+    <NuxtChild
+      :users="users"
+      :verifiedusers="verifiedUsers"
+      :usersPagination="usersPagination"
+      :unverifiedusers="unverifiedUsers"
+    />
   </div>
 </template>
 
@@ -64,13 +84,25 @@ export default Vue.extend({
   data() {
     return {
       users: [],
+      verifiedUsers: [],
+      unverifiedUsers: [],
       value: '',
+      usersPagination: {},
     }
   },
   async created() {
     const users = await this.$usersApi.show('staff')
     console.log(users, 'users')
+
     this.users = users.data
+
+    this.verifiedUsers = users.data.filter(
+      (user: any) => user.status === 'active'
+    )
+    this.unverifiedUsers = users.data.filter(
+      (user: any) => user.status !== 'active'
+    )
+    this.usersPagination = users.pagination
   },
   methods: {
     addProduct(): void {

@@ -4,14 +4,29 @@
       <div class="lister_header">
         <div class="d-flex">
           <h4 class="pt-8">Plans and pricing</h4>
-          <NuxtLink to="/Plans/" class="ml-20 mr-10">
-            <el-button size="mini" round type="primary">All</el-button>
+          <NuxtLink to="/plans" class="ml-20 mr-10">
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/plans' ? 'primary' : ''"
+              >All</el-button
+            >
           </NuxtLink>
-          <NuxtLink to="/Plans/Active" class="mr-10">
-            <el-button size="mini" round>Active</el-button>
+          <NuxtLink to="/plans/Active" class="mr-10">
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/plans/Active' ? 'primary' : ''"
+              >Active</el-button
+            >
           </NuxtLink>
-          <NuxtLink to="/Plans/DeActive">
-            <el-button size="mini" round>Deactive</el-button>
+          <NuxtLink to="/plans/DeActive">
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/plans/DeActive' ? 'primary' : ''"
+              >Deactive</el-button
+            >
           </NuxtLink>
         </div>
         <div class="d-flex">

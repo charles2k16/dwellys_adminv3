@@ -1,20 +1,42 @@
 <template>
   <div>
-    <el-card class="p-20">
+    <el-card class="py-20">
       <div class="lister_header">
         <div class="d-flex">
-          <h4 class="mr-20 pt-8">Discounts</h4>
-          <NuxtLink to="/discounts/" class="ml-20 mr-10">
-            <el-button size="mini" round type="primary">All</el-button>
+          <h4 class="mr-10 pt-8">Discounts</h4>
+          <NuxtLink to="/discounts" class="ml-20 mr-10">
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/discounts' ? 'primary' : ''"
+              >All</el-button
+            >
           </NuxtLink>
           <NuxtLink to="/discounts/active" class="mr-10">
-            <el-button size="mini" round>Active</el-button>
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/discounts/active' ? 'primary' : ''"
+              >Active</el-button
+            >
           </NuxtLink>
-          <NuxtLink to="/discounts/scheduled">
-            <el-button size="mini" round>Scheduled</el-button>
+          <NuxtLink to="/discounts/scheduled" class="mr-10">
+            <el-button
+              size="mini"
+              round
+              :type="$route.path == '/discounts/scheduled' ? 'primary' : ''"
+              >Scheduled</el-button
+            >
           </NuxtLink>
-          <NuxtLink to="/discounts/scheduled">
-            <el-button size="mini" round>Expired</el-button>
+          <NuxtLink to="/discounts/expiredDiscounts">
+            <el-button
+              size="mini"
+              round
+              :type="
+                $route.path == '/discounts/expiredDiscounts' ? 'primary' : ''
+              "
+              >Expired</el-button
+            >
           </NuxtLink>
         </div>
         <div class="d-flex">
@@ -59,6 +81,7 @@
       :scheduleddiscounts="scheduled_discounts"
       :expireddiscounts="expired_discounts"
       :fetch-data="fetchData"
+      :discountsPagination="discountsPagination"
       :loading="loading"
     />
   </div>
@@ -76,6 +99,7 @@ export default Vue.extend({
       active_discounts: [],
       scheduled_discounts: [],
       expired_discounts: [],
+      discountsPagination: {},
       value: '',
     }
   },
@@ -85,8 +109,9 @@ export default Vue.extend({
   methods: {
     async fetchData() {
       const discounts = await this.$discountApi.index()
-      console.log(discounts.data)
+      console.log(discounts)
       this.discounts = discounts.data
+      // this.discountsPagination = discounts.pagination
       if (!this.discounts) {
         this.loading = true
       }
