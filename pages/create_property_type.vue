@@ -399,12 +399,12 @@ export default Vue.extend({
         )
         console.log(propertyResponse)
         this.loading = false
+        this.$router.replace('/property_types')
         ;(this as any as IMixinState).$message({
           showClose: true,
           message: propertyResponse.message,
           type: 'success',
         })
-        this.$router.replace('/property_types')
       } catch (error: any) {
         this.loading = false
         if (error?.response) {

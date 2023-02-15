@@ -131,7 +131,7 @@ export default Vue.extend({
             )
           } else {
             ;(this as any as IMixinState).getNotification(
-              'Check Internet connectivity',
+              'Something went wrong',
               'warning'
             )
           }

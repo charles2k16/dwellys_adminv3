@@ -11,7 +11,7 @@
         <Nuxt />
       </el-main>
       <footer class="d-flex justify_between">
-        <p>Dwellys © 2022. All right reserved.</p>
+        <p>Dwellys © 2022. All right reserved.</p> 
 
         <p>v-0.5.1</p>
         <!-- <a
