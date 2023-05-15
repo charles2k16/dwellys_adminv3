@@ -237,7 +237,6 @@ export default Vue.extend({
   async created() {
     const currencies = await this.$countriesApi.index()
     this.currencies = currencies.data
-    console.log(this.currencies)
   },
   methods: {
     addTier() {
@@ -248,7 +247,6 @@ export default Vue.extend({
     },
     getPlan(plan: any) {
       this.pricing = plan
-      console.log('plan', this.pricing)
       this.counter = plan.listing_plan_features.length
       this.dialogVisible = true
     },
@@ -256,7 +254,6 @@ export default Vue.extend({
       this.$router.push(`/listing_details/${id}`)
     },
     open(planId: string, planName: string) {
-      console.log(planId, 'profile')
       // const h = this.$createElement
       this.$confirm(
         `Are you sure you want to delete ${planName} ? You cannot undo this action.`,
@@ -283,8 +280,6 @@ export default Vue.extend({
           no_of_days: this.pricing.no_of_days,
           features: this.pricing.listing_plan_features,
         })
-
-        console.log(planResponse)
         this.dialogVisible = false
         this.loading = false
         this.fetchData()
@@ -294,7 +289,6 @@ export default Vue.extend({
           type: 'success',
         })
       } catch (error) {
-        console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
       }
     },
@@ -302,8 +296,6 @@ export default Vue.extend({
       this.loading = true
       try {
         const planResponse = await this.$listingPlanApi.delete(planId)
-
-        console.log(planResponse)
 
         this.loading = false
         this.fetchData()
@@ -313,7 +305,6 @@ export default Vue.extend({
           type: 'success',
         })
       } catch (error) {
-        console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
       }
     },
@@ -324,8 +315,6 @@ export default Vue.extend({
           listing_plan_id: planId,
         })
 
-        console.log(planResponse)
-
         this.loading = false
         this.fetchData()
         ;(this as any as IMixinState).$message({
@@ -334,7 +323,6 @@ export default Vue.extend({
           type: 'success',
         })
       } catch (error) {
-        console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
       }
     },

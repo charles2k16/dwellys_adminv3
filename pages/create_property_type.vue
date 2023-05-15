@@ -359,8 +359,6 @@ export default Vue.extend({
             1
           )
         : this.propertyUpload.specifications.push(icon)
-
-      console.log(this.propertyUpload.specifications)
     },
     getAmenityIcon(icon: any) {
       const mainSpec = Object.assign([], this.propertyUpload.amenities)
@@ -371,8 +369,6 @@ export default Vue.extend({
             1
           )
         : this.propertyUpload.amenities.push(icon)
-
-      console.log(this.propertyUpload.amenities)
     },
     toggleUpload(event: any) {
       const reader = new FileReader()
@@ -391,13 +387,11 @@ export default Vue.extend({
       }
     },
     async submitUpload() {
-      console.log(this.propertyUpload)
       this.loading = true
       try {
         const propertyResponse = await this.$propertyApi.create(
           this.propertyUpload
         )
-        console.log(propertyResponse)
         this.loading = false
         this.$router.replace('/property_types')
         ;(this as any as IMixinState).$message({
@@ -408,14 +402,12 @@ export default Vue.extend({
       } catch (error: any) {
         this.loading = false
         if (error?.response) {
-          console.log(error?.response)
           ;(this as any as IMixinState).$message({
             showClose: true,
             message: error?.response?.data?.message,
             type: 'error',
           })
         } else {
-          console.log(error, 'error')
           ;(this as any as IMixinState).$message({
             showClose: true,
             message: 'Check your network connectivity',

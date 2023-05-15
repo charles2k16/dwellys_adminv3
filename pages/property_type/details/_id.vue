@@ -122,11 +122,7 @@ export default Vue.extend({
     }
   },
   async created() {
-    // this.pageLoad = true;
-    console.log(this.$route.params)
     const property = await this.$propertyApi.single(this.$route.params.id)
-
-    console.log(property)
     this.property = property.data
   },
   methods: {
@@ -134,7 +130,6 @@ export default Vue.extend({
       this.$router.push(`/property_type/edit/${id}`)
     },
     open(id: string) {
-      // const h = this.$createElement
       this.$confirm(
         'Are you sure you want to delete ? You cannot undo this action.',
         {
@@ -146,10 +141,8 @@ export default Vue.extend({
       })
     },
     async deletePropertyType(id: string) {
-      console.log(id)
       try {
         const propertyResponse = await this.$propertyApi.delete(id)
-        console.log(propertyResponse)
         ;(this as any as IMixinState).$message({
           showClose: true,
           message: propertyResponse.message,

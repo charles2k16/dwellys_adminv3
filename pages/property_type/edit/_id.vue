@@ -263,7 +263,6 @@ export default Vue.extend({
     const property = await this.$propertyApi.single(this.property_type_id)
 
     this.property = property.data
-    console.log(this.property)
   },
   methods: {
     isSpecification(iconSpec: any) {
@@ -286,8 +285,6 @@ export default Vue.extend({
             1
           )
         : this.property.specifications.push(icon)
-
-      console.log(this.property.specifications)
     },
     getAmenityIcon(icon: any) {
       const mainSpec = Object.assign([], this.property.amenities)
@@ -309,7 +306,6 @@ export default Vue.extend({
       }
     },
     async submitChanges() {
-      // console.log(this.property)
       this.loading = true
       const specifications = this.property.specifications.map(
         (specification: any) => {
@@ -326,7 +322,6 @@ export default Vue.extend({
           id: amenity.id ? amenity.id : '',
         }
       })
-      console.log(amenities)
 
       try {
         const propertyResponse = await this.$propertyApi.update(
@@ -340,7 +335,6 @@ export default Vue.extend({
             description: this.property.description,
           }
         )
-        console.log(propertyResponse)
 
         this.loading = false
         ;(this as any as IMixinState).$message({
@@ -351,7 +345,6 @@ export default Vue.extend({
         // this.$router.replace('/property_types')
       } catch (error: any) {
         this.loading = false
-        console.log(error?.response?.data, 'error')
         // ;(this as any as IMixinState).catchError(error?.response?.data?.message)
       }
     },

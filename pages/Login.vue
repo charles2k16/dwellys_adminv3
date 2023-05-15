@@ -104,10 +104,7 @@ export default Vue.extend({
           },
         })
         .then((response: any) => {
-          console.log(login)
-          console.log(response)
           const { user, token } = response.data.data
-          console.log('user token', user, token)
           this.$auth.setUserToken(token)
           this.$auth.setUser(user)
           // this.$auth.$storage.setLocalStorage("user_data", user);
@@ -122,9 +119,7 @@ export default Vue.extend({
           })
         })
         .catch((error) => {
-          console.log(error)
           if (error?.response?.data) {
-            console.log(error.response.data)
             ;(this as any as IMixinState).getNotification(
               'User Not Recognized',
               'warning'

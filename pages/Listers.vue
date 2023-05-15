@@ -99,8 +99,6 @@ export default Vue.extend({
     async fetchData() {
       // this.pageLoad = true;
       const listers = await this.$usersApi.show('lister')
-      // const verifiedlisters = await this.$usersApi.show('lister')
-      // const unverifiedlisters = await this.$usersApi.show('lister')
 
       console.log(listers)
       this.listers = listers.data
@@ -109,11 +107,9 @@ export default Vue.extend({
       this.verified_listers = listers.data.filter(
         (listing: any) => listing.is_id_card_verified === 1
       )
-      // console.log('verified',this.verified_listers)
       this.unverified_listers = listers.data.filter(
         (listing: any) => listing.is_id_card_verified === 0
       )
-      // console.log('unverified',this.unverified_listers)
     },
     addProduct(): void {
       ;(this as any).$refs.handleAction.showAddClassModal()

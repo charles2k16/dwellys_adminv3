@@ -201,7 +201,6 @@ export default Vue.extend({
     viewProfile(profile: any) {
       this.profile = profile
       this.drawer = true
-      console.log(profile)
     },
     handleCurrentChange() {},
     open(discountId: string) {
@@ -223,9 +222,6 @@ export default Vue.extend({
     async deleteDiscount(id: string) {
       try {
         const discountResponse = await this.$discountApi.delete(id)
-
-        console.log(discountResponse)
-        // console.log(listingId, active)
         ;(this as any as IMixinState).$message({
           showClose: true,
           message: `Discount Deleted Successfully!`,
@@ -233,7 +229,6 @@ export default Vue.extend({
         })
         this.fetchData()
       } catch (error) {
-        console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
       }
     },

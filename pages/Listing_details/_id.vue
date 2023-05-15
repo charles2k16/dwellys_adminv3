@@ -369,7 +369,6 @@ export default Vue.extend({
   methods: {
     async fetchData() {
       const listing = await this.$listingsApi.single(this.$route.params.id)
-      console.log(listing)
       this.listing = listing.data
 
       const property = await this.$propertyApi.single(
@@ -378,7 +377,6 @@ export default Vue.extend({
 
       const propertySpecs = property.data.specifications
       const propertyAmenities = property.data.amenities
-      // console.log(propertyAmenities);
 
       for (let i = 0; i < propertySpecs.length; i++) {
         if (
@@ -398,8 +396,6 @@ export default Vue.extend({
       //       : propertyAmenities
       //   );
       // });
-
-      console.log(propertyAmenities)
       this.amenities = propertyAmenities
     },
     getImage(imageId: string) {
@@ -439,7 +435,6 @@ export default Vue.extend({
       this.photos = []
     },
     removeSpec(index: number) {
-      console.log('specification id', index)
       // const h = this.$createElement
       this.$confirm('Are you sure you want to delete?', {
         cancelButtonText: 'No, i want to keep',
@@ -466,7 +461,6 @@ export default Vue.extend({
         })
     },
     open(planId: string) {
-      console.log(planId, 'profile')
       // const h = this.$createElement
       this.$confirm('Are you sure you want to delete?', {
         cancelButtonText: 'No, i want to keep',
@@ -508,8 +502,6 @@ export default Vue.extend({
         ? this.listing.amenities.splice(amenityIndex, 1)
         : this.listing.amenities.push(property)
       // }
-
-      console.log(this.listing.amenities)
     },
     deleteListingModal() {
       // const h = this.$createElement
@@ -525,7 +517,6 @@ export default Vue.extend({
         })
     },
     addSpecs() {
-      console.log(this.propertySpecs)
       for (let i = 0; i < this.propertySpecs.length; i++) {
         if (this.propertySpecs[i].number > 0) {
           this.listing.property_specifications.push(this.propertySpecs[i])
@@ -534,7 +525,6 @@ export default Vue.extend({
       this.specVisible = false
     },
     addAmenities() {
-      console.log(this.listing.amenities)
       this.amenityVisible = false
 
       // for (let i = 0; i < this.propertySpecs.length; i++) {
@@ -557,8 +547,6 @@ export default Vue.extend({
       try {
         const ImageResponse = await this.$listingImagesApi.delete(planId)
 
-        console.log(ImageResponse)
-
         this.loading = false
         this.fetchData()
         ;(this as any as IMixinState).$message({
@@ -567,7 +555,6 @@ export default Vue.extend({
           type: 'success',
         })
       } catch (error) {
-        console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
       }
     },
@@ -575,8 +562,6 @@ export default Vue.extend({
       this.deleteLoading = true
       try {
         const ListingResponse = await this.$listingsApi.delete(this.listing_id)
-
-        console.log(ListingResponse)
 
         this.deleteLoading = false
         this.fetchData()
@@ -588,7 +573,6 @@ export default Vue.extend({
         this.$router.replace('/profile')
       } catch (error) {
         this.deleteLoading = false
-        console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
       }
     },
@@ -600,9 +584,6 @@ export default Vue.extend({
           status,
         })
 
-        console.log(listingResponse)
-        // console.log(listingId, active)
-
         this.approvalLoader = false
         ;(this as any as IMixinState).$message({
           showClose: true,
@@ -612,7 +593,6 @@ export default Vue.extend({
         this.$router.push('/listings')
       } catch (error: any) {
         this.approvalLoader = false
-        console.log(error, 'error')
         ;(this as any as IMixinState).$message({
           showClose: true,
           message: error.message,
@@ -653,7 +633,6 @@ export default Vue.extend({
           icon: amenity.icon,
         }
       })
-      console.log(amenities)
 
       try {
         const listingResponse = await this.$listingUpdateApi.update(
@@ -676,8 +655,6 @@ export default Vue.extend({
           }
         )
 
-        console.log(listingResponse)
-
         this.loading = false
         this.fetchData()
         ;(this as any as IMixinState).$message({
@@ -687,7 +664,6 @@ export default Vue.extend({
         })
         // this.$router.replace("/profile");
       } catch (error) {
-        console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
         this.loading = false
       }
@@ -698,8 +674,6 @@ export default Vue.extend({
           listing_image_id: imageId,
         })
 
-        console.log(ImageResponse)
-
         this.loading = false
         this.fetchData()
         ;(this as any as IMixinState).$message({
@@ -708,19 +682,15 @@ export default Vue.extend({
           type: 'success',
         })
       } catch (error) {
-        console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
       }
     },
     async addImages() {
-      console.log(this.photos)
       try {
         const listingResponse = await this.$listingImagesApi.create({
           listing_id: this.listing_id,
           listing_photos: this.photos,
         })
-        console.log(listingResponse)
-        // console.log(listingId, active)
         this.dialogVisible = false
         this.loading = false
         this.fetchData()
@@ -730,7 +700,6 @@ export default Vue.extend({
           type: 'success',
         })
       } catch (error: any) {
-        console.log(error, 'error')
         ;(this as any as IMixinState).$message({
           showClose: true,
           message: error.message,

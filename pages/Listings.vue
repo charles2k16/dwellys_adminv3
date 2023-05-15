@@ -100,11 +100,9 @@ export default Vue.extend({
       this.verified_listings = listings.data.filter(
         (listing: any) => listing.status === 'active'
       )
-      // console.log('verified',this.verified_listings)
       this.unverified_listings = listings.data.filter(
         (listing: any) => listing.status === 'inactive'
       )
-      // console.log('unverified',this.unverified_listings)
     },
     addProduct(): void {
       ;(this as any).$refs.handleAction.showAddClassModal()

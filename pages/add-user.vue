@@ -280,7 +280,6 @@ export default Vue.extend({
   async created() {
     const countries = await this.$countriesApi.index()
     this.countries = countries.data
-    console.log(countries)
   },
   methods: {
     addTier() {
@@ -290,7 +289,6 @@ export default Vue.extend({
       this.user_account.tierForm.splice(index, 1)
     },
     onPhoneUpdate(e: any) {
-      console.log(e)
       this.user_account.phone_number = e.formattedNumber
       this.countries.filter((country: any) =>
         country.short_name === e.countryCode
@@ -299,8 +297,6 @@ export default Vue.extend({
       )
     },
     submit_account() {
-      //   this.user_account.activate = activate
-      console.log('send')
       this.btnLoading = true
       ;(this as any).$refs.user_account.validate((valid: boolean) => {
         if (valid) {
@@ -319,7 +315,6 @@ export default Vue.extend({
     async signUp(): Promise<void> {
       try {
         const response = await this.$registerApi.create(this.user_account)
-        console.log(response)
         ;(this as any as IMixinState).$message({
           showClose: true,
           message: response.message,

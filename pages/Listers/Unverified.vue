@@ -297,7 +297,6 @@ export default Vue.extend({
     viewProfile(profile: any) {
       this.profile = profile
       this.drawer = true
-      console.log(profile)
     },
     handleCurrentChange() {},
     async approveLister(profile: any) {
@@ -306,9 +305,6 @@ export default Vue.extend({
         const listingResponse = await this.$approvalApi.create({
           user_id: profile.id,
         })
-
-        console.log(listingResponse)
-
         this.loading = false
         this.drawer = false
         this.fetchData()
@@ -318,13 +314,11 @@ export default Vue.extend({
           type: 'success',
         })
       } catch (error) {
-        console.log(error, 'error')
         this.loading = false
         ;(this as any as IMixinState).catchError(error)
       }
     },
     deleteProduct(id: string) {
-      console.log(id)
       this.$message({
         message: 'Product Deleted',
         type: 'success',

@@ -240,11 +240,9 @@ export default Vue.extend({
     viewProfile(profile: any) {
       this.profile = profile
       this.drawer = true
-      console.log(profile)
     },
     handleCurrentChange() {},
     open(listingId: string, active: string, btnText: string) {
-      console.log(listingId, 'profile')
       // const h = this.$createElement
       this.$confirm(
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum interdum quisque risus ornare tincidunt sed in. Neque elit nunc scelerisque lacinia ultrices adipiscing.',
@@ -269,15 +267,11 @@ export default Vue.extend({
     },
     async approveLister(listingId: string, status: string) {
       this.loading = true
-      console.log(status)
       try {
         const listingResponse = await this.$toggleListingApi.create({
           listing_id: listingId,
           status,
         })
-
-        console.log(listingResponse)
-        // console.log(listingId, active)
 
         this.loading = false
         this.fetchData()
@@ -287,7 +281,6 @@ export default Vue.extend({
           type: 'success',
         })
       } catch (error) {
-        console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
       }
     },

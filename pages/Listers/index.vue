@@ -328,8 +328,6 @@ export default Vue.extend({
   },
   methods: {
     getAvatar(file: any) {
-      console.log(file)
-
       const reader = new FileReader()
       reader.readAsDataURL(file.raw)
       reader.onloadend = () => {
@@ -338,7 +336,6 @@ export default Vue.extend({
     },
     handleCurrentChange() {},
     onPhoneUpdate(e: any) {
-      console.log(e)
       this.profile.phone_number = e.formattedNumber
       this.countries.filter((country: any) =>
         country.short_name === e.countryCode
@@ -349,7 +346,6 @@ export default Vue.extend({
     viewProfile(profile: any) {
       this.profile = profile
       this.drawer = true
-      console.log(profile)
     },
     async approveLister(profile: any) {
       this.loading = true
@@ -357,8 +353,6 @@ export default Vue.extend({
         const listingResponse = await this.$approvalApi.create({
           user_id: profile.id,
         })
-
-        console.log(listingResponse)
 
         this.loading = false
         this.drawer = false
@@ -369,14 +363,12 @@ export default Vue.extend({
           type: 'success',
         })
       } catch (error) {
-        console.log(error, 'error')
         this.loading = false
         ;(this as any as IMixinState).catchError(error)
       }
     },
     async updateUser(): Promise<void> {
       this.saveLoading = true
-      // console.log(this.lister);
       const data = {
         avatar:
           this.avatar !==
@@ -391,13 +383,11 @@ export default Vue.extend({
         country_id: this.profile.country_id,
         user_type: this.profile.user_type,
       }
-      console.log(data)
       try {
         const profileResponse = await this.$listerUpdateApi.update(
           'update',
           data
         )
-        console.log('profile response', profileResponse)
         this.$auth.setUser(profileResponse.data.user)
 
         this.saveLoading = false
