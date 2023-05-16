@@ -95,14 +95,11 @@ export default Vue.extend({
       //   const listings = await this.$listingsApi.index()
       const plans = await this.$listingPlanApi.index()
       this.plans = plans.data
-      console.log(plans.data)
 
       this.activePlans = plans.data.filter((plan: any) => plan.is_active === 1)
-      console.log('active', this.activePlans)
       this.deactivatedPlans = plans.data.filter(
         (plan: any) => plan.is_active === 0
       )
-      console.log('deactive', this.deactivatedPlans)
     },
     addProduct(): void {
       ;(this as any).$refs.handleAction.showAddClassModal()

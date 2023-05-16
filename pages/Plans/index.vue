@@ -289,7 +289,16 @@ export default Vue.extend({
           type: 'success',
         })
       } catch (error) {
-        ;(this as any as IMixinState).catchError(error)
+        const errorResponses = Object.values(
+          error?.response?.data?.errors
+        ).toString()
+        console.log(errorResponses)
+        this.loading = false
+        ;(this as any as IMixinState).$message({
+          showClose: true,
+          message: errorResponses,
+          type: 'error',
+        })
       }
     },
     async deletePlan(planId: string) {

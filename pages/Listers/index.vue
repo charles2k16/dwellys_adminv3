@@ -318,6 +318,7 @@ export default Vue.extend({
       tableLoading: false,
       profile: {} as any,
       search: '' as string,
+      country_id: '' as string,
       avatar:
         'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png' as any,
     }
@@ -325,6 +326,10 @@ export default Vue.extend({
   async created() {
     const countries = await this.$countriesApi.index()
     this.countries = countries.data
+    const country = countries.data.filter(
+      (country) => country.short_name === 'GH'
+    )
+    this.country_id = country[0].id
   },
   methods: {
     getAvatar(file: any) {
@@ -345,6 +350,8 @@ export default Vue.extend({
     },
     viewProfile(profile: any) {
       this.profile = profile
+
+      console.log(this.profile)
       this.drawer = true
     },
     async approveLister(profile: any) {
@@ -380,7 +387,7 @@ export default Vue.extend({
         first_name: this.profile.first_name,
         last_name: this.profile.last_name,
         phone_number: this.profile.phone_number,
-        country_id: this.profile.country_id,
+        country_id: this.country_id,
         user_type: this.profile.user_type,
       }
       try {
@@ -397,7 +404,16 @@ export default Vue.extend({
         )
       } catch (error) {
         this.saveLoading = false
-        ;(this as any as IMixinState).catchError(error)
+        const errorResponses = Object.values(
+          error?.response?.data?.errors
+        ).toString()
+        console.log(errorResponses)
+        // ;(this as any as IMixinState).$message({
+        //   showClose: true,
+        //   message: errorResponses,
+        //   type: 'error',
+        // })
+        // ;(this as any as IMixinState).catchError(error)
       }
     },
   },
@@ -417,9 +433,9 @@ $medium_screen: 769px;
     font-weight: 400;
   }
   .profile_img {
-    width: 42%;
+    width: 36%;
     border-radius: 50%;
-    height: 150px;
+    height: 180px;
     @media (max-width: $medium_screen) {
       margin: 0 auto;
     }

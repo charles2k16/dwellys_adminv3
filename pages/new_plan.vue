@@ -243,7 +243,6 @@ export default Vue.extend({
   async created() {
     const currencies = await this.$countriesApi.index()
     this.currencies = currencies.data
-    console.log(this.currencies)
   },
   methods: {
     addTier() {
@@ -255,8 +254,6 @@ export default Vue.extend({
       this.plan.features.splice(index, 1)
     },
     submit_plan() {
-      //   this.plan.activate = activate
-      console.log(this.plan)
       this.btnLoading = true
       ;(this as any).$refs.plan.validate((valid: boolean) => {
         if (valid) {
@@ -291,9 +288,7 @@ export default Vue.extend({
               : this.plan.no_of_days,
           features: this.plan.features,
         }
-        console.log(data)
         const response = await this.$listingPlanApi.create(data)
-        console.log(response)
         ;(this as any as IMixinState).$message({
           showClose: true,
           message: response.message,

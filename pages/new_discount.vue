@@ -196,7 +196,6 @@ export default Vue.extend({
   },
   methods: {
     submit_discount() {
-      console.log(this.plan)
       this.btnLoading = true
       ;(this as any).$refs.plan.validate((valid: boolean) => {
         if (valid) {
@@ -226,9 +225,7 @@ export default Vue.extend({
           listing_plan_id: this.plan.listing_plan_id,
           no_of_days: this.plan.no_of_days,
         }
-        console.log(data)
         const response = await this.$discountApi.create(data)
-        console.log(response)
         ;(this as any as IMixinState).$message({
           showClose: true,
           message: response.message,

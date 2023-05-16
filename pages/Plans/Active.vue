@@ -268,7 +268,7 @@ export default Vue.extend({
       })
     },
     async editPricing(id: string) {
-      this.dialogVisible = false
+      this.loading = true
       try {
         const planResponse = await this.$listingPlanApi.update(id, {
           name: this.pricing.name,
@@ -281,7 +281,7 @@ export default Vue.extend({
           no_of_days: this.pricing.no_of_days,
           features: this.pricing.listing_plan_features,
         })
-
+        this.dialogVisible = false
         this.loading = false
         this.fetchData()
         ;(this as any as IMixinState).$message({
@@ -290,7 +290,16 @@ export default Vue.extend({
           type: 'success',
         })
       } catch (error) {
-        ;(this as any as IMixinState).catchError(error)
+        const errorResponses = Object.values(
+          error?.response?.data?.errors
+        ).toString()
+        console.log(errorResponses)
+        this.loading = false
+        ;(this as any as IMixinState).$message({
+          showClose: true,
+          message: errorResponses,
+          type: 'error',
+        })
       }
     },
     async deletePlan(planId: string) {

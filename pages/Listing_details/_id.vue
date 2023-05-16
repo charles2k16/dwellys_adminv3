@@ -133,11 +133,24 @@
             v-model="listing.property_type.name"
           /> -->
         </section>
+        <section class="listing_bar">
+          <p>Listing name</p>
+          <el-input
+            v-if="listing.listing_detail"
+            v-model="listing.listing_detail.name"
+            class="pt-10"
+          />
+          <!-- <el-input
+            v-if="listing.property_type"
+            v-model="listing.property_type.name"
+          /> -->
+        </section>
         <section class="listing_bar pl-20">
           <p>Amount</p>
           <el-input
             v-if="listing.listing_detail"
             v-model="listing.listing_detail.price"
+            class="pt-10 w-100"
           />
         </section>
       </div>
@@ -370,6 +383,7 @@ export default Vue.extend({
     async fetchData() {
       const listing = await this.$listingsApi.single(this.$route.params.id)
       this.listing = listing.data
+      console.log(listing)
 
       const property = await this.$propertyApi.single(
         listing.data.property_type.id
@@ -664,7 +678,16 @@ export default Vue.extend({
         })
         // this.$router.replace("/profile");
       } catch (error) {
-        ;(this as any as IMixinState).catchError(error)
+        const errorResponses = Object.values(
+          error?.response?.data?.errors
+        ).toString()
+        console.log(errorResponses)
+        this.loading = false
+        ;(this as any as IMixinState).$message({
+          showClose: true,
+          message: errorResponses,
+          type: 'error',
+        })
         this.loading = false
       }
     },
@@ -718,7 +741,7 @@ $medium_screen: 769px;
   padding: 5px !important;
 }
 .listing_bar {
-  width: 150px;
+  min-width: 120px;
   padding-right: 10px;
 }
 .property_images {

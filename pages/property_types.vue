@@ -184,10 +184,8 @@ export default Vue.extend({
       })
     },
     async deletePropertyType(id: string) {
-      console.log(id)
       try {
         const propertyResponse = await this.$propertyApi.delete(id)
-        console.log(propertyResponse)
         ;(this as any as IMixinState).$message({
           showClose: true,
           message: propertyResponse.message,
@@ -195,23 +193,19 @@ export default Vue.extend({
         })
         this.fetchData()
       } catch (error) {
-        console.log(error, 'error')
         ;(this as any as IMixinState).catchError(error)
       }
     },
     viewProfile(profile: any) {
       this.profile = profile
-      console.log(profile)
     },
     toDetails(id: string) {
-      console.log(id, 'id')
       this.$router.push(`/property_type/details/${id}`)
     },
     async fetchData() {
       const listings = await this.$propertyApi.index()
-      console.log(listings)
       this.properties = listings.data
-      console.log(listings.data)
+      console.log(listings)
     },
   },
 })

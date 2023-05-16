@@ -17,7 +17,9 @@
                 class="info_card"
                 @click="getIcon(specification)"
               >
-                <p>{{ specification.name }}</p>
+                <p>
+                  {{ specification.name }}
+                </p>
               </section>
             </div>
           </section>
