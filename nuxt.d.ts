@@ -43,6 +43,7 @@ declare module 'vue/types/vue' {
     $listingImagesApi: apiService
     $listingPlanApi: apiService
     $countriesApi: apiService
+    $forgottenPassApi: apiService
     $registerApi: apiService
     $propertyApi: apiService
     $specificationsTypeApi: apiService

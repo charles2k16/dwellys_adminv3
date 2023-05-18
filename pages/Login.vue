@@ -28,7 +28,11 @@
               ></el-input>
             </el-form-item>
           </el-form>
-
+          <div class="d-flex justify_end">
+            <NuxtLink to="/reset_password" style="text-decoration: underline"
+              >Forgotten password ?</NuxtLink
+            >
+          </div>
           <div class="mt-20">
             <el-button
               class="full_width"

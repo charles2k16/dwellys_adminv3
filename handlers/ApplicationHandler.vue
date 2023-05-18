@@ -14,6 +14,17 @@
       </template>
       <AddProduct v-if="showProductModal" />
     </el-dialog>
+    <el-dialog
+      :visible.sync="photoModal"
+      width="40%"
+      :destroy-on-close="true"
+      custom-class="mobile-modal"
+    >
+      <template slot="title">
+        <h3>Upload your photo</h3>
+      </template>
+      <ListerImageUpload @avatar="userAvatar" />
+    </el-dialog>
   </div>
 </template>
 
@@ -26,12 +37,23 @@ export default Vue.extend({
     return {
       modalTitle: '' as string,
       showProductModal: false as boolean,
+      photoModal: false as boolean,
     }
   },
   methods: {
     showAddClassModal(): void {
       this.modalTitle = 'Add Product'
       this.showProductModal = true
+    },
+    showPhotoModal(): void {
+      this.photoModal = true
+    },
+    closePhotoModal(): void {
+      this.photoModal = false
+    },
+    userAvatar(file: Object) {
+      this.$emit('avatar', file)
+      this.photoModal = false
     },
   },
 })

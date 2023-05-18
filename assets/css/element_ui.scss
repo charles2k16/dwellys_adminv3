@@ -285,6 +285,16 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   padding-bottom: 0;
 }
 
+.upload_dragg > .el-upload > .el-upload-dragger {
+  width: 450px;
+}
+
+@media (max-width: 768px) {
+  .upload_dragg > .el-upload > .el-upload-dragger {
+    width: 300px;
+  }
+}
+
 .el-upload-list {
   display: none;
 }

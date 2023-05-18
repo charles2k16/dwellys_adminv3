@@ -100,6 +100,10 @@ export default Vue.extend({
           ? 'Edit Property Type'
           : routeName === 'Listing_details-id'
           ? 'Listing details'
+          : routeName === 'new-lister'
+          ? 'New Lister'
+          : routeName === 'new-listing'
+          ? 'New Listing'
           : routeName
     },
   },

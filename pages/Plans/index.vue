@@ -184,10 +184,18 @@
       <!-- slot="footer" -->
       <div class="deactive_btn bottom clearfix">
         <el-button
+          v-if="plan.is_active == 0"
+          type="success"
+          class="full_width"
+          @click="toggleListingPlan(plan.id)"
+          >Activate tier
+        </el-button>
+        <el-button
+          v-else
           type="primary"
           class="full_width"
           @click="toggleListingPlan(plan.id)"
-          >{{ plan.is_active == 0 ? 'Activate tier' : 'Deactivate tier' }}
+          >Deactivate tier
         </el-button>
       </div>
     </el-card>

@@ -22,6 +22,7 @@ export default (ctx, inject) => {
   inject('specificationsTypeApi', apiService('/propertytypespecifications'))
   inject('AmenitiesApi', apiService('/propertytypeamenities'))
   inject('listingPlanApi', apiService('/listingplans'))
+  inject('forgottenPassApi', apiService('/forgotpassword'))
   inject('listingImagesApi', apiService('/listingimages'))
   inject('listerUpdateApi', apiService('/auth/account'))
   inject('discountApi', apiService('/discounts'))

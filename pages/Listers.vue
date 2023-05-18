@@ -58,8 +58,10 @@
             prefix-icon="el-icon-search"
           >
           </el-input>
-          <el-button type="danger"
-            ><i class="el-icon-plus mr-10"></i>New Lister</el-button
+          <NuxtLink to="/new-lister"
+            ><el-button type="danger"
+              ><i class="el-icon-plus mr-10"></i>New Lister</el-button
+            ></NuxtLink
           >
         </div>
       </div>
