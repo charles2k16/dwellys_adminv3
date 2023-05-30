@@ -94,6 +94,7 @@ export default Vue.extend({
     async fetchData() {
       //   const listings = await this.$listingsApi.index()
       const plans = await this.$listingPlanApi.index()
+      console.log(plans)
       this.plans = plans.data
 
       this.activePlans = plans.data.filter((plan: any) => plan.is_active === 1)

@@ -82,7 +82,6 @@
       :expireddiscounts="expired_discounts"
       :fetch-data="fetchData"
       :discountsPagination="discountsPagination"
-      :loading="loading"
     />
   </div>
 </template>
@@ -94,7 +93,6 @@ export default Vue.extend({
   middleware: 'auth',
   data() {
     return {
-      loading: false,
       discounts: [],
       active_discounts: [],
       scheduled_discounts: [],
@@ -111,18 +109,14 @@ export default Vue.extend({
       const discounts = await this.$discountApi.index()
       console.log(discounts)
       this.discounts = discounts.data
-      // this.discountsPagination = discounts.pagination
-      if (!this.discounts) {
-        this.loading = true
-      }
 
-      // this.verified_discounts = discounts.data.filter(
-      //   (listing: any) => listing.status === 'active'
-      // )
-      // // console.log('verified',this.verified_discounts)
-      // this.unverified_discounts = discounts.data.filter(
-      //   (listing: any) => listing.status === 'inactive'
-      // )
+      this.active_discounts = discounts.data.filter(
+        (listing: any) => listing.status === 'active'
+      )
+      // console.log('verified',this.verified_discounts)
+      this.expired_discounts = discounts.data.filter(
+        (listing: any) => listing.status === 'inactive'
+      )
       // console.log('unverified',this.unverified_discounts)
     },
     addProduct(): void {

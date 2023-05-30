@@ -155,7 +155,7 @@
             >
             </el-option>
           </el-select>
-          <span class="pl-10">users per page</span>
+          <span class="pl-10">listings per page</span>
         </div>
         <!-- layout="prev, pager, next, sizes, total" -->
         <div v-if="listingsPageDetails" class="align_center">
@@ -244,14 +244,10 @@ export default Vue.extend({
     handleCurrentChange() {},
     open(listingId: string, active: string, btnText: string) {
       // const h = this.$createElement
-      this.$confirm(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum interdum quisque risus ornare tincidunt sed in. Neque elit nunc scelerisque lacinia ultrices adipiscing.',
-        'Are you sure you want approve the listing?',
-        {
-          cancelButtonText: 'Cancel',
-          confirmButtonText: btnText,
-        }
-      )
+      this.$confirm('Are you sure you want approve the listing?', {
+        cancelButtonText: 'Cancel',
+        confirmButtonText: btnText,
+      })
         .then(() => {
           this.approveLister(listingId, active, btnText)
         })

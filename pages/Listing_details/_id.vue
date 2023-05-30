@@ -25,12 +25,12 @@
         </div>
       </div>
       <p v-if="imageErr" style="color: red">{{ imageErr }}</p>
-      <span slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer pr-20 pb-20">
         <el-button @click="closeImgUpload">Cancel</el-button>
         <el-button type="primary" :loading="loading" @click="addImages"
           >Add Image(s)</el-button
         >
-      </span>
+      </div>
     </el-dialog>
     <el-dialog
       title="Add Property Specification(s)"
@@ -677,7 +677,7 @@ export default Vue.extend({
           type: 'success',
         })
         // this.$router.replace("/profile");
-      } catch (error) {
+      } catch (error: any) {
         const errorResponses = Object.values(
           error?.response?.data?.errors
         ).toString()

@@ -296,7 +296,7 @@ export default Vue.extend({
           message: planResponse.message,
           type: 'success',
         })
-      } catch (error) {
+      } catch (error: any) {
         const errorResponses = Object.values(
           error?.response?.data?.errors
         ).toString()
@@ -312,7 +312,7 @@ export default Vue.extend({
     async deletePlan(planId: string) {
       this.loading = true
       try {
-        const planResponse = await this.$listingPlanApi.delete(planId)
+        await this.$listingPlanApi.delete(planId)
 
         this.loading = false
         this.fetchData()

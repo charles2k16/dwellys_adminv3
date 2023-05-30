@@ -112,7 +112,7 @@
             >
             </el-option>
           </el-select>
-          <span class="pl-10">users per page</span>
+          <span class="pl-10">discounts per page</span>
         </div>
         <!-- layout="prev, pager, next, sizes, total" -->
         <div v-if="discountsPagination" class="align_center">

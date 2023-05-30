@@ -2,7 +2,7 @@
   <div>
     <el-card class="mt-20">
       <el-table
-        v-loading="discounts.length < 1"
+        v-loading="discounts.length < 0"
         :data="discounts"
         stripe
         :default-sort="{ prop: 'name', order: 'descending' }"
@@ -113,7 +113,7 @@
             >
             </el-option>
           </el-select>
-          <span class="pl-10">users per page</span>
+          <span class="pl-10">discounts per page</span>
         </div>
         <!-- layout="prev, pager, next, sizes, total" -->
         <div v-if="discountsPagination" class="align_center">
@@ -146,10 +146,6 @@ import { IMixinState } from '@/types/mixinsTypes'
 export default Vue.extend({
   name: 'Discounts',
   props: {
-    loading: {
-      required: true,
-      type: Boolean,
-    },
     discounts: {
       required: true,
       type: Array,

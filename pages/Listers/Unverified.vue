@@ -117,7 +117,7 @@
             >
             </el-option>
           </el-select>
-          <span class="pl-10">users per page</span>
+          <span class="pl-10">listers per page</span>
         </div>
         <!-- layout="prev, pager, next, sizes, total" -->
         <div v-if="listersPageDetails" class="align_center">

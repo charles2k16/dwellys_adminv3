@@ -12,12 +12,15 @@
             <div class="d-flex" @click="viewProfile(scope.row)">
               <!-- <a :href="`/products/${scope.row.id}`">{{ scope.row.name }}</a> -->
               <span class="mr-10">
-                <img
+                <a
                   v-if="scope.row.avatar"
-                  :src="scope.row.avatar"
-                  alt="pic"
-                  class="profile_avatar"
-                />
+                  :href="scope.row.avatar"
+                  target="_blank"
+                  ><img
+                    :src="scope.row.avatar"
+                    alt="pic"
+                    class="profile_avatar"
+                /></a>
                 <img
                   v-else
                   src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
@@ -99,7 +102,7 @@
             >
             </el-option>
           </el-select>
-          <span class="pl-10">users per page</span>
+          <span class="pl-10">listers per page</span>
         </div>
         <!-- layout="prev, pager, next, sizes, total" -->
         <div v-if="listersPageDetails" class="align_center">
@@ -327,7 +330,7 @@ export default Vue.extend({
     const countries = await this.$countriesApi.index()
     this.countries = countries.data
     const country = countries.data.filter(
-      (country) => country.short_name === 'GH'
+      (country: any) => country.short_name === 'GH'
     )
     this.country_id = country[0].id
   },
@@ -402,7 +405,7 @@ export default Vue.extend({
           'Update successfull!',
           'success'
         )
-      } catch (error) {
+      } catch (error: any) {
         this.saveLoading = false
         const errorResponses = Object.values(
           error?.response?.data?.errors
